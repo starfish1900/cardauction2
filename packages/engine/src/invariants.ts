@@ -1,7 +1,7 @@
-import { DECK_SIZE, isDigit, type CardId } from './cards.js';
+import { DECK_SIZE, isDigit, suitOf, type CardId } from './cards.js';
 import { effectiveValue, hasNewColor, inWindow } from './rules.js';
-import { STOCK_SIZE } from './setup.js';
-import { P1, P2, type GameState } from './state.js';
+import { stockSize } from './setup.js';
+import { P1, P2, rulesOf, type GameState } from './state.js';
 
 /**
  * Checks everything that must hold in any reachable state. Returns human-readable violations
@@ -28,7 +28,10 @@ export function findViolations(state: GameState): string[] {
   for (const id of seen.keys()) {
     if (!Number.isInteger(id) || id < 0 || id >= DECK_SIZE) problems.push(`bad card id ${id}`);
   }
-  if (state.stock.length !== STOCK_SIZE) problems.push(`stock has ${state.stock.length} cards`);
+  const rules = rulesOf(state);
+  if (state.stock.length !== stockSize(rules)) {
+    problems.push(`stock has ${state.stock.length} cards`);
+  }
 
   for (const seat of [P1, P2] as const) {
     for (const id of state.known[seat]) {
@@ -51,6 +54,9 @@ export function findViolations(state: GameState): string[] {
     const previous = state.bids[i - 1];
     if (!previous) return;
     if (!hasNewColor(previous, row.tens, row.units)) problems.push(`bid ${i} brings no new suit`);
+    if (rules.distinctSuits && suitOf(row.tens) === suitOf(row.units)) {
+      problems.push(`bid ${i} uses one suit twice`);
+    }
     if (!inWindow(effectiveValue(previous), row.value)) problems.push(`bid ${i} is out of range`);
     if (previous.modifier && previous.modifier.by !== row.by) {
       problems.push(`the action card on bid ${i - 1} was not played by the next bidder`);
@@ -69,6 +75,7 @@ export function findViolations(state: GameState): string[] {
   if (state.phase === 'exchange' && (state.toMove !== P2 || state.moveCount !== 0)) {
     problems.push('the exchange belongs to P2 at move 0');
   }
+  if (state.phase === 'exchange' && !rules.exchange) problems.push('an exchange the rules exclude');
   if (state.phase === 'firstBid' && (state.toMove !== P1 || state.bids.length !== 1)) {
     problems.push('the first bid belongs to P1 before any other bid');
   }

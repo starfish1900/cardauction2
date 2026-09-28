@@ -18,6 +18,7 @@
     "dev": "pnpm --filter @cardauction/server dev",
     "dev:web": "pnpm --filter @cardauction/web dev",
     "sim": "pnpm --filter @cardauction/engine sim",
+    "lab": "pnpm --filter @cardauction/balance-lab lab",
     "play": "pnpm --filter @cardauction/engine play",
     "online": "pnpm --filter @cardauction/client-cli online",
     "bot": "pnpm --filter @cardauction/client-cli bot",

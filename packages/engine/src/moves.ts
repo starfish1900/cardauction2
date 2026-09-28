@@ -1,7 +1,15 @@
-import { isAction, isCardId, isDigit, type CardId } from './cards.js';
+import { isAction, isCardId, isDigit, suitOf, type CardId } from './cards.js';
 import { hasLegalBid, type ActionPlay } from './legal.js';
 import { bidValue, columnShift, hasNewColor, inWindow, latestBid, mod100 } from './rules.js';
-import { otherSeat, P1, type BidRow, type GameResult, type GameState, type Seat } from './state.js';
+import {
+  otherSeat,
+  P1,
+  rulesOf,
+  type BidRow,
+  type GameResult,
+  type GameState,
+  type Seat,
+} from './state.js';
 
 export type Move =
   /** P2's opening choice to keep their hand. */
@@ -39,6 +47,8 @@ export type MoveError =
   | 'TABLE_CARD_NOT_ALLOWED'
   /** Neither digit card brings a suit absent from the latest bid (rule 6.4). */
   | 'NO_NEW_COLOR'
+  /** Both digit cards share a suit, under the distinct-suits rule variant. */
+  | 'SAME_SUIT'
   /** Not 1 to 10 above the (possibly modified) latest bid (rules 7, 8, 9). */
   | 'OUT_OF_RANGE'
   | 'TAKE_REQUIRED'
@@ -95,8 +105,9 @@ function validateBid(
   }
 
   const hand = state.hands[seat];
+  const rules = rulesOf(state);
   const fromTable = used.filter((id) => !hand.includes(id));
-  if (state.phase === 'firstBid') {
+  if (state.phase === 'firstBid' && rules.firstBidTableCard) {
     if (fromTable.length === 0) return fail('TABLE_CARD_REQUIRED');
     if (fromTable.length > 1) {
       const onTable = fromTable.filter((id) => state.table.includes(id)).length;
@@ -110,6 +121,7 @@ function validateBid(
 
   const latest = latestBid(state);
   if (!hasNewColor(latest, tens, units)) return fail('NO_NEW_COLOR');
+  if (rules.distinctSuits && suitOf(tens) === suitOf(units)) return fail('SAME_SUIT');
   const reference = mod100(latest.value + (action ? columnShift(action.column) : 0));
   if (!inWindow(reference, bidValue(tens, units))) return fail('OUT_OF_RANGE');
 

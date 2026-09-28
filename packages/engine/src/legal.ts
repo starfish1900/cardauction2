@@ -1,6 +1,6 @@
 import { ACTION_FACE, FACE_COUNT, faceOf, SUITS, type CardId } from './cards.js';
 import { bidWindow, latestBid, mod100, rowSuits, type Shift } from './rules.js';
-import type { Column, GameState } from './state.js';
+import { rulesOf, type Column, type GameState } from './state.js';
 
 export interface ActionPlay {
   readonly card: CardId;
@@ -61,7 +61,9 @@ function makeBid(tens: CardId, units: CardId, action: ActionPlay | undefined): B
  */
 export function forEachLegalBid(state: GameState, visit: (bid: BidChoice) => boolean | void): void {
   if (state.result !== null || (state.phase !== 'firstBid' && state.phase !== 'bid')) return;
-  const first = state.phase === 'firstBid';
+  const rules = rulesOf(state);
+  // Rule 6.2: the first bid uses a table card (unless a rule variant says otherwise).
+  const first = state.phase === 'firstBid' && rules.firstBidTableCard;
   const hand = faceIndex(state.hands[state.toMove]);
   const table = first ? faceIndex(state.table) : null;
   const latest = latestBid(state);
@@ -95,6 +97,7 @@ export function forEachLegalBid(state: GameState, visit: (bid: BidChoice) => boo
           const tensOld = tensSuit === oldA || tensSuit === oldB;
           const unitsOld = unitsSuit === oldA || unitsSuit === oldB;
           if (tensOld && unitsOld) continue;
+          if (rules.distinctSuits && tensSuit === unitsSuit) continue;
           const tensFace = tensSuit * 10 + tensRank;
           const unitsFace = unitsSuit * 10 + unitsRank;
           const pair = tensFace === unitsFace;

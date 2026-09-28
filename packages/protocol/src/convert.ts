@@ -3,6 +3,7 @@ import {
   type BidRow,
   type CardId,
   type GameState,
+  type PlayerView,
   type Seat,
 } from '@cardauction/engine';
 import type { WireBidRow, WireSeat, WireView } from './wire.js';
@@ -87,5 +88,35 @@ export function stateFromView(view: WireView): GameState {
     bidCount,
     moveCount: bids.length - 1 + (view.phase === 'exchange' ? 0 : 1),
     result,
+  };
+}
+
+/**
+ * The engine's view for the seat a wire view belongs to: what the server's AI receives, so it
+ * knows exactly what a human client knows and nothing more.
+ */
+export function playerViewFromWire(view: WireView): PlayerView {
+  const bids = view.bids.map(fromWireBidRow);
+  const bidCount: [number, number] = [0, 0];
+  for (const row of bids) if (row.by !== null) bidCount[row.by] += 1;
+  const result = view.result
+    ? {
+        winner: view.result.winner === null ? null : fromWireSeat(view.result.winner),
+        reason: view.result.reason,
+      }
+    : null;
+  return {
+    seat: fromWireSeat(view.you.seat),
+    phase: result ? 'over' : view.phase,
+    toMove: fromWireSeat(view.toMove),
+    moveCount: bids.length - 1 + (view.phase === 'exchange' ? 0 : 1),
+    hand: view.you.hand,
+    opponent: { handCount: view.opponent.handCount, known: view.opponent.known },
+    table: view.table,
+    bids,
+    bidCount,
+    stockCount: view.stockCount,
+    result,
+    finalHands: view.result ? [view.result.hands.P1, view.result.hands.P2] : null,
   };
 }

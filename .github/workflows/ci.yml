@@ -26,15 +26,16 @@ jobs:
         run: pnpm sim --games 20000
       - name: Build the server bundle and the web client
         run: pnpm build
-      - name: Smoke test (two bots play a whole game against the built server)
+      - name: Smoke test (bots play each other and the AI on the built server, AI threads checked)
         env:
           NODE_ENV: production
           SESSION_SECRET: ci-only-secret-ci-only-secret-ci-only
+          METRICS_TOKEN: ci-only-metrics-token
           PORT: '3000'
         run: |
-          node apps/server/dist/main.js &
+          node --max-old-space-size=320 apps/server/dist/main.js &
           SERVER_PID=$!
-          pnpm smoke --server http://localhost:3000
+          pnpm smoke --server http://localhost:3000 --metrics-token "$METRICS_TOKEN"
           kill -TERM "$SERVER_PID"
           wait "$SERVER_PID"
 

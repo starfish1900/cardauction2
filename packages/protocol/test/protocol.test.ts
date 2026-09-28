@@ -16,6 +16,7 @@ import {
   exchangeSchema,
   fromWireBidRow,
   helloSchema,
+  playerViewFromWire,
   PRIVATE_CODE_ALPHABET,
   stateFromView,
   toWireBidRow,
@@ -87,6 +88,25 @@ describe('a client rebuilding the engine state from its view', () => {
         expect(validateMove(mine, state.toMove, move)).toEqual(
           validateMove(state, state.toMove, move),
         );
+      }
+    }
+  });
+
+  it('gives the AI exactly the engine view of its seat, nothing more', () => {
+    for (const state of statesToMove(30)) {
+      for (const seat of [0, 1] as const) {
+        const expected = viewFor(state, seat);
+        const view = playerViewFromWire(wireView(state, seat));
+        expect(view.seat).toBe(expected.seat);
+        expect(view.phase).toBe(expected.phase);
+        expect(view.toMove).toBe(expected.toMove);
+        expect(view.moveCount).toBe(expected.moveCount);
+        expect(view.hand).toEqual(expected.hand);
+        expect(view.opponent).toEqual(expected.opponent);
+        expect(view.table).toEqual(expected.table);
+        expect(view.bids).toEqual(expected.bids);
+        expect(view.bidCount).toEqual(expected.bidCount);
+        expect(view.stockCount).toBe(expected.stockCount);
       }
     }
   });

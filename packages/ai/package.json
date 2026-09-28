@@ -1,0 +1,30 @@
+{
+  "name": "@cardauction/ai",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CardAuction AI: information-set Monte Carlo tree search over a fast model of the rules, with a worker pool.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./pool": "./src/pool.ts",
+    "./worker": "./src/worker.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "selfplay": "tsx scripts/selfplay.ts",
+    "bench": "tsx scripts/bench.ts"
+  },
+  "dependencies": {
+    "@cardauction/engine": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.0",
+    "fast-check": "^4.10.2",
+    "tsx": "^4.23.15",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2"
+  },
+  "sideEffects": false
+}
