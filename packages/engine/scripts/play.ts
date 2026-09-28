@@ -44,7 +44,6 @@ const MESSAGES: Record<MoveError, string> = {
     'Your first bid must use exactly one table card: mark it with t (e.g. t6D, or +t for the action card).',
   ONE_TABLE_CARD_ONLY: 'Only one table card may be used in the first bid.',
   TABLE_CARD_NOT_ALLOWED: 'Only the first bid may use a table card.',
-  SAME_COLOR: 'The two digit cards must have different suits.',
   NO_NEW_COLOR: 'Your bid needs a suit that the latest bid does not have.',
   OUT_OF_RANGE: 'The new number must be 1 to 10 above the (modified) latest bid.',
   TAKE_REQUIRED: 'Add the table card you take: ... take <card>.',
@@ -82,6 +81,7 @@ Moves (suits: * stars, D diamonds, C clubs, H hearts, S spades; A = action card)
   swap 5H 3C               P2's opening: give 5♥, take 3♣ from the table
   7* 0H take 9C            bid 70 with 7★ and 0♥, then take 9♣ from the table
   + 7D 0* take 3C          same with an action card in column 1 (+10); "-" is column 4 (−10)
+  6D 6D take 2C            both copies of one card: 66 (the two cards may share a suit)
   t6D 3* take 4C           first bid: t marks the table card you use
   +t 7D 0* take 3C         first bid: use the table's action card
   hint                     list some legal bids

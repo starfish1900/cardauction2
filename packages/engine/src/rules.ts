@@ -56,8 +56,9 @@ export function rowSuits(row: BidRow): readonly [Suit, Suit] {
 }
 
 /**
- * Rule 6.4 as settled in Q&A: a new bid must contain a color (suit) that neither card of the
- * latest bid has. With two different suits on each side, the unordered suit pair must change.
+ * Rule 6.4 as amended: a new bid must contain a color (suit) that no card of the latest bid has.
+ * The two cards of a bid may share a suit, so the latest bid has one or two old colors: after
+ * 5♥ 8♠ a bid needs ★, ♦ or ♣; after 5♥ 8♥ it needs anything but ♥ (6♠ 3♥ will do).
  */
 export function hasNewColor(latest: BidRow, tens: CardId, units: CardId): boolean {
   const [a, b] = rowSuits(latest);

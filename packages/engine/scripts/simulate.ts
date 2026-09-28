@@ -10,7 +10,14 @@ import { fork } from 'node:child_process';
 import { availableParallelism } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
-import { findViolations, playRandomGame, seededRng } from '../src/index.js';
+import {
+  faceOf,
+  findViolations,
+  legalBids,
+  playRandomGame,
+  seededRng,
+  suitOf,
+} from '../src/index.js';
 
 const JOB_ENV = 'CARDAUCTION_SIM_JOB';
 
@@ -27,6 +34,11 @@ interface Stats {
   firstBidTableAction: number;
   actionPlays: number;
   bidsWithoutTake: number;
+  /** Bids whose two digit cards share a suit, and those made of both copies of one card. */
+  sameSuitBids: number;
+  pairBids: number;
+  /** Sum over bids of the number of distinct legal bids the bidder could choose from. */
+  choices: number;
   moves: number;
   violation: { seed: number; problems: string[] } | null;
 }
@@ -45,6 +57,9 @@ function emptyStats(): Stats {
     firstBidTableAction: 0,
     actionPlays: 0,
     bidsWithoutTake: 0,
+    sameSuitBids: 0,
+    pairBids: 0,
+    choices: 0,
     moves: 0,
     violation: null,
   };
@@ -60,6 +75,9 @@ function runRange(firstSeed: number, count: number, check: boolean): Stats {
       if (move.type === 'bid') {
         if (move.action) stats.actionPlays += 1;
         if (move.take === undefined) stats.bidsWithoutTake += 1;
+        if (suitOf(move.tens) === suitOf(move.units)) stats.sameSuitBids += 1;
+        if (faceOf(move.tens) === faceOf(move.units)) stats.pairBids += 1;
+        stats.choices += legalBids(before).length;
         if (before.phase === 'firstBid' && move.action && before.table.includes(move.action.card)) {
           stats.firstBidTableAction += 1;
         }
@@ -99,6 +117,9 @@ function merge(parts: Stats[]): Stats {
     total.firstBidTableAction += part.firstBidTableAction;
     total.actionPlays += part.actionPlays;
     total.bidsWithoutTake += part.bidsWithoutTake;
+    total.sameSuitBids += part.sameSuitBids;
+    total.pairBids += part.pairBids;
+    total.choices += part.choices;
     total.moves += part.moves;
     if (!total.violation && part.violation) total.violation = part.violation;
   }
@@ -128,6 +149,8 @@ function report(
     `  P2 exchanged         ${pct(stats.exchanges, stats.games)} of games`,
     `  first bid with the table's action card  ${pct(stats.firstBidTableAction, stats.games)} of games`,
     `  action cards played  ${pct(stats.actionPlays, stats.bids)} of bids`,
+    `  same-suit bids       ${pct(stats.sameSuitBids, stats.bids)} of bids (both copies of one card: ${pct(stats.pairBids, stats.bids)})`,
+    `  choice per bid       ${(stats.choices / Math.max(stats.bids, 1)).toFixed(1)} legal bids on average`,
     `  bids with an empty table (no take)      ${int(stats.bidsWithoutTake)}`,
     '  bids per game (histogram)',
     ...stats.histogram

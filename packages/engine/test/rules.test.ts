@@ -1,20 +1,20 @@
 import { describe, expect, it } from 'vitest';
 import { bidWindow, mod100, validateMove, type Column, type GameState } from '../src/index.js';
-import { card, position } from './helpers.js';
+import { card, cards, position } from './helpers.js';
 
 /** Validates a bid by P1 from hand; the table holds a single spare card to take. */
 function check(latest: string, bid: string, column?: Column): string {
-  const [tensCode, unitsCode] = bid.split(' ') as [string, string];
   const state: GameState = position({
     start: latest,
     p1: column ? `${bid} A` : bid,
     table: '9*',
   });
   const hand = state.hands[0];
+  const [tens, units] = cards(hand, bid) as [number, number];
   const move = {
     type: 'bid' as const,
-    tens: card(hand, tensCode),
-    units: card(hand, unitsCode),
+    tens,
+    units,
     ...(column ? { action: { card: card(hand, 'A'), column } } : {}),
     take: card(state.table, '9*'),
   };
@@ -39,8 +39,26 @@ describe('rule book examples (rules 6.4, 7, 8, 9) and the Q&A decisions', () => 
     expect(check('5H 8S', '6H 3D')).toBe('legal');
   });
 
-  it('rejects two digit cards of the same color', () => {
-    expect(check('5H 8S', '6D 3D')).toBe('SAME_COLOR');
+  it('accepts two digit cards of the same color when that color is new (rule change)', () => {
+    expect(check('5H 8S', '6D 3D')).toBe('legal');
+    expect(check('5H 8S', '6* 5*')).toBe('legal');
+  });
+
+  it('rejects a one-color bid in one of the old colors', () => {
+    expect(check('5H 8S', '6H 3H')).toBe('NO_NEW_COLOR');
+    expect(check('5H 8S', '6S 3S')).toBe('NO_NEW_COLOR');
+  });
+
+  it('after a one-color bid, only that color is old', () => {
+    expect(check('5H 8H', '6S 3H')).toBe('legal');
+    expect(check('5H 8H', '6C 3C')).toBe('legal');
+    expect(check('5H 8H', '6H 3H')).toBe('NO_NEW_COLOR');
+  });
+
+  it('accepts both copies of one card as a bid (6♦ 6♦ = 66)', () => {
+    expect(check('5H 8S', '6D 6D')).toBe('legal');
+    expect(check('5H 8S', '6H 6H')).toBe('NO_NEW_COLOR');
+    expect(check('5H 8S', '7D 7D')).toBe('OUT_OF_RANGE');
   });
 
   it('rejects +12 without an action card', () => {
@@ -85,8 +103,9 @@ describe('rule book examples (rules 6.4, 7, 8, 9) and the Q&A decisions', () => 
     expect(check('5D 7C', '4H 7*', 4)).toBe('OUT_OF_RANGE');
   });
 
-  it('allows any two colors after a starting pair of one suit', () => {
+  it('treats a one-suit starting pair like any one-color bid', () => {
     expect(check('3H 7H', '4H 0D')).toBe('legal');
+    expect(check('3H 7H', '4H 0H')).toBe('NO_NEW_COLOR');
   });
 
   it('computes modulo 100 as a non-negative remainder', () => {

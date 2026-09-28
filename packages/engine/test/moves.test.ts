@@ -121,6 +121,17 @@ describe('P1 first bid (rule 6.2 and the Q&A decisions)', () => {
     expect(next.toMove).toBe(P2);
   });
 
+  it('accepts two digits of the same suit (rule change)', () => {
+    // 6♦ from the table and 3♦ from hand make 63; ♦ is new after 5♥ 8♠.
+    const move: Move = {
+      type: 'bid',
+      tens: card(table, '6D'),
+      units: card(hand, '3D'),
+      take: card(table, '4C'),
+    };
+    expect(error(state, P1, move)).toBe('legal');
+  });
+
   it('accepts a table digit, a hand digit and an action card from hand', () => {
     // Column 1 raises 58 to 68: 7♦ from hand and 2♥ from the table make 72.
     const move: Move = {

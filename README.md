@@ -48,8 +48,11 @@ milestones.
 
 The engine follows the rule book, with these decisions from the planning Q&A:
 
-- **Color means suit** (5 colors). A new bid needs a suit that neither card of the latest bid has:
-  after 5♥ 8♠, both 6♥ 3♠ and 6♠ 3♥ are illegal, while 6♠ 3★ is legal.
+- **Color means suit** (5 colors). The two digit cards of a bid may share a suit, even as the two
+  copies of one card (6♦ 6♦ = 66), but a new bid needs a suit that no card of the latest bid has:
+  after 5♥ 8♠, both 6♥ 3♠ and 6♠ 3♥ are illegal, while 6♠ 3★ and 6♦ 3♦ are legal; after 5♥ 8♥,
+  6♠ 3♥ is legal. Bids needed two different suits until 27 September 2026, when that condition was
+  dropped after the first simulations.
 - **The 67 undealt cards** stay face-down all game. If the table is empty, the bidder takes nothing.
 - **P1's first bid** uses exactly one table card: a table action card with two hand digits, or a
   table digit with one hand digit (plus, optionally, an action card from hand). P1 then takes a
@@ -87,5 +90,15 @@ Suits are numbered ★ ♦ ♣ ♥ ♠ (rule-book order).
 ## Latest simulation
 
 1,000,000 random games (seeds 1–1,000,000), every invariant checked after every move:
-0 violations. P1 won 51.2% of games, games lasted 7.9 bids on average (at most 22), and P1 could not
-open in 7 games. Random play is a weak player; the AI in M3 will give more meaningful balance data.
+0 violations. The same seeds under the old and the current color rule:
+
+| Random play, 1,000,000 games      | Two different suits required | Same suit allowed (current) |
+| --------------------------------- | ---------------------------- | --------------------------- |
+| P1 wins                           | 51.2%                        | 51.3%                       |
+| Bids per game                     | 7.89 on average, at most 22  | 8.01 on average, at most 22 |
+| Games of 13 bids or more          | 9.7%                         | 10.8%                       |
+| Legal bids to choose from         | 21.7 per bid on average      | 25.3 per bid on average     |
+| Bids whose two cards share a suit | 0% (not allowed)             | 13.9% (both copies: 0.6%)   |
+| Games where P1 could not open     | 7                            | 7                           |
+
+Random play is a weak player; the AI in M3 will give more meaningful balance data.

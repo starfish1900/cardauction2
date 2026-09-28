@@ -5,6 +5,8 @@ import {
   isAction,
   isDigit,
   legalBids,
+  P1,
+  P2,
   playRandomGame,
   seededRng,
   takeOptions,
@@ -17,17 +19,23 @@ import {
 } from '../src/index.js';
 import { card, position } from './helpers.js';
 
-/** Identifies a bid by faces, columns and which card (if any) comes from the table. */
+/**
+ * Identifies a bid by faces, column and which card (if any) comes from the table. When both
+ * digits are the same face and one copy is on the table, it does not matter which is which.
+ */
 function key(state: GameState, bid: BidChoice): string {
   const fromTable = (id: CardId): boolean => !state.hands[state.toMove].includes(id);
+  const pair = faceOf(bid.tens) === faceOf(bid.units);
   const source =
     bid.action && fromTable(bid.action.card)
       ? 'A'
-      : fromTable(bid.tens)
-        ? 'T'
-        : fromTable(bid.units)
-          ? 'U'
-          : '-';
+      : fromTable(bid.tens) || fromTable(bid.units)
+        ? pair
+          ? 'P'
+          : fromTable(bid.tens)
+            ? 'T'
+            : 'U'
+        : '-';
   return `${faceOf(bid.tens)}/${faceOf(bid.units)}/${bid.action?.column ?? 0}/${source}`;
 }
 
@@ -62,6 +70,16 @@ function bruteForceBids(state: GameState): Set<string> {
   return keys;
 }
 
+/** Positions where both copies of 6♦ make 66: from hand on a later bid, or hand + table on P1's first bid. */
+function pairPositions(): [later: GameState, opening: GameState] {
+  return [
+    // Latest 6♠ 3★ = 63 by P1: P2 can bid 66 (6♦ 6♦), 67 (6♦ 7♥) or 76 with the action card (+10).
+    position({ rows: [{ by: P1, cards: '6S 3*' }], toMove: P2, p2: '6D 6D 7H A', table: '2H' }),
+    // Latest 5♥ 8♠ = 58: P1 can open 66 (table 6♦ + hand 6♦), 61 (table 6♦ + 1♣) or 64 (6♦ + table 4♣).
+    position({ phase: 'firstBid', p1: '6D 1C', table: '6D 4C' }),
+  ];
+}
+
 function sampleStates(games: number): GameState[] {
   const states: GameState[] = [];
   for (let seed = 1; seed <= games; seed++) {
@@ -74,9 +92,9 @@ function sampleStates(games: number): GameState[] {
 
 describe('legal bid generation', () => {
   it('matches a brute-force search over every card combination', () => {
-    const states = sampleStates(12);
+    const states = sampleStates(16);
     expect(states.length).toBeGreaterThan(100);
-    for (const state of states) {
+    for (const state of [...states, ...pairPositions()]) {
       const generated = legalBids(state).map((bid) => key(state, bid));
       expect(new Set(generated).size).toBe(generated.length); // no duplicates
       expect(new Set(generated)).toEqual(bruteForceBids(state));
@@ -93,6 +111,28 @@ describe('legal bid generation', () => {
           expect(validateMove(state, state.toMove, move)).toEqual({ ok: true });
         }
       }
+    }
+  });
+
+  it('offers a pair made of both copies of one card exactly once', () => {
+    const [later, opening] = pairPositions();
+    expect(legalBids(later)).toHaveLength(3);
+    expect(legalBids(opening)).toHaveLength(3);
+    for (const state of [later, opening]) {
+      const pairs = legalBids(state).filter((bid) => faceOf(bid.tens) === faceOf(bid.units));
+      expect(pairs).toHaveLength(1);
+      const [bid] = pairs as [BidChoice];
+      expect(bid.tens).not.toBe(bid.units);
+      // On the opening, exactly one of the two copies is the table card; later, both are in hand.
+      const onTable = [bid.tens, bid.units].filter((id) => state.table.includes(id));
+      expect(onTable).toHaveLength(state === opening ? 1 : 0);
+      const [take] = takeOptions(state, bid);
+      const next = applyMove(state, state.toMove, {
+        type: 'bid',
+        ...bid,
+        ...(take !== undefined ? { take } : {}),
+      });
+      expect(next.bids[next.bids.length - 1]?.value).toBe(66);
     }
   });
 

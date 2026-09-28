@@ -1,4 +1,4 @@
-import { isAction, isCardId, isDigit, suitOf, type CardId } from './cards.js';
+import { isAction, isCardId, isDigit, type CardId } from './cards.js';
 import { hasLegalBid, type ActionPlay } from './legal.js';
 import { bidValue, columnShift, hasNewColor, inWindow, latestBid, mod100 } from './rules.js';
 import { otherSeat, P1, type BidRow, type GameResult, type GameState, type Seat } from './state.js';
@@ -37,8 +37,6 @@ export type MoveError =
   | 'ONE_TABLE_CARD_ONLY'
   /** Only the first bid may use a table card (rules 6.2, 6.3). */
   | 'TABLE_CARD_NOT_ALLOWED'
-  /** The two digit cards share a suit (rule 6.4). */
-  | 'SAME_COLOR'
   /** Neither digit card brings a suit absent from the latest bid (rule 6.4). */
   | 'NO_NEW_COLOR'
   /** Not 1 to 10 above the (possibly modified) latest bid (rules 7, 8, 9). */
@@ -111,7 +109,6 @@ function validateBid(
   }
 
   const latest = latestBid(state);
-  if (suitOf(tens) === suitOf(units)) return fail('SAME_COLOR');
   if (!hasNewColor(latest, tens, units)) return fail('NO_NEW_COLOR');
   const reference = mod100(latest.value + (action ? columnShift(action.column) : 0));
   if (!inWindow(reference, bidValue(tens, units))) return fail('OUT_OF_RANGE');

@@ -1,4 +1,4 @@
-import { DECK_SIZE, isDigit, suitOf, type CardId } from './cards.js';
+import { DECK_SIZE, isDigit, type CardId } from './cards.js';
 import { effectiveValue, hasNewColor, inWindow } from './rules.js';
 import { STOCK_SIZE } from './setup.js';
 import { P1, P2, type GameState } from './state.js';
@@ -50,7 +50,6 @@ export function findViolations(state: GameState): string[] {
     bidsBy[row.by] = (bidsBy[row.by] ?? 0) + 1;
     const previous = state.bids[i - 1];
     if (!previous) return;
-    if (suitOf(row.tens) === suitOf(row.units)) problems.push(`bid ${i} repeats a suit`);
     if (!hasNewColor(previous, row.tens, row.units)) problems.push(`bid ${i} brings no new suit`);
     if (!inWindow(effectiveValue(previous), row.value)) problems.push(`bid ${i} is out of range`);
     if (previous.modifier && previous.modifier.by !== row.by) {

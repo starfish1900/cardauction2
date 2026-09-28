@@ -19,15 +19,27 @@ export interface ExchangeChoice {
   readonly take: CardId;
 }
 
-/** For each face, the lowest-numbered card of that face in `cards`, or -1. */
-function faceIndex(cards: readonly CardId[]): Int16Array {
-  const index = new Int16Array(FACE_COUNT).fill(-1);
+/** For each face in a pile of cards: the lowest-numbered copy and the next one (-1 when absent). */
+interface FaceIndex {
+  readonly first: Int16Array;
+  readonly second: Int16Array;
+}
+
+function faceIndex(cards: readonly CardId[]): FaceIndex {
+  const first = new Int16Array(FACE_COUNT).fill(-1);
+  const second = new Int16Array(FACE_COUNT).fill(-1);
   for (const id of cards) {
     const face = faceOf(id);
-    const current = index[face] ?? -1;
-    if (current < 0 || id < current) index[face] = id;
+    const lowest = first[face] ?? -1;
+    if (lowest < 0 || id < lowest) {
+      second[face] = lowest;
+      first[face] = id;
+    } else {
+      const next = second[face] ?? -1;
+      if (next < 0 || id < next) second[face] = id;
+    }
   }
-  return index;
+  return { first, second };
 }
 
 interface ActionOption {
@@ -41,9 +53,11 @@ function makeBid(tens: CardId, units: CardId, action: ActionPlay | undefined): B
 }
 
 /**
- * Visits every legal bid of the player to move, one per combination of faces: two copies of the
- * same face give the same bid, so only the lowest id is used. On the first bid, a face held both
- * in hand and on the table gives two different bids. Return true from `visit` to stop early.
+ * Visits every legal bid of the player to move, once per combination of faces. Copies of a face
+ * are interchangeable, so the lowest id is used, plus the second copy when both digits are the
+ * same card (5♥ 5♥ = 55). On the first bid, a face held both in hand and on the table gives two
+ * different bids, since either copy can be the table card; for a pair made of one copy from each,
+ * which copy is the tens does not matter, so it is visited once. Return true from `visit` to stop.
  */
 export function forEachLegalBid(state: GameState, visit: (bid: BidChoice) => boolean | void): void {
   if (state.result !== null || (state.phase !== 'firstBid' && state.phase !== 'bid')) return;
@@ -54,14 +68,14 @@ export function forEachLegalBid(state: GameState, visit: (bid: BidChoice) => boo
   const [oldA, oldB] = rowSuits(latest);
 
   const options: ActionOption[] = [{ shift: 0, action: undefined, fromTable: false }];
-  const handAction = hand[ACTION_FACE] ?? -1;
+  const handAction = hand.first[ACTION_FACE] ?? -1;
   if (handAction >= 0) {
     options.push(
       { shift: 10, action: { card: handAction, column: 1 }, fromTable: false },
       { shift: -10, action: { card: handAction, column: 4 }, fromTable: false },
     );
   }
-  const tableAction = table ? (table[ACTION_FACE] ?? -1) : -1;
+  const tableAction = table ? (table.first[ACTION_FACE] ?? -1) : -1;
   if (tableAction >= 0) {
     options.push(
       { shift: 10, action: { card: tableAction, column: 1 }, fromTable: true },
@@ -77,27 +91,32 @@ export function forEachLegalBid(state: GameState, visit: (bid: BidChoice) => boo
       const unitsRank = value % 10;
       for (const tensSuit of SUITS) {
         for (const unitsSuit of SUITS) {
-          if (tensSuit === unitsSuit) continue;
+          // Rule 6.4: the bid needs a suit the latest bid does not have. Both may share a suit.
           const tensOld = tensSuit === oldA || tensSuit === oldB;
           const unitsOld = unitsSuit === oldA || unitsSuit === oldB;
           if (tensOld && unitsOld) continue;
           const tensFace = tensSuit * 10 + tensRank;
           const unitsFace = unitsSuit * 10 + unitsRank;
-          const tensInHand = hand[tensFace] ?? -1;
-          const unitsInHand = hand[unitsFace] ?? -1;
+          const pair = tensFace === unitsFace;
           if (!table || option.fromTable) {
             // Later bids, or a first bid whose table card is the action card: digits from hand.
-            if (tensInHand >= 0 && unitsInHand >= 0) {
-              if (visit(makeBid(tensInHand, unitsInHand, option.action)) === true) return;
+            const tens = hand.first[tensFace] ?? -1;
+            const units = (pair ? hand.second[unitsFace] : hand.first[unitsFace]) ?? -1;
+            if (tens >= 0 && units >= 0) {
+              if (visit(makeBid(tens, units, option.action)) === true) return;
             }
             continue;
           }
           // First bid without a table action card: exactly one digit comes from the table.
-          const tensOnTable = table[tensFace] ?? -1;
-          const unitsOnTable = table[unitsFace] ?? -1;
+          const tensOnTable = table.first[tensFace] ?? -1;
+          const unitsInHand = hand.first[unitsFace] ?? -1;
           if (tensOnTable >= 0 && unitsInHand >= 0) {
             if (visit(makeBid(tensOnTable, unitsInHand, option.action)) === true) return;
           }
+          // For a pair (one copy on the table, one in hand) the swapped version is the same bid.
+          if (pair) continue;
+          const tensInHand = hand.first[tensFace] ?? -1;
+          const unitsOnTable = table.first[unitsFace] ?? -1;
           if (tensInHand >= 0 && unitsOnTable >= 0) {
             if (visit(makeBid(tensInHand, unitsOnTable, option.action)) === true) return;
           }

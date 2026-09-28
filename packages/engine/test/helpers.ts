@@ -83,11 +83,22 @@ export function position(spec: PositionSpec): GameState {
   };
 }
 
-/** First card in `pool` matching `code`. */
-export function card(pool: readonly CardId[], code: string): CardId {
+/** First card in `pool` matching `code`, skipping the cards in `exclude`. */
+export function card(
+  pool: readonly CardId[],
+  code: string,
+  exclude: readonly CardId[] = [],
+): CardId {
   const face = parseFace(code);
   if (!face) throw new Error(`bad card code ${code}`);
-  const id = pool.find((c) => faceMatches(c, face));
+  const id = pool.find((c) => faceMatches(c, face) && !exclude.includes(c));
   if (id === undefined) throw new Error(`${code} not found`);
   return id;
+}
+
+/** Distinct cards in `pool` for space-separated codes: "6D 6D" gives both copies of 6♦. */
+export function cards(pool: readonly CardId[], codes: string): CardId[] {
+  const found: CardId[] = [];
+  for (const code of codes.split(/\s+/u).filter(Boolean)) found.push(card(pool, code, found));
+  return found;
 }
