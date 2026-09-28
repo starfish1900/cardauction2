@@ -1,0 +1,55 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+#
+# Milestone M1 deploys the game server alone, on Render's free plan while the game is being
+# built (it sleeps after 15 idle minutes and takes about a minute to wake). The static site
+# arrives with M2 and the Key Value instance with M4; M5 moves the server to Starter ($7 a month).
+services:
+  - type: web
+    runtime: node
+    name: cardauction-server
+    plan: free
+    region: ohio # nearest region to Toronto
+    # pnpm is pinned to the version in package.json's packageManager field.
+    buildCommand: npx --yes pnpm@10.28.0 install --frozen-lockfile && npx --yes pnpm@10.28.0 --filter @cardauction/server build
+    startCommand: node --max-old-space-size=320 apps/server/dist/main.js
+    healthCheckPath: /healthz
+    maxShutdownDelaySeconds: 60
+    # Deploy main only after GitHub Actions has passed.
+    autoDeployTrigger: checksPass
+    buildFilter:
+      paths:
+        - apps/server/**
+        - packages/**
+        - package.json
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - render.yaml
+        - .node-version
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: '24'
+      # Games live in memory until M4 brings Key Value snapshots; a deploy ends them.
+      - key: STATE_STORE
+        value: memory
+      # Caps for the free instance (0.1 CPU); Starter raises them to 250 and 5.
+      - key: MAX_GAMES
+        value: '50'
+      - key: MAX_AI_GAMES
+        value: '3'
+      # Render generates these once; find them under the service's Environment tab.
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: METRICS_TOKEN
+        generateValue: true
+      - key: ADMIN_TOKEN
+        generateValue: true
+      # Render sits behind Cloudflare, which puts the client's address in True-Client-IP.
+      # Check after deploying: GET /admin/whoami with a forged True-Client-IP header must not
+      # echo the forged value.
+      - key: CLIENT_IP_HEADER
+        value: true-client-ip
+      # The web client's address (M2). Tools such as the terminal client send no origin.
+      - key: CORS_ORIGIN
+        value: https://cardauction-web.onrender.com

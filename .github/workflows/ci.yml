@@ -20,6 +20,20 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm lint
       - run: pnpm format:check
-      - run: pnpm test
+      - name: Tests (engine, protocol, server integration with a fake clock)
+        run: pnpm test
       - name: Random-play simulation (20,000 games, every invariant checked)
         run: pnpm sim --games 20000
+      - name: Build the server bundle
+        run: pnpm build
+      - name: Smoke test (two bots play a whole game against the built server)
+        env:
+          NODE_ENV: production
+          SESSION_SECRET: ci-only-secret-ci-only-secret-ci-only
+          PORT: '3000'
+        run: |
+          node apps/server/dist/main.js &
+          SERVER_PID=$!
+          pnpm smoke --server http://localhost:3000
+          kill -TERM "$SERVER_PID"
+          wait "$SERVER_PID"
