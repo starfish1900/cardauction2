@@ -1,0 +1,24 @@
+{
+  "name": "@cardauction/protocol",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CardAuction client-server protocol: event names, zod schemas, wire views and error codes.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@cardauction/engine": "workspace:*",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.0",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2"
+  }
+}

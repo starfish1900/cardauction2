@@ -13,8 +13,13 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "pnpm -r test",
+    "build": "pnpm --filter @cardauction/server build",
+    "dev": "pnpm --filter @cardauction/server dev",
     "sim": "pnpm --filter @cardauction/engine sim",
     "play": "pnpm --filter @cardauction/engine play",
+    "online": "pnpm --filter @cardauction/client-cli online",
+    "bot": "pnpm --filter @cardauction/client-cli bot",
+    "smoke": "pnpm --filter @cardauction/client-cli smoke",
     "check": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test"
   },
   "devDependencies": {
