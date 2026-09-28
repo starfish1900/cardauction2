@@ -504,7 +504,10 @@ export class Games {
     game.startDeadline = null;
     game.aiDueAt = null;
     this.cancelAi(game);
-    for (const seat of game.seats) seat.graceDeadline = null;
+    for (const seat of game.seats) {
+      seat.graceDeadline = null;
+      seat.awayAtEnd = seat.kind === 'human' && !seat.connected;
+    }
     this.record(game, {
       type: 'end',
       winner: result.winner === null ? null : toWireSeat(result.winner),
@@ -740,7 +743,8 @@ export class Games {
 
   /**
    * Deletes a game, idempotently: its timer, AI job, registry and player-index entries and its
-   * snapshot. Players who were away when it ended get a tombstone with the result for 10 minutes.
+   * snapshot. Players who were away when it ended, and so never saw the result, get a tombstone
+   * with the result for 10 minutes.
    */
   private dispose(game: Game, why: string): void {
     if (game.disposed) return;
@@ -755,7 +759,7 @@ export class Games {
     for (const seat of game.humans()) {
       const playerId = seat.playerId as string;
       if (this.byPlayer.get(playerId) === game) this.byPlayer.delete(playerId);
-      if (result && !seat.connected && !seat.left) {
+      if (result && seat.awayAtEnd && !seat.connected && !seat.left) {
         this.tombstones.set(playerId, {
           gameId: game.id,
           seat: toWireSeat(seat.index),

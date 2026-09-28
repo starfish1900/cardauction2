@@ -25,6 +25,8 @@ export interface SeatState extends SeatSpec {
   ready: boolean;
   /** Left the finished game for the lobby or another game. */
   left: boolean;
+  /** Was away when the game ended, so never saw the result: gets a tombstone if it is deleted. */
+  awayAtEnd: boolean;
   rematch: boolean;
   /** Recent command ids and their replies: a resent command is answered, not applied twice. */
   readonly commands: Map<string, Reply<{ readonly version: number }>>;
@@ -117,6 +119,7 @@ function makeSeat(spec: SeatSpec, index: Seat): SeatState {
     graceDeadline: null,
     ready: ai,
     left: false,
+    awayAtEnd: false,
     rematch: false,
     commands: new Map(),
     sentEvents: 0,

@@ -206,6 +206,25 @@ describe('disconnects and zombie games', () => {
     expect(back.ok && back.endedGame).toMatchObject({ gameId, winner: 'P2', reason: 'forfeit' });
   });
 
+  it('A saw the result, then reloads: the deleted game is not reported as ended while away', async () => {
+    t = await startServer({ ai: slowAi(5_000) });
+    const a = await TestClient.connect(t.url, { nickname: 'Ada' });
+    clients.push(a);
+    const started = await a.emit('lobby.ai.start', { level: 'easy', seat: 'P1' });
+    const gameId = started.ok ? started.gameId : '';
+    await a.update(gameId, (u) => u.view.status === 'playing');
+    expect((await a.emit('game.resign', { gameId, cmdId: 'r1' })).ok).toBe(true);
+    await a.update(gameId, (u) => u.view.status === 'over');
+
+    // The reload drops the connection: nobody is left, so the game is deleted at once.
+    await gone(a);
+    await until(() => t.server.games.get(gameId) === null);
+    const back = await a.reconnect();
+    expect(back.ok).toBe(true);
+    expect(back.ok && back.endedGame).toBeFalsy();
+    expect(back.ok && back.activeGameId).toBeFalsy();
+  });
+
   it('a matched player never confirms the start: cancelled after 10 s; the other goes back to the front of the queue', async () => {
     t = await startServer();
     const { gameId, p1, p2 } = await quickMatch(t);
