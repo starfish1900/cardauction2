@@ -41,12 +41,9 @@ describe('the Render Blueprint', () => {
     expect(policy).toBe(contentSecurityPolicy(server ?? ''));
   });
 
-  it('asks nothing of a free service that only paid plans allow', () => {
-    // Render refuses the whole Blueprint otherwise ("not supported for free tier services").
-    expect(setting('cardauction-server', /plan: (\S+)/)).toBe('free');
-    expect(
-      setting('cardauction-server', /(maxShutdownDelaySeconds|numInstances|scaling|disk):/),
-    ).toBeUndefined();
+  it('runs the game server on Starter, which never sleeps', () => {
+    // Starter's plan ID since August 2026 (0.5 CPU, 512 MB); the free plan sleeps when idle.
+    expect(setting('cardauction-server', /plan: (\S+)/)).toBe('0.5c-512mb');
   });
 
   it('installs each service alone, and rebuilds it when a package it uses changes', () => {

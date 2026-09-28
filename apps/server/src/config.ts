@@ -18,7 +18,7 @@ const envSchema = z.object({
   AI_THREADS: z.coerce.number().int().min(0).max(16).default(1),
   /** Longest AI search, whatever the level's budget (a slow instance thinks longer). */
   AI_MAX_THINK_MS: z.coerce.number().int().min(100).max(30_000).default(8_000),
-  /** memory: games live only in this process. keyvalue arrives with milestone M4. */
+  /** memory: games live only in this process. A Key Value store is milestone M4 (postponed). */
   STATE_STORE: z.enum(['memory']).default('memory'),
   /** Bearer tokens for /metrics and /admin; the endpoints are off when unset. */
   METRICS_TOKEN: z.string().min(16).optional(),

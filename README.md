@@ -5,14 +5,18 @@ numbers made of cards; the first player who cannot continue the auction loses.
 
 This repository is built milestone by milestone, each one arriving as a pull request.
 
-| Milestone | Scope                                                                         | Status  |
-| --------- | ----------------------------------------------------------------------------- | ------- |
-| M0        | Rules engine, property tests, random-play simulator, terminal game            | Done    |
-| M1        | Game server: sessions, lobby, games, timers, disconnects, first Render deploy | Done    |
-| M2        | Web client: lobby, table, turn composer, card faces, animations, reconnection | Done    |
-| M3        | AI: ISMCTS with three levels, worker thread, balance lab                      | Done    |
-| M4        | Hardening: Key Value snapshots, deploy handoff, soak and load tests           | Next    |
-| M5        | Launch on Render (Starter instance, free Key Value, static site)              | Planned |
+| Milestone | Scope                                                                         | Status |
+| --------- | ----------------------------------------------------------------------------- | ------ |
+| M0        | Rules engine, property tests, random-play simulator, terminal game            | Done   |
+| M1        | Game server: sessions, lobby, games, timers, disconnects, first Render deploy | Done   |
+| M2        | Web client: lobby, table, turn composer, card faces, animations, reconnection | Done   |
+| M3        | AI: ISMCTS with three levels, worker thread, balance lab                      | Done   |
+| M4        | Hardening: Key Value snapshots, deploy handoff, soak and load tests           | Later  |
+| M5        | Demo launch on Render: Starter instance, static site, a one-hour soak         | Done   |
+
+The game is a demo for now, so M4 waits until it needs production-grade hosting: until then a
+deploy or a restart ends the games in progress (see Deploying to Render for deploying without
+interrupting anyone).
 
 ## Requirements
 
@@ -36,6 +40,7 @@ pnpm build                          # server bundle (apps/server/dist) and web c
 pnpm online --name Ada              # play on a server from a terminal (see below)
 pnpm bot --bots 10 --games 5        # bots playing random legal moves against a server
 pnpm smoke --server <url>           # health check, two bots play each other, one plays the AI
+pnpm soak --metrics-token <token>   # an hour of bots, dropping out now and then; memory must stay flat
 pnpm --filter @cardauction/ai bench # search speed at every stage of a game
 ```
 
@@ -74,9 +79,9 @@ quitting and starting again brings you back to your game within 25 s.
 repository and apply. Render creates two services and from then on deploys `main` whenever GitHub
 Actions passes:
 
-- `cardauction-server`, the game server, on the free plan (it sleeps after 15 idle minutes and
-  takes about a minute to wake; the web client says so while it waits). Render generates
-  `SESSION_SECRET`, `METRICS_TOKEN` and `ADMIN_TOKEN`.
+- `cardauction-server`, the game server, on the Starter plan ($7 a month: 0.5 CPU and 512 MB,
+  and it never sleeps, unlike the free plan). Render needs a payment method on the workspace for
+  it. Render generates `SESSION_SECRET`, `METRICS_TOKEN` and `ADMIN_TOKEN`.
 - `cardauction-web`, the web client, a static site (free): open its URL to play.
 
 Each build installs only its own service and the workspace packages it uses, and a service is
@@ -98,8 +103,23 @@ set the AI's threads and the longest an AI move may take.
 
 `/healthz` is public. `/metrics` and `/admin/status` need `Authorization: Bearer <token>` with the
 tokens from the service's Environment tab; `POST /admin/drain?on=true` stops new games and
-`POST /admin/games/<id>/abort` ends one game. Games live in memory until M4, so a deploy or restart
-ends games in progress (players are told, and the game ends without a result).
+`POST /admin/games/<id>/abort` ends one game.
+
+Games live in memory (Key Value snapshots are M4), so a deploy or restart ends the games in
+progress: the players are told, and the game ends without a result. To deploy while people may be
+playing, drain the server first, then merge once `/admin/status` shows no game playing (the new
+instance starts without the drain; a player who tries to start a game meanwhile is asked to try
+again in a moment):
+
+```sh
+curl -X POST -H "Authorization: Bearer $ADMIN_TOKEN" \
+  "https://cardauction-server.onrender.com/admin/drain?on=true"
+curl -H "Authorization: Bearer $ADMIN_TOKEN" https://cardauction-server.onrender.com/admin/status
+```
+
+Before the move to Starter, `pnpm soak` ran for an hour against the bundled server with Starter's
+settings: 12,253 games (quick, private and against the AI) and 1,104 dropped connections, with no
+errors, the heap near 20 MB throughout, and nothing left behind.
 
 Per-address limits (connections, private codes, code guesses) read the client's address from
 `CLIENT_IP_HEADER`, `True-Client-IP` on Render. Check once after the first deploy that clients
@@ -128,9 +148,9 @@ apps/
     src/state/ one Zustand store, changed only through its actions
     e2e/       Playwright tests: real browsers, a real server
 tools/
-  client/      terminal client, random-move bots, smoke test
+  client/      terminal client, random-move bots, smoke and soak tests
   balance-lab/ AI-vs-AI tournaments on every core, with rule variants
-render.yaml    Render Blueprint: the server (free plan for now) and the web client (static site)
+render.yaml    Render Blueprint: the server (Starter plan) and the web client (static site)
 ```
 
 ## How the web client plays
@@ -198,7 +218,7 @@ gets, so it never sees the opponent's hidden cards or the 67 face-down cards.
 
 An iteration costs about 22 µs of one 2.1 GHz Xeon core on average: 44 µs at a game's start,
 under 10 µs after six bids. A Hard move thus takes about 0.18 s of a full core, 0.35 s at the
-start. On Render's free instance (0.1 CPU) that is a few seconds; on Starter (0.5 CPU) it hides
+start. On Render's Starter instance (0.5 CPU) that is about 0.35 s, 0.7 s at the start: it hides
 inside the wait below.
 
 On the server the searches run on a worker thread (`AI_THREADS`, 1 on Render), off the event
