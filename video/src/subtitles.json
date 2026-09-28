@@ -1,0 +1,587 @@
+[
+ {
+  "start": 0.6,
+  "end": 2.689,
+  "text": "Welcome to CardAuction!"
+ },
+ {
+  "start": 2.789,
+  "end": 7.753,
+  "text": "It's a game for two players,\nall about numbers you build with cards."
+ },
+ {
+  "start": 7.803,
+  "end": 10.392,
+  "text": "If you can count to 100, you can play."
+ },
+ {
+  "start": 10.392,
+  "end": 14.336,
+  "text": "Let's learn every rule,\nthen how to play in the app."
+ },
+ {
+  "start": 15.436,
+  "end": 17.682,
+  "text": "Players take turns making numbers,"
+ },
+ {
+  "start": 17.682,
+  "end": 23.035,
+  "text": "and each new number must be a little\nhigher than the last: it's an auction."
+ },
+ {
+  "start": 23.085,
+  "end": 26.516,
+  "text": "The first player who can't\nmake a new bid loses."
+ },
+ {
+  "start": 28.116,
+  "end": 32.077,
+  "text": "CardAuction uses 120 cards."
+ },
+ {
+  "start": 32.127,
+  "end": 36.908,
+  "text": "Most are number cards,\neach showing one digit, from 0 to 9."
+ },
+ {
+  "start": 36.958,
+  "end": 40.573,
+  "text": "Each number card has\na suit with its own color:"
+ },
+ {
+  "start": 40.573,
+  "end": 46.202,
+  "text": "gold stars, blue diamonds, green clubs,\nred hearts and black spades."
+ },
+ {
+  "start": 46.252,
+  "end": 51.828,
+  "text": "Here, color and suit mean the same thing.\nAnd every card comes in two copies."
+ },
+ {
+  "start": 51.878,
+  "end": 56.979,
+  "text": "The other 20 cards are action cards,\nmarked plus or minus 10."
+ },
+ {
+  "start": 57.079,
+  "end": 60.764,
+  "text": "To make a number,\nput two number cards side by side:"
+ },
+ {
+  "start": 60.764,
+  "end": 64.92,
+  "text": "the left one gives the tens,\nthe right one the units."
+ },
+ {
+  "start": 64.97,
+  "end": 67.694,
+  "text": "A 7 and a 3 make 73."
+ },
+ {
+  "start": 67.744,
+  "end": 73.457,
+  "text": "A 0 and a 5 make 05:\njust five, written with two digits."
+ },
+ {
+  "start": 74.257,
+  "end": 76.442,
+  "text": "To set up, shuffle the cards."
+ },
+ {
+  "start": 76.442,
+  "end": 82.416,
+  "text": "The first two number cards turned over\nmake the starting number: here, 47."
+ },
+ {
+  "start": 82.466,
+  "end": 89.012,
+  "text": "Each player gets 13 cards, and 25 go\nface up in the middle: that's the table."
+ },
+ {
+  "start": 89.062,
+  "end": 93.162,
+  "text": "The other 67 stay face down,\nout of the game."
+ },
+ {
+  "start": 93.212,
+  "end": 97.769,
+  "text": "Any card you take from the table\nstays visible to your opponent."
+ },
+ {
+  "start": 98.569,
+  "end": 101.353,
+  "text": "Player 2 starts with one small choice:"
+ },
+ {
+  "start": 101.353,
+  "end": 106.955,
+  "text": "swap one card from their hand\nfor one on the table, or keep their hand."
+ },
+ {
+  "start": 107.005,
+  "end": 109.483,
+  "text": "Then Player 1 makes the first bid,"
+ },
+ {
+  "start": 109.483,
+  "end": 114.62,
+  "text": "using exactly one card from the table\nwith cards from their hand."
+ },
+ {
+  "start": 114.67,
+  "end": 116.565,
+  "text": "After that, you take turns."
+ },
+ {
+  "start": 116.565,
+  "end": 121.458,
+  "text": "On your turn, you make a bid,\nthen take one card from the table."
+ },
+ {
+  "start": 122.258,
+  "end": 126.968,
+  "text": "Now, the heart of the game.\nA bid must follow just two rules."
+ },
+ {
+  "start": 127.068,
+  "end": 133.138,
+  "text": "Rule one: count up. Your number\nmust be 1 to 10 steps above the latest bid."
+ },
+ {
+  "start": 133.188,
+  "end": 135.594,
+  "text": "Say the latest bid is 58."
+ },
+ {
+  "start": 135.644,
+  "end": 137.514,
+  "text": "One step: 59."
+ },
+ {
+  "start": 137.514,
+  "end": 139.149,
+  "text": "Two steps: 60."
+ },
+ {
+  "start": 139.149,
+  "end": 142.089,
+  "text": "All the way to ten steps: 68."
+ },
+ {
+  "start": 142.139,
+  "end": 145.771,
+  "text": "Any number from 59 to 68 is fine."
+ },
+ {
+  "start": 145.821,
+  "end": 147.677,
+  "text": "But 58 itself is not:"
+ },
+ {
+  "start": 147.677,
+  "end": 154.529,
+  "text": "you must go up at least one step.\nAnd 69 is too far: that's eleven steps."
+ },
+ {
+  "start": 155.329,
+  "end": 161.063,
+  "text": "Numbers here have only two digits,\nso after 99 comes 00."
+ },
+ {
+  "start": 161.113,
+  "end": 165.001,
+  "text": "Picture the mileage counter in a car:"
+ },
+ {
+  "start": 165.001,
+  "end": 172.652,
+  "text": "after 99, it rolls over to 00,\nand keeps counting: 01, 02, and so on."
+ },
+ {
+  "start": 172.702,
+  "end": 178.592,
+  "text": "CardAuction counts the same way.\nIf the latest bid is 95, count up:"
+ },
+ {
+  "start": 178.592,
+  "end": 179.745,
+  "text": "96,"
+ },
+ {
+  "start": 179.745,
+  "end": 180.923,
+  "text": "96, 97,"
+ },
+ {
+  "start": 180.923,
+  "end": 182.042,
+  "text": "96, 97, 98,"
+ },
+ {
+  "start": 182.042,
+  "end": 183.183,
+  "text": "96, 97, 98, 99,"
+ },
+ {
+  "start": 183.183,
+  "end": 184.454,
+  "text": "96, 97, 98, 99, 00,"
+ },
+ {
+  "start": 184.454,
+  "end": 185.466,
+  "text": "96, 97, 98, 99, 00, 01,"
+ },
+ {
+  "start": 185.466,
+  "end": 186.594,
+  "text": "96, 97, 98, 99, 00, 01, 02,"
+ },
+ {
+  "start": 186.594,
+  "end": 187.765,
+  "text": "96, 97, 98, 99, 00, 01, 02, 03,"
+ },
+ {
+  "start": 187.765,
+  "end": 188.895,
+  "text": "96, 97, 98, 99, 00, 01, 02, 03, 04,"
+ },
+ {
+  "start": 188.895,
+  "end": 190.428,
+  "text": "96, 97, 98, 99, 00, 01, 02, 03, 04, 05."
+ },
+ {
+  "start": 190.478,
+  "end": 198.238,
+  "text": "That's ten steps: from 95, you may bid\nanything from 96 all the way around to 05."
+ },
+ {
+  "start": 198.288,
+  "end": 203.473,
+  "text": "But 94 goes backward,\nand 06 is eleven steps away."
+ },
+ {
+  "start": 203.523,
+  "end": 209.332,
+  "text": "You can also picture the numbers on a dial,\nlike a clock with 100 marks."
+ },
+ {
+  "start": 209.332,
+  "end": 215.702,
+  "text": "You always move forward, 1 to 10 marks,\nand after 99 the dial keeps going."
+ },
+ {
+  "start": 215.752,
+  "end": 222.181,
+  "text": "So right after 99,\nthe next bid can be anything from 00 to 09."
+ },
+ {
+  "start": 222.231,
+  "end": 227.849,
+  "text": "A small number can top a big one,\nwhen you count up past 99 to reach it."
+ },
+ {
+  "start": 228.649,
+  "end": 234.343,
+  "text": "Rule two: your bid needs at least\none color that the latest bid doesn't have."
+ },
+ {
+  "start": 234.393,
+  "end": 240.595,
+  "text": "Say the latest bid is 5 of hearts,\n8 of spades: 58, in red and black."
+ },
+ {
+  "start": 240.595,
+  "end": 242.883,
+  "text": "You'd like to bid 63."
+ },
+ {
+  "start": 242.933,
+  "end": 248.154,
+  "text": "6 of stars and 3 of spades?\nYes! The gold star is new."
+ },
+ {
+  "start": 248.204,
+  "end": 254.78,
+  "text": "6 of hearts and 3 of spades? No:\nred and black are both already in 58."
+ },
+ {
+  "start": 254.83,
+  "end": 260.25,
+  "text": "Your two cards may share a color:\n6 of diamonds and 3 of diamonds works,"
+ },
+ {
+  "start": 260.25,
+  "end": 262.156,
+  "text": "because blue is new."
+ },
+ {
+  "start": 262.206,
+  "end": 268.607,
+  "text": "You may even use both copies of a card:\ntwo 6s of diamonds make 66."
+ },
+ {
+  "start": 269.407,
+  "end": 271.083,
+  "text": "Now, the action cards."
+ },
+ {
+  "start": 271.083,
+  "end": 277.12,
+  "text": "Just before you bid, an action card\nmoves the latest bid up or down by 10."
+ },
+ {
+  "start": 277.17,
+  "end": 283.931,
+  "text": "Place it beside the latest bid: on the left,\nit adds 10; on the right, it takes 10 away."
+ },
+ {
+  "start": 283.981,
+  "end": 292.24,
+  "text": "Say the latest bid is 58, and your cards\ncan make 72, but nothing from 59 to 68."
+ },
+ {
+  "start": 292.29,
+  "end": 297.222,
+  "text": "Put an action card on the left:\n58 plus 10 is 68."
+ },
+ {
+  "start": 297.272,
+  "end": 303.07,
+  "text": "Count up from 68: 69 to 78. 72 fits!"
+ },
+ {
+  "start": 303.12,
+  "end": 306.499,
+  "text": "On the right, 58 minus 10 is 48:"
+ },
+ {
+  "start": 306.499,
+  "end": 313.445,
+  "text": "you may bid from 49 up to 58.\nThis time, 58 itself is allowed."
+ },
+ {
+  "start": 313.495,
+  "end": 316.622,
+  "text": "Action cards roll over too:"
+ },
+ {
+  "start": 316.622,
+  "end": 322.464,
+  "text": "95 plus 10 is 05,\nso you may bid from 06 to 15."
+ },
+ {
+  "start": 322.514,
+  "end": 330.229,
+  "text": "And 03 minus 10 rolls back to 93:\nyou may bid from 94 around to 03."
+ },
+ {
+  "start": 330.279,
+  "end": 332.503,
+  "text": "The color rule still applies."
+ },
+ {
+  "start": 333.303,
+  "end": 336.596,
+  "text": "After every bid,\ntake one card from the table:"
+ },
+ {
+  "start": 336.596,
+  "end": 341.865,
+  "text": "a missing number, a new color,\nor an action card can save you later."
+ },
+ {
+  "start": 341.915,
+  "end": 347.818,
+  "text": "The cards you bid stay on the bid board.\nWhen the table is empty, you take nothing."
+ },
+ {
+  "start": 348.618,
+  "end": 353.316,
+  "text": "Remember Player 1's first bid,\nwith exactly one table card?"
+ },
+ {
+  "start": 353.366,
+  "end": 355.841,
+  "text": "Say the starting number is 47."
+ },
+ {
+  "start": 355.841,
+  "end": 360.779,
+  "text": "The table has a 5 of stars,\nand you hold a 2 of hearts."
+ },
+ {
+  "start": 360.829,
+  "end": 366.051,
+  "text": "Together they make 52:\nfive steps up, with a new color. Perfect."
+ },
+ {
+  "start": 366.101,
+  "end": 371.991,
+  "text": "The table card can also be an action card,\nused with two cards from your hand."
+ },
+ {
+  "start": 372.791,
+  "end": 377.192,
+  "text": "The game ends when a player can't\nmake a legal bid on their turn:"
+ },
+ {
+  "start": 377.192,
+  "end": 378.811,
+  "text": "that player loses."
+ },
+ {
+  "start": 378.861,
+  "end": 381.252,
+  "text": "Say the latest bid is 87."
+ },
+ {
+  "start": 381.252,
+  "end": 388.441,
+  "text": "You need a number from 88 to 97,\nso your tens card must be an 8 or a 9."
+ },
+ {
+  "start": 388.491,
+  "end": 394.257,
+  "text": "With no 8, no 9, and no action card to help,\nyou're stuck, and you lose."
+ },
+ {
+  "start": 394.307,
+  "end": 398.624,
+  "text": "And if Player 1 can't make the first bid,\nPlayer 2 wins."
+ },
+ {
+  "start": 398.674,
+  "end": 405.11,
+  "text": "In the app, each turn has a 60-second clock.\nIf it runs out while you must bid, you lose."
+ },
+ {
+  "start": 405.11,
+  "end": 410.21,
+  "text": "If it runs out during Player 2's swap,\nthey just keep their hand."
+ },
+ {
+  "start": 411.11,
+  "end": 412.64,
+  "text": "Let's play in the app."
+ },
+ {
+  "start": 412.64,
+  "end": 417.212,
+  "text": "Open the CardAuction website:\nthe address is on your screen."
+ },
+ {
+  "start": 417.262,
+  "end": 419.84,
+  "text": "Type your name, then pick a way to play:"
+ },
+ {
+  "start": 419.84,
+  "end": 423.649,
+  "text": "Quick match,\nagainst the next person looking for a game;"
+ },
+ {
+  "start": 423.649,
+  "end": 426.296,
+  "text": "Play the AI, with a level and a seat;"
+ },
+ {
+  "start": 426.296,
+  "end": 430.714,
+  "text": "or Private game,\nto invite a friend with a code or a link."
+ },
+ {
+  "start": 430.814,
+  "end": 433.778,
+  "text": "Here's the table: your hand at the bottom,"
+ },
+ {
+  "start": 433.778,
+  "end": 439.189,
+  "text": "the table cards in the middle,\nand the bid board with every bid so far."
+ },
+ {
+  "start": 439.239,
+  "end": 442.362,
+  "text": "At the top, your opponent's cards:\nface down,"
+ },
+ {
+  "start": 442.362,
+  "end": 445.608,
+  "text": "except the ones they took from the table."
+ },
+ {
+  "start": 445.658,
+  "end": 449.806,
+  "text": "On your turn, tap a card for the tens,\nthen one for the units."
+ },
+ {
+  "start": 449.806,
+  "end": 452.882,
+  "text": "The app shows your number and checks it."
+ },
+ {
+  "start": 452.932,
+  "end": 455.688,
+  "text": "If a bid can't work, it tells you why."
+ },
+ {
+  "start": 455.738,
+  "end": 462.526,
+  "text": "For an action card, tap it, then the plus 10\nor minus 10 slot beside the latest bid."
+ },
+ {
+  "start": 462.576,
+  "end": 466.483,
+  "text": "Then tap a table card to take,\nand press Confirm."
+ },
+ {
+  "start": 466.533,
+  "end": 470.761,
+  "text": "With Assist on,\nthe cards that fit a legal move light up."
+ },
+ {
+  "start": 470.811,
+  "end": 476.86,
+  "text": "As Player 2, your first move is the swap:\ntap a card in your hand and a table card,"
+ },
+ {
+  "start": 476.86,
+  "end": 478.572,
+  "text": "or keep your hand."
+ },
+ {
+  "start": 478.622,
+  "end": 482.906,
+  "text": "Lost your connection?\nYou have 25 seconds to come back."
+ },
+ {
+  "start": 482.956,
+  "end": 487.833,
+  "text": "At the end, both hands are revealed,\nand you can ask for a rematch."
+ },
+ {
+  "start": 487.883,
+  "end": 492.482,
+  "text": "And the rules are always one tap away,\nin English or French."
+ },
+ {
+  "start": 493.382,
+  "end": 499.942,
+  "text": "That's everything! Count up 1 to 10 steps,\nremember that after 99 comes 00,"
+ },
+ {
+  "start": 499.942,
+  "end": 504.89,
+  "text": "bring a new color,\nand use your action cards wisely."
+ },
+ {
+  "start": 504.94,
+  "end": 506.881,
+  "text": "Have fun, and good luck!"
+ }
+]

@@ -11,6 +11,8 @@ export default defineConfig(
       '**/node_modules/**',
       '**/test-results/**',
       '**/playwright-report/**',
+      // The video tutorial: its own npm project (Remotion), outside the workspace.
+      'video/**',
     ],
   },
   js.configs.recommended,
