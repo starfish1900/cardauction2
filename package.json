@@ -13,8 +13,10 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "pnpm -r test",
-    "build": "pnpm --filter @cardauction/server build",
+    "e2e": "pnpm --filter @cardauction/web e2e",
+    "build": "pnpm --filter @cardauction/server --filter @cardauction/web build",
     "dev": "pnpm --filter @cardauction/server dev",
+    "dev:web": "pnpm --filter @cardauction/web dev",
     "sim": "pnpm --filter @cardauction/engine sim",
     "play": "pnpm --filter @cardauction/engine play",
     "online": "pnpm --filter @cardauction/client-cli online",
@@ -25,6 +27,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "eslint": "^10.11.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "prettier": "^3.9.9",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.70.1"

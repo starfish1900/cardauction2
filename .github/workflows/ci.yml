@@ -24,7 +24,7 @@ jobs:
         run: pnpm test
       - name: Random-play simulation (20,000 games, every invariant checked)
         run: pnpm sim --games 20000
-      - name: Build the server bundle
+      - name: Build the server bundle and the web client
         run: pnpm build
       - name: Smoke test (two bots play a whole game against the built server)
         env:
@@ -37,3 +37,28 @@ jobs:
           pnpm smoke --server http://localhost:3000
           kill -TERM "$SERVER_PID"
           wait "$SERVER_PID"
+
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Install Chromium for Playwright
+        run: pnpm --filter @cardauction/web exec playwright install --with-deps chromium
+      - name: End-to-end tests (two browsers play whole games; desktop and phone layouts)
+        run: pnpm e2e
+      - name: Keep the report of a failed run
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: |
+            apps/web/playwright-report
+            apps/web/test-results
+          retention-days: 7

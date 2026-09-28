@@ -9,8 +9,8 @@ This repository is built milestone by milestone, each one arriving as a pull req
 | --------- | ----------------------------------------------------------------------------- | ------- |
 | M0        | Rules engine, property tests, random-play simulator, terminal game            | Done    |
 | M1        | Game server: sessions, lobby, games, timers, disconnects, first Render deploy | Done    |
-| M2        | Web client: lobby, table, turn composer, card faces, animations, reconnection | Next    |
-| M3        | AI: ISMCTS with three levels, worker thread, balance lab                      | Planned |
+| M2        | Web client: lobby, table, turn composer, card faces, animations, reconnection | Done    |
+| M3        | AI: ISMCTS with three levels, worker thread, balance lab                      | Next    |
 | M4        | Hardening: Key Value snapshots, deploy handoff, soak and load tests           | Planned |
 | M5        | Launch on Render (Starter instance, free Key Value, static site)              | Planned |
 
@@ -24,21 +24,38 @@ This repository is built milestone by milestone, each one arriving as a pull req
 ```sh
 pnpm install
 pnpm check                          # typecheck, lint, format check and all tests
-pnpm test                           # engine, protocol and server integration tests
+pnpm test                           # engine, protocol, server integration and web unit tests
+pnpm e2e                            # browsers play whole games against a real server (below)
 pnpm sim                            # 1,000,000 random games, every invariant checked
 pnpm sim --games 20000 --seed 7     # smaller reproducible run
 pnpm play                           # play in the terminal against a random bot (no server)
 pnpm dev                            # game server on http://localhost:3000, restarts on changes
-pnpm build                          # bundle the server into apps/server/dist/main.js
+pnpm dev:web                        # web client on http://localhost:5173 (with pnpm dev running)
+pnpm build                          # server bundle (apps/server/dist) and web client (apps/web/dist)
 pnpm online --name Ada              # play on a server from a terminal (see below)
 pnpm bot --bots 10 --games 5        # bots playing random legal moves against a server
 pnpm smoke --server <url>           # health check, then two bots play a whole game
 ```
 
-## Playing online before the web client
+## Playing in the browser
 
-Until the web client arrives (M2), a terminal client plays on any server with the notation of
-`pnpm play`. Start a server with `pnpm dev`, then in two other terminals:
+Start the server with `pnpm dev` and the web client with `pnpm dev:web`, then open
+http://localhost:5173. To play yourself, open a second window in private mode (each window is a
+different guest): choose **Create a code** in one and type the code, or open the link, in the
+other. **Play the AI** starts at once; until M3 every AI level plays random legal moves.
+`http://localhost:5173/?gallery` shows every card face.
+
+The end-to-end tests start their own server (port 3100) and a production build of the client
+(port 4173, served from another origin like on Render, with the production Content-Security-Policy),
+then drive real browsers at desktop and phone sizes: two players play whole games, a rematch, a
+lost connection and a reload, a game against the AI, and the lobby screens. They need Playwright's
+Chromium (`pnpm --filter @cardauction/web exec playwright install chromium`), or another Chromium
+given in `PW_CHROMIUM_PATH`.
+
+## Terminal client
+
+A terminal client plays on any server with the notation of `pnpm play`. Start a server with
+`pnpm dev`, then in two other terminals:
 
 ```sh
 pnpm online --name Ada              # type "quick" in both to be matched
@@ -54,9 +71,18 @@ plays random legal moves.
 ## Deploying to Render
 
 `render.yaml` is a Blueprint: in the Render dashboard choose **New → Blueprint**, pick this
-repository and apply. Render creates `cardauction-server` on the free plan (it sleeps after
-15 idle minutes and takes about a minute to wake), generates `SESSION_SECRET`, `METRICS_TOKEN`
-and `ADMIN_TOKEN`, and from then on deploys `main` whenever GitHub Actions passes. Then check it:
+repository and apply. Render creates two services and from then on deploys `main` whenever GitHub
+Actions passes:
+
+- `cardauction-server`, the game server, on the free plan (it sleeps after 15 idle minutes and
+  takes about a minute to wake; the web client says so while it waits). Render generates
+  `SESSION_SECRET`, `METRICS_TOKEN` and `ADMIN_TOKEN`.
+- `cardauction-web`, the web client, a static site (free): open its URL to play.
+
+Each service gets `https://<name>.onrender.com` when that name is free. If Render shows another
+address (a name already taken elsewhere gets a suffix), put the real addresses in `render.yaml`,
+`VITE_SERVER_URL` and the `connect-src` of the Content-Security-Policy for the web client,
+`CORS_ORIGIN` for the server, and deploy again (a test checks that they agree). Then check it:
 
 ```sh
 pnpm smoke --server https://cardauction-server.onrender.com   # the URL Render shows
@@ -86,12 +112,36 @@ apps/
   server/      Express 5 + Socket.IO 4 game server
     src/games/ the game actor, the manager (commands, timers, disconnects, cleanup), views
     test/      integration tests: real sockets, a manual clock, every disconnect case
+  web/         React 19 + Vite web client
+    src/cards/ card faces and backs, drawn as SVG
+    src/game/  the table: bids, table cards, hand, turn composer, result, card motion
+    src/net/   the Socket.IO connection and every request to the server
+    src/state/ one Zustand store, changed only through its actions
+    e2e/       Playwright tests: real browsers, a real server
 tools/
   client/      terminal client, random-move bots, smoke test
-render.yaml    Render Blueprint (the server on the free plan for now)
+render.yaml    Render Blueprint: the server (free plan for now) and the web client (static site)
 ```
 
-The web client (`apps/web`) and the AI (`packages/ai`) arrive with M2 and M3.
+The AI (`packages/ai`) arrives with M3.
+
+## How the web client plays
+
+- The composer checks every bid with the engine itself, from the player's own view, before it is
+  sent: it says what is missing (a card, the action card's column, the card to take) or why the
+  bid is not legal (no new color, out of range…), and Confirm only sends a legal move. Assist mode
+  (on by default against the AI) highlights the cards that fit a legal move.
+- Every card has one identity on screen (`layoutId`), so Motion animates it from wherever it was
+  to wherever it is: from a hand to the bids, from the table to a hand. Cards that were hidden
+  (the opponent's) fly in from their side; a new game is dealt card by card; the numbers count up
+  (and through 99 → 00); the clock drains and pulses in its last 10 s; the opponent's hand
+  turns face up at the end. `prefers-reduced-motion` turns movement off.
+- A lost connection is retried at once, then every few seconds; in a game the banner counts down
+  the 25 s left to return, and the opponent sees the same countdown. A reload or a reopened tab
+  lands back in the game, and a second tab takes over from the first (which offers to take it
+  back).
+- English and French, following the browser; the choice is kept on the device, like the guest
+  token, the name and assist mode.
 
 ## How the server keeps games sound
 
