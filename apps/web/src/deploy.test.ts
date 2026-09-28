@@ -26,6 +26,14 @@ describe('the Render Blueprint', () => {
     expect(policy).toBe(contentSecurityPolicy(server ?? ''));
   });
 
+  it('asks nothing of a free service that only paid plans allow', () => {
+    // Render refuses the whole Blueprint otherwise ("not supported for free tier services").
+    expect(setting('cardauction-server', /plan: (\S+)/)).toBe('free');
+    expect(
+      setting('cardauction-server', /(maxShutdownDelaySeconds|numInstances|scaling|disk):/),
+    ).toBeUndefined();
+  });
+
   it('rewrites every path to the single page (for /join/CODE links)', () => {
     expect(setting('cardauction-web', /source: (\S+)\s+destination: \/index\.html/)).toBe('/*');
     expect(setting('cardauction-web', /staticPublishPath: (\S+)/)).toBe('apps/web/dist');
