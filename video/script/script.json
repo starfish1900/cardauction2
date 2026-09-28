@@ -1,0 +1,647 @@
+{
+ "scenes": [
+  {
+   "id": "intro",
+   "title": "Welcome",
+   "segments": [
+    {
+     "text": "Welcome to CardAuction!",
+     "gap": 0.5,
+     "say": "Welcome to Card Auction!",
+     "id": "welcome",
+     "speech": "Welcome to Card Auction!"
+    },
+    {
+     "text": "It's a game for two players, all about numbers you build with cards.",
+     "gap": 0.45,
+     "id": "idea",
+     "speech": "It's a game for two players, all about numbers you build with cards."
+    },
+    {
+     "text": "If you can count to 100, you can play. Let's learn every rule, then how to play in the app.",
+     "gap": 0.6,
+     "id": "promise",
+     "speech": "If you can count to one hundred, you can play. Let's learn every rule, then how to play in the app."
+    }
+   ],
+   "hold": 0.3
+  },
+  {
+   "id": "goal",
+   "title": "The goal",
+   "segments": [
+    {
+     "text": "Players take turns making numbers, and each new number must be a little higher than the last: it's an auction.",
+     "gap": 0.45,
+     "id": "turns",
+     "speech": "Players take turns making numbers, and each new number must be a little higher than the last: it's an auction."
+    },
+    {
+     "text": "The first player who can't make a new bid loses.",
+     "gap": 0.6,
+     "id": "loses",
+     "speech": "The first player who can't make a new bid loses."
+    }
+   ],
+   "hold": 0.8
+  },
+  {
+   "id": "cards",
+   "title": "The cards",
+   "segments": [
+    {
+     "text": "CardAuction uses 120 cards.",
+     "gap": 0.45,
+     "say": "Card Auction uses one hundred and twenty cards.",
+     "id": "deck",
+     "speech": "Card Auction uses one hundred and twenty cards."
+    },
+    {
+     "text": "Most are number cards, each showing one digit, from 0 to 9.",
+     "gap": 0.45,
+     "id": "digits",
+     "speech": "Most are number cards, each showing one digit, from zero to nine."
+    },
+    {
+     "text": "Each number card has a suit with its own color: gold stars, blue diamonds, green clubs, red hearts and black spades.",
+     "gap": 0.45,
+     "id": "suits",
+     "speech": "Each number card has a suit with its own color: gold stars, blue diamonds, green clubs, red hearts and black spades."
+    },
+    {
+     "text": "Here, color and suit mean the same thing. And every card comes in two copies.",
+     "gap": 0.45,
+     "id": "copies",
+     "speech": "Here, color and suit mean the same thing. And every card comes in two copies."
+    },
+    {
+     "text": "The other 20 cards are action cards, marked plus or minus 10.",
+     "gap": 0.5,
+     "id": "actions",
+     "speech": "The other twenty cards are action cards, marked plus or minus ten."
+    },
+    {
+     "text": "To make a number, put two number cards side by side: the left one gives the tens, the right one the units.",
+     "gap": 0.45,
+     "id": "build",
+     "speech": "To make a number, put two number cards side by side: the left one gives the tens, the right one the units."
+    },
+    {
+     "text": "A 7 and a 3 make 73.",
+     "gap": 0.45,
+     "say": "A seven and a three make seventy-three.",
+     "id": "seventythree",
+     "speech": "A seven and a three make seventy-three."
+    },
+    {
+     "text": "A 0 and a 5 make 05: just five, written with two digits.",
+     "gap": 0.6,
+     "say": "A zero and a five make zero five: just five, written with two digits.",
+     "id": "zerofive",
+     "speech": "A zero and a five make zero five: just five, written with two digits."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "setup",
+   "title": "Setting up",
+   "segments": [
+    {
+     "text": "To set up, shuffle the cards. The first two number cards turned over make the starting number: here, 47.",
+     "gap": 0.45,
+     "id": "start",
+     "speech": "To set up, shuffle the cards. The first two number cards turned over make the starting number: here, forty-seven."
+    },
+    {
+     "text": "Each player gets 13 cards, and 25 go face up in the middle: that's the table.",
+     "gap": 0.45,
+     "id": "deal",
+     "speech": "Each player gets thirteen cards, and twenty-five go face up in the middle: that's the table."
+    },
+    {
+     "text": "The other 67 stay face down, out of the game.",
+     "gap": 0.45,
+     "id": "stock",
+     "speech": "The other sixty-seven stay face down, out of the game."
+    },
+    {
+     "text": "Any card you take from the table stays visible to your opponent.",
+     "gap": 0.6,
+     "id": "visible",
+     "speech": "Any card you take from the table stays visible to your opponent."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "flow",
+   "title": "How a game goes",
+   "segments": [
+    {
+     "text": "Player 2 starts with one small choice: swap one card from their hand for one on the table, or keep their hand.",
+     "gap": 0.45,
+     "id": "swap",
+     "speech": "player two starts with one small choice: swap one card from their hand for one on the table, or keep their hand."
+    },
+    {
+     "text": "Then Player 1 makes the first bid, using exactly one card from the table with cards from their hand.",
+     "gap": 0.45,
+     "id": "first",
+     "speech": "Then player one makes the first bid, using exactly one card from the table with cards from their hand."
+    },
+    {
+     "text": "After that, you take turns. On your turn, you make a bid, then take one card from the table.",
+     "gap": 0.6,
+     "id": "loop",
+     "speech": "After that, you take turns. On your turn, you make a bid, then take one card from the table."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "count",
+   "title": "Rule one: count up",
+   "segments": [
+    {
+     "text": "Now, the heart of the game. A bid must follow just two rules.",
+     "gap": 0.5,
+     "id": "heart",
+     "speech": "Now, the heart of the game. A bid must follow just two rules."
+    },
+    {
+     "text": "Rule one: count up. Your number must be 1 to 10 steps above the latest bid.",
+     "gap": 0.45,
+     "id": "rule",
+     "speech": "Rule one: count up. Your number must be one to ten steps above the latest bid."
+    },
+    {
+     "text": "Say the latest bid is 58.",
+     "gap": 0.45,
+     "id": "latest",
+     "speech": "Say the latest bid is fifty-eight."
+    },
+    {
+     "text": "One step: 59.",
+     "gap": 0.25,
+     "id": "c1",
+     "speech": "One step: fifty-nine."
+    },
+    {
+     "text": "Two steps: 60.",
+     "gap": 0.25,
+     "id": "c2",
+     "speech": "Two steps: sixty."
+    },
+    {
+     "text": "All the way to ten steps: 68.",
+     "gap": 0.45,
+     "id": "c10",
+     "speech": "All the way to ten steps: sixty-eight."
+    },
+    {
+     "text": "Any number from 59 to 68 is fine.",
+     "gap": 0.45,
+     "id": "range",
+     "speech": "Any number from fifty-nine to sixty-eight is fine."
+    },
+    {
+     "text": "But 58 itself is not: you must go up at least one step. And 69 is too far: that's eleven steps.",
+     "gap": 0.6,
+     "id": "nope",
+     "speech": "But fifty-eight itself is not: you must go up at least one step. And sixty-nine is too far: that's eleven steps."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "rollover",
+   "title": "After 99 comes 00",
+   "segments": [
+    {
+     "text": "Numbers here have only two digits, so after 99 comes 00.",
+     "gap": 0.45,
+     "id": "top",
+     "speech": "Numbers here have only two digits, so after ninety-nine comes zero zero."
+    },
+    {
+     "text": "Picture the mileage counter in a car: after 99, it rolls over to 00, and keeps counting: 01, 02, and so on.",
+     "gap": 0.45,
+     "id": "roll",
+     "speech": "Picture the mileage counter in a car: after ninety-nine, it rolls over to zero zero, and keeps counting: zero one, zero two, and so on."
+    },
+    {
+     "text": "CardAuction counts the same way. If the latest bid is 95, count up:",
+     "gap": 0.3,
+     "say": "Card Auction counts the same way. If the latest bid is ninety-five, count up:",
+     "id": "from95",
+     "speech": "Card Auction counts the same way. If the latest bid is ninety-five, count up:"
+    },
+    {
+     "text": "96,",
+     "gap": 0.12,
+     "id": "n96",
+     "speech": "ninety-six,"
+    },
+    {
+     "text": "97,",
+     "gap": 0.12,
+     "id": "n97",
+     "speech": "ninety-seven,"
+    },
+    {
+     "text": "98,",
+     "gap": 0.12,
+     "id": "n98",
+     "speech": "ninety-eight,"
+    },
+    {
+     "text": "99,",
+     "gap": 0.12,
+     "id": "n99",
+     "speech": "ninety-nine,"
+    },
+    {
+     "text": "00,",
+     "gap": 0.12,
+     "id": "n00",
+     "speech": "zero zero,"
+    },
+    {
+     "text": "01,",
+     "gap": 0.12,
+     "id": "n01",
+     "speech": "zero one,"
+    },
+    {
+     "text": "02,",
+     "gap": 0.12,
+     "id": "n02",
+     "speech": "zero two,"
+    },
+    {
+     "text": "03,",
+     "gap": 0.12,
+     "id": "n03",
+     "speech": "zero three,"
+    },
+    {
+     "text": "04,",
+     "gap": 0.12,
+     "id": "n04",
+     "speech": "zero four,"
+    },
+    {
+     "text": "05.",
+     "gap": 0.45,
+     "id": "n05",
+     "speech": "zero five."
+    },
+    {
+     "text": "That's ten steps: from 95, you may bid anything from 96 all the way around to 05.",
+     "gap": 0.45,
+     "id": "window",
+     "speech": "That's ten steps: from ninety-five, you may bid anything from ninety-six all the way around to zero five."
+    },
+    {
+     "text": "But 94 goes backward, and 06 is eleven steps away.",
+     "gap": 0.45,
+     "id": "nope",
+     "speech": "But ninety-four goes backward, and zero six is eleven steps away."
+    },
+    {
+     "text": "You can also picture the numbers on a dial, like a clock with 100 marks. You always move forward, 1 to 10 marks, and after 99 the dial keeps going.",
+     "gap": 0.45,
+     "id": "dial",
+     "speech": "You can also picture the numbers on a dial, like a clock with one hundred marks. You always move forward, one to ten marks, and after ninety-nine the dial keeps going."
+    },
+    {
+     "text": "So right after 99, the next bid can be anything from 00 to 09.",
+     "gap": 0.45,
+     "id": "after99",
+     "speech": "So right after ninety-nine, the next bid can be anything from zero zero to zero nine."
+    },
+    {
+     "text": "A small number can top a big one, when you count up past 99 to reach it.",
+     "gap": 0.6,
+     "id": "small",
+     "speech": "A small number can top a big one, when you count up past ninety-nine to reach it."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "color",
+   "title": "Rule two: a new color",
+   "segments": [
+    {
+     "text": "Rule two: your bid needs at least one color that the latest bid doesn't have.",
+     "gap": 0.45,
+     "id": "rule",
+     "speech": "Rule two: your bid needs at least one color that the latest bid doesn't have."
+    },
+    {
+     "text": "Say the latest bid is 5 of hearts, 8 of spades: 58, in red and black. You'd like to bid 63.",
+     "gap": 0.45,
+     "id": "latest",
+     "speech": "Say the latest bid is five of hearts, eight of spades: fifty-eight, in red and black. You'd like to bid sixty-three."
+    },
+    {
+     "text": "6 of stars and 3 of spades? Yes! The gold star is new.",
+     "gap": 0.45,
+     "id": "yes",
+     "speech": "six of stars and three of spades? Yes! The gold star is new."
+    },
+    {
+     "text": "6 of hearts and 3 of spades? No: red and black are both already in 58.",
+     "gap": 0.45,
+     "id": "no",
+     "speech": "six of hearts and three of spades? No: red and black are both already in fifty-eight."
+    },
+    {
+     "text": "Your two cards may share a color: 6 of diamonds and 3 of diamonds works, because blue is new.",
+     "gap": 0.45,
+     "id": "share",
+     "speech": "Your two cards may share a color: six of diamonds and three of diamonds works, because blue is new."
+    },
+    {
+     "text": "You may even use both copies of a card: two 6s of diamonds make 66.",
+     "gap": 0.6,
+     "say": "You may even use both copies of a card: two sixes of diamonds make sixty-six.",
+     "id": "pair",
+     "speech": "You may even use both copies of a card: two sixes of diamonds make sixty-six."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "action",
+   "title": "Action cards",
+   "segments": [
+    {
+     "text": "Now, the action cards. Just before you bid, an action card moves the latest bid up or down by 10.",
+     "gap": 0.45,
+     "id": "intro",
+     "speech": "Now, the action cards. Just before you bid, an action card moves the latest bid up or down by ten."
+    },
+    {
+     "text": "Place it beside the latest bid: on the left, it adds 10; on the right, it takes 10 away.",
+     "gap": 0.45,
+     "id": "sides",
+     "speech": "Place it beside the latest bid: on the left, it adds ten; on the right, it takes ten away."
+    },
+    {
+     "text": "Say the latest bid is 58, and your cards can make 72, but nothing from 59 to 68.",
+     "gap": 0.45,
+     "id": "example",
+     "speech": "Say the latest bid is fifty-eight, and your cards can make seventy-two, but nothing from fifty-nine to sixty-eight."
+    },
+    {
+     "text": "Put an action card on the left: 58 plus 10 is 68.",
+     "gap": 0.45,
+     "id": "plus",
+     "speech": "Put an action card on the left: fifty-eight plus ten is sixty-eight."
+    },
+    {
+     "text": "Count up from 68: 69 to 78. 72 fits!",
+     "gap": 0.45,
+     "id": "fits",
+     "speech": "Count up from sixty-eight: sixty-nine to seventy-eight. seventy-two fits!"
+    },
+    {
+     "text": "On the right, 58 minus 10 is 48: you may bid from 49 up to 58. This time, 58 itself is allowed.",
+     "gap": 0.45,
+     "id": "minus",
+     "speech": "On the right, fifty-eight minus ten is forty-eight: you may bid from forty-nine up to fifty-eight. This time, fifty-eight itself is allowed."
+    },
+    {
+     "text": "Action cards roll over too: 95 plus 10 is 05, so you may bid from 06 to 15.",
+     "gap": 0.45,
+     "id": "wrapplus",
+     "speech": "Action cards roll over too: ninety-five plus ten is zero five, so you may bid from zero six to fifteen."
+    },
+    {
+     "text": "And 03 minus 10 rolls back to 93: you may bid from 94 around to 03.",
+     "gap": 0.45,
+     "id": "wrapminus",
+     "speech": "And zero three minus ten rolls back to ninety-three: you may bid from ninety-four around to zero three."
+    },
+    {
+     "text": "The color rule still applies.",
+     "gap": 0.6,
+     "id": "stillcolor",
+     "speech": "The color rule still applies."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "take",
+   "title": "Taking a card",
+   "segments": [
+    {
+     "text": "After every bid, take one card from the table: a missing number, a new color, or an action card can save you later.",
+     "gap": 0.45,
+     "id": "take",
+     "speech": "After every bid, take one card from the table: a missing number, a new color, or an action card can save you later."
+    },
+    {
+     "text": "The cards you bid stay on the bid board. When the table is empty, you take nothing.",
+     "gap": 0.6,
+     "id": "board",
+     "speech": "The cards you bid stay on the bid board. When the table is empty, you take nothing."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "first",
+   "title": "The first bid",
+   "segments": [
+    {
+     "text": "Remember Player 1's first bid, with exactly one table card?",
+     "gap": 0.45,
+     "id": "remember",
+     "speech": "Remember player one's first bid, with exactly one table card?"
+    },
+    {
+     "text": "Say the starting number is 47. The table has a 5 of stars, and you hold a 2 of hearts.",
+     "gap": 0.45,
+     "id": "setup",
+     "speech": "Say the starting number is forty-seven. The table has a five of stars, and you hold a two of hearts."
+    },
+    {
+     "text": "Together they make 52: five steps up, with a new color. Perfect.",
+     "gap": 0.45,
+     "id": "bid",
+     "speech": "Together they make fifty-two: five steps up, with a new color. Perfect."
+    },
+    {
+     "text": "The table card can also be an action card, used with two cards from your hand.",
+     "gap": 0.6,
+     "id": "action",
+     "speech": "The table card can also be an action card, used with two cards from your hand."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "end",
+   "title": "How the game ends",
+   "segments": [
+    {
+     "text": "The game ends when a player can't make a legal bid on their turn: that player loses.",
+     "gap": 0.45,
+     "id": "rule",
+     "speech": "The game ends when a player can't make a legal bid on their turn: that player loses."
+    },
+    {
+     "text": "Say the latest bid is 87. You need a number from 88 to 97, so your tens card must be an 8 or a 9.",
+     "gap": 0.45,
+     "say": "Say the latest bid is eighty-seven. You need a number from eighty-eight to ninety-seven, so your tens card must be an eight or a nine.",
+     "id": "example",
+     "speech": "Say the latest bid is eighty-seven. You need a number from eighty-eight to ninety-seven, so your tens card must be an eight or a nine."
+    },
+    {
+     "text": "With no 8, no 9, and no action card to help, you're stuck, and you lose.",
+     "gap": 0.45,
+     "say": "With no eight, no nine, and no action card to help, you're stuck, and you lose.",
+     "id": "stuck",
+     "speech": "With no eight, no nine, and no action card to help, you're stuck, and you lose."
+    },
+    {
+     "text": "And if Player 1 can't make the first bid, Player 2 wins.",
+     "gap": 0.45,
+     "id": "open",
+     "speech": "And if player one can't make the first bid, player two wins."
+    },
+    {
+     "text": "In the app, each turn has a 60-second clock. If it runs out while you must bid, you lose. If it runs out during Player 2's swap, they just keep their hand.",
+     "gap": 0.7,
+     "say": "In the app, each turn has a sixty second clock. If it runs out while you must bid, you lose. If it runs out during player two's swap, they just keep their hand.",
+     "id": "clock",
+     "speech": "In the app, each turn has a sixty second clock. If it runs out while you must bid, you lose. If it runs out during player two's swap, they just keep their hand."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "app",
+   "title": "Playing in the app",
+   "segments": [
+    {
+     "text": "Let's play in the app. Open the CardAuction website: the address is on your screen.",
+     "gap": 0.45,
+     "say": "Let's play in the app. Open the Card Auction website: the address is on your screen.",
+     "id": "open",
+     "speech": "Let's play in the app. Open the Card Auction website: the address is on your screen."
+    },
+    {
+     "text": "Type your name, then pick a way to play: Quick match, against the next person looking for a game;",
+     "gap": 0.2,
+     "id": "quick",
+     "speech": "Type your name, then pick a way to play: Quick match, against the next person looking for a game;"
+    },
+    {
+     "text": "Play the AI, with a level and a seat;",
+     "gap": 0.2,
+     "say": "Play the A I, with a level and a seat;",
+     "id": "ai",
+     "speech": "Play the A I, with a level and a seat;"
+    },
+    {
+     "text": "or Private game, to invite a friend with a code or a link.",
+     "gap": 0.5,
+     "id": "private",
+     "speech": "or Private game, to invite a friend with a code or a link."
+    },
+    {
+     "text": "Here's the table: your hand at the bottom, the table cards in the middle, and the bid board with every bid so far.",
+     "gap": 0.45,
+     "id": "table",
+     "speech": "Here's the table: your hand at the bottom, the table cards in the middle, and the bid board with every bid so far."
+    },
+    {
+     "text": "At the top, your opponent's cards: face down, except the ones they took from the table.",
+     "gap": 0.45,
+     "id": "opponent",
+     "speech": "At the top, your opponent's cards: face down, except the ones they took from the table."
+    },
+    {
+     "text": "On your turn, tap a card for the tens, then one for the units. The app shows your number and checks it.",
+     "gap": 0.45,
+     "id": "compose",
+     "speech": "On your turn, tap a card for the tens, then one for the units. The app shows your number and checks it."
+    },
+    {
+     "text": "If a bid can't work, it tells you why.",
+     "gap": 0.45,
+     "id": "why",
+     "speech": "If a bid can't work, it tells you why."
+    },
+    {
+     "text": "For an action card, tap it, then the plus 10 or minus 10 slot beside the latest bid.",
+     "gap": 0.45,
+     "id": "action",
+     "speech": "For an action card, tap it, then the plus ten or minus ten slot beside the latest bid."
+    },
+    {
+     "text": "Then tap a table card to take, and press Confirm.",
+     "gap": 0.45,
+     "id": "confirm",
+     "speech": "Then tap a table card to take, and press Confirm."
+    },
+    {
+     "text": "With Assist on, the cards that fit a legal move light up.",
+     "gap": 0.45,
+     "id": "assist",
+     "speech": "With Assist on, the cards that fit a legal move light up."
+    },
+    {
+     "text": "As Player 2, your first move is the swap: tap a card in your hand and a table card, or keep your hand.",
+     "gap": 0.45,
+     "id": "swap",
+     "speech": "As player two, your first move is the swap: tap a card in your hand and a table card, or keep your hand."
+    },
+    {
+     "text": "Lost your connection? You have 25 seconds to come back.",
+     "gap": 0.45,
+     "id": "grace",
+     "speech": "Lost your connection? You have twenty-five seconds to come back."
+    },
+    {
+     "text": "At the end, both hands are revealed, and you can ask for a rematch.",
+     "gap": 0.45,
+     "id": "result",
+     "speech": "At the end, both hands are revealed, and you can ask for a rematch."
+    },
+    {
+     "text": "And the rules are always one tap away, in English or French.",
+     "gap": 0.7,
+     "id": "rules",
+     "speech": "And the rules are always one tap away, in English or French."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "outro",
+   "title": "That's it",
+   "segments": [
+    {
+     "text": "That's everything! Count up 1 to 10 steps, remember that after 99 comes 00, bring a new color, and use your action cards wisely.",
+     "gap": 0.45,
+     "id": "recap",
+     "speech": "That's everything! Count up one to ten steps, remember that after ninety-nine comes zero zero, bring a new color, and use your action cards wisely."
+    },
+    {
+     "text": "Have fun, and good luck!",
+     "gap": 1.2,
+     "id": "luck",
+     "speech": "Have fun, and good luck!"
+    }
+   ],
+   "hold": 1.5
+  }
+ ]
+}

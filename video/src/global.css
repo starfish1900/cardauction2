@@ -1,0 +1,12 @@
+:root {
+  --card-face: #fffdf8;
+  --card-edge: #cfc8b8;
+  --back: #7a1c2a;
+  --back-line: #e5b95a;
+  --back-pattern: rgba(255, 214, 160, 0.22);
+}
+.card-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
