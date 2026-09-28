@@ -1,23 +1,23 @@
 # Render Blueprint: https://render.com/docs/blueprint-spec
 #
-# Two services: the game server (Render's free plan while the game is being built: it sleeps
-# after 15 idle minutes and takes about a minute to wake) and the web client, a static site
-# (always free). The Key Value instance arrives with M4; M5 moves the server to Starter
-# ($7 a month).
+# Two services: the game server on Render's Starter plan ($7 a month, never sleeps) and the web
+# client, a static site (always free). Games live in memory; Key Value snapshots, which would let
+# a deploy hand games over instead of ending them, come with milestone M4, postponed for now.
 services:
   - type: web
     runtime: node
     name: cardauction-server
-    plan: free
+    # Starter: 0.5 CPU and 512 MB, $7 a month, never sleeps. Render's plan ID since August 2026;
+    # the older name "starter" means the same plan.
+    plan: 0.5c-512mb
     region: ohio # nearest region to Toronto
     # pnpm is pinned to the version in package.json's packageManager field. The install takes
     # only the server and the workspace packages it uses, not the web client's dependencies.
     buildCommand: npx --yes pnpm@10.28.0 install --frozen-lockfile --filter @cardauction/server... && npx --yes pnpm@10.28.0 --filter @cardauction/server build
     startCommand: node --max-old-space-size=320 apps/server/dist/main.js
     healthCheckPath: /healthz
-    # A free service gets Render's default 30 s between SIGTERM and SIGKILL, and cannot set
-    # maxShutdownDelaySeconds; the server stops in under a second (15 s at most). A paid plan
-    # (M5) can give the M4 deploy handoff more time.
+    # Render's default 30 s between SIGTERM and SIGKILL is plenty: the server stops in under a
+    # second (15 s at most).
     # Deploy main only after GitHub Actions has passed.
     autoDeployTrigger: checksPass
     buildFilter:
@@ -35,17 +35,18 @@ services:
         value: production
       - key: NODE_VERSION
         value: '24'
-      # Games live in memory until M4 brings Key Value snapshots; a deploy ends them.
+      # Games live in memory: a deploy or restart ends the games in progress, and the players are
+      # told. To deploy without interrupting anyone, drain the server first (see the README).
       - key: STATE_STORE
         value: memory
-      # Caps for the free instance (0.1 CPU); Starter raises them to 250 and 5.
+      # Caps for the Starter instance: further players are told the server is busy.
       - key: MAX_GAMES
-        value: '50'
+        value: '250'
       - key: MAX_AI_GAMES
-        value: '3'
+        value: '5'
       # The AI searches on one worker thread, off the main thread; an AI move waits at most this
-      # long for it, queue included. On the free instance's 0.1 CPU, a Hard move early in a game
-      # can take several seconds.
+      # long for it, queue included. On half a core a Hard move needs about 0.35 s on average and
+      # 0.7 s at a game's start, within the 0.8–1.5 s its move waits anyway.
       - key: AI_THREADS
         value: '1'
       - key: AI_MAX_THINK_MS

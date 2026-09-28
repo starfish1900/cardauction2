@@ -2,7 +2,7 @@
   "name": "@cardauction/client-cli",
   "version": "0.1.0",
   "private": true,
-  "description": "Terminal client, random-move bot and smoke test for the CardAuction server.",
+  "description": "Terminal client, random-move bot, smoke test and soak test for the CardAuction server.",
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
@@ -11,7 +11,8 @@
     "typecheck": "tsc -p tsconfig.json",
     "online": "tsx src/online.ts",
     "bot": "tsx src/bot-cli.ts",
-    "smoke": "tsx src/smoke.ts"
+    "smoke": "tsx src/smoke.ts",
+    "soak": "tsx src/soak.ts"
   },
   "dependencies": {
     "@cardauction/engine": "workspace:*",
