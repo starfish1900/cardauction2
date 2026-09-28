@@ -1,9 +1,11 @@
 /**
  * Smoke test for a running server: checks /healthz, then two bots quick-match and play one whole
- * game of random legal moves. Exits with 0 when both saw the same result.
+ * game of random legal moves, and a bot plays one game against the AI (Easy, which still runs a
+ * real search on the AI's worker thread). Exits with 0 when all went well.
  *
  *   pnpm smoke                                          local server on port 3000
  *   pnpm smoke --server https://cardauction-server.onrender.com
+ *   pnpm smoke --metrics-token <token>                  also check the AI threads in /metrics
  *
  * A free Render instance sleeps after 15 idle minutes, so the health check waits up to 2 minutes.
  */
@@ -14,6 +16,7 @@ const { values } = parseArgs({
   options: {
     server: { type: 'string', default: 'http://localhost:3000' },
     'wake-timeout': { type: 'string', default: '120' },
+    'metrics-token': { type: 'string' },
   },
 });
 const url = values.server.replace(/\/$/u, '');
@@ -52,4 +55,31 @@ const winner = gameA.result.winner === null ? 'nobody' : gameA.result.winner;
 console.log(
   `  game       ${gameA.gameId}: ${gameA.moves + gameB.moves} moves, ${winner} won (${gameA.result.reason})`,
 );
+const [vsAi] = await runBot({
+  url,
+  nickname: 'Smoke C',
+  mode: { kind: 'ai', level: 'easy' },
+  moveDelayMs: 20,
+});
+if (!vsAi) throw new Error('the game against the AI did not finish');
+console.log(
+  `  vs AI      ${vsAi.gameId}: ${vsAi.moves} moves by the bot, ${vsAi.result.winner ?? 'nobody'} won (${vsAi.result.reason})`,
+);
+
+// With the metrics token: the AI's moves must have come from its threads, not the fallback.
+const token = values['metrics-token'];
+if (token) {
+  const response = await fetch(`${url}/metrics`, { headers: { authorization: `Bearer ${token}` } });
+  if (!response.ok) throw new Error(`/metrics answered HTTP ${response.status}`);
+  const { ai } = (await response.json()) as {
+    ai?: { threads: number; searches: number; failed: number; restarts: number; thinkMs: number };
+  };
+  if (!ai) throw new Error('/metrics has no AI figures: the AI runs without threads');
+  if (ai.threads < 1 || ai.searches < 1 || ai.failed > 0 || ai.restarts > 0) {
+    throw new Error(`the AI threads are unwell: ${JSON.stringify(ai)}`);
+  }
+  console.log(
+    `  AI threads ${ai.threads}: ${ai.searches} searches, ${(ai.thinkMs / ai.searches).toFixed(0)} ms each`,
+  );
+}
 console.log(`  passed in  ${((Date.now() - started) / 1000).toFixed(1)} s`);

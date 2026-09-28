@@ -58,13 +58,42 @@ export interface GameResult {
   readonly reason: EndReason;
 }
 
+/**
+ * Rule options, for experiments such as the balance lab's. Real games always use
+ * {@link STANDARD_RULES}, and their states carry no `rules` at all.
+ */
+export interface RuleSet {
+  /** P2 may first swap one hand card for one table card (rule 6.1). */
+  readonly exchange: boolean;
+  /** P1's first bid uses exactly one table card (rule 6.2). */
+  readonly firstBidTableCard: boolean;
+  /** A bid's two cards must have different suits (the rule before September 2026). */
+  readonly distinctSuits: boolean;
+  readonly handSize: number;
+  readonly tableSize: number;
+}
+
+export const STANDARD_RULES: RuleSet = {
+  exchange: true,
+  firstBidTableCard: true,
+  distinctSuits: false,
+  handSize: 13,
+  tableSize: 25,
+};
+
+export function rulesOf(state: { readonly rules?: RuleSet | undefined }): RuleSet {
+  return state.rules ?? STANDARD_RULES;
+}
+
 export interface GameState {
+  /** Absent in real games: the standard rules. */
+  readonly rules?: RuleSet;
   readonly phase: Phase;
   readonly toMove: Seat;
   readonly hands: readonly [readonly CardId[], readonly CardId[]];
   /** Face-up table cards, visible to both players. */
   readonly table: readonly CardId[];
-  /** The face-down cards left after setup (67); they never enter play. */
+  /** The face-down cards left after setup (67 with the standard rules); they never enter play. */
   readonly stock: readonly CardId[];
   /** Row 0 is the starting number. */
   readonly bids: readonly BidRow[];

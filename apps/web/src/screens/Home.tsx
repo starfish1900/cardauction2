@@ -188,7 +188,9 @@ export function Home() {
           >
             {busy === 'ai' ? <Dots /> : t('home.start')}
           </button>
-          <p className="note">{t('home.aiNote')}</p>
+          <p className="note">
+            {t(`home.aiNote.${level}`)} {t('home.aiFair')}
+          </p>
         </motion.section>
 
         <motion.section className="panel home-card home-card--private" variants={item}>

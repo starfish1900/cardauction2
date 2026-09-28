@@ -5,6 +5,7 @@ import {
   type GameResult,
   type GameState,
   type Phase,
+  type RuleSet,
   type Seat,
 } from './state.js';
 
@@ -14,6 +15,8 @@ import {
  * tests check exhaustively.
  */
 export interface PlayerView {
+  /** Absent in real games: the standard rules. */
+  readonly rules?: RuleSet;
   readonly seat: Seat;
   readonly phase: Phase;
   readonly toMove: Seat;
@@ -38,6 +41,7 @@ export function viewFor(state: GameState, seat: Seat): PlayerView {
   const opponent = otherSeat(seat);
   const over = state.result !== null;
   return {
+    ...(state.rules ? { rules: state.rules } : {}),
     seat,
     phase: state.phase,
     toMove: state.toMove,

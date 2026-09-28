@@ -27,6 +27,8 @@ export interface ServerOptions {
   readonly store?: StateStore;
   /** Real time given to last messages before sockets close at shutdown. */
   readonly flushMs?: number;
+  /** The AI's own figures (threads, queue, searches), for /metrics. */
+  readonly aiStats?: () => object;
 }
 
 export interface GameServer {
@@ -104,6 +106,7 @@ export function createGameServer(options: ServerOptions): GameServer {
       heapMB: Math.round(memory.heapUsed / 1e6),
       rssMB: Math.round(memory.rss / 1e6),
       counters: metrics.counters(),
+      ...(options.aiStats ? { ai: options.aiStats() } : {}),
     };
   };
 

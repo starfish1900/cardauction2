@@ -335,6 +335,7 @@ function errorText(analysis: Analysis, t: ReturnType<typeof useTranslation>['t']
     case 'BAD_COLUMN':
     case 'CARD_NOT_IN_HAND':
     case 'CARD_NOT_ON_TABLE':
+    case 'SAME_SUIT':
     case 'TAKE_REQUIRED':
       return t('compose.errors.other', { code: analysis.error });
   }

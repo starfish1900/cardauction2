@@ -10,8 +10,8 @@ This repository is built milestone by milestone, each one arriving as a pull req
 | M0        | Rules engine, property tests, random-play simulator, terminal game            | Done    |
 | M1        | Game server: sessions, lobby, games, timers, disconnects, first Render deploy | Done    |
 | M2        | Web client: lobby, table, turn composer, card faces, animations, reconnection | Done    |
-| M3        | AI: ISMCTS with three levels, worker thread, balance lab                      | Next    |
-| M4        | Hardening: Key Value snapshots, deploy handoff, soak and load tests           | Planned |
+| M3        | AI: ISMCTS with three levels, worker thread, balance lab                      | Done    |
+| M4        | Hardening: Key Value snapshots, deploy handoff, soak and load tests           | Next    |
 | M5        | Launch on Render (Starter instance, free Key Value, static site)              | Planned |
 
 ## Requirements
@@ -24,17 +24,19 @@ This repository is built milestone by milestone, each one arriving as a pull req
 ```sh
 pnpm install
 pnpm check                          # typecheck, lint, format check and all tests
-pnpm test                           # engine, protocol, server integration and web unit tests
+pnpm test                           # engine, protocol, AI, server integration, lab and web tests
 pnpm e2e                            # browsers play whole games against a real server (below)
 pnpm sim                            # 1,000,000 random games, every invariant checked
 pnpm sim --games 20000 --seed 7     # smaller reproducible run
 pnpm play                           # play in the terminal against a random bot (no server)
+pnpm lab --a hard --b medium        # AI-vs-AI tournament on every core (see Balance lab)
 pnpm dev                            # game server on http://localhost:3000, restarts on changes
 pnpm dev:web                        # web client on http://localhost:5173 (with pnpm dev running)
 pnpm build                          # server bundle (apps/server/dist) and web client (apps/web/dist)
 pnpm online --name Ada              # play on a server from a terminal (see below)
 pnpm bot --bots 10 --games 5        # bots playing random legal moves against a server
-pnpm smoke --server <url>           # health check, then two bots play a whole game
+pnpm smoke --server <url>           # health check, two bots play each other, one plays the AI
+pnpm --filter @cardauction/ai bench # search speed at every stage of a game
 ```
 
 ## Playing in the browser
@@ -42,8 +44,7 @@ pnpm smoke --server <url>           # health check, then two bots play a whole g
 Start the server with `pnpm dev` and the web client with `pnpm dev:web`, then open
 http://localhost:5173. To play yourself, open a second window in private mode (each window is a
 different guest): choose **Create a code** in one and type the code, or open the link, in the
-other. **Play the AI** starts at once; until M3 every AI level plays random legal moves.
-`http://localhost:5173/?gallery` shows every card face.
+other. **Play the AI** starts at once. `http://localhost:5173/?gallery` shows every card face.
 
 The end-to-end tests start their own server (port 3100) and a production build of the client
 (port 4173, served from another origin like on Render, with the production Content-Security-Policy),
@@ -65,8 +66,7 @@ pnpm online --name Ada --server https://cardauction-server.onrender.com
 
 Type `help` for the commands: `quick`, `ai easy p1`, `create`, `join <code>`, moves such as
 `7* 0H take 9C`, `resign`, `rematch`, `lobby`. The guest token is kept in `~/.cardauction/`, so
-quitting and starting again brings you back to your game within 25 s. Until M3, every AI level
-plays random legal moves.
+quitting and starting again brings you back to your game within 25 s.
 
 ## Deploying to Render
 
@@ -79,6 +79,9 @@ Actions passes:
   `SESSION_SECRET`, `METRICS_TOKEN` and `ADMIN_TOKEN`.
 - `cardauction-web`, the web client, a static site (free): open its URL to play.
 
+Each build installs only its own service and the workspace packages it uses, and a service is
+rebuilt only when those change (a test checks both against the package manifests).
+
 Each service gets `https://<name>.onrender.com` when that name is free. If Render shows another
 address (a name already taken elsewhere gets a suffix), put the real addresses in `render.yaml`,
 `VITE_SERVER_URL` and the `connect-src` of the Content-Security-Policy for the web client,
@@ -86,7 +89,12 @@ address (a name already taken elsewhere gets a suffix), put the real addresses i
 
 ```sh
 pnpm smoke --server https://cardauction-server.onrender.com   # the URL Render shows
+pnpm smoke --server https://cardauction-server.onrender.com --metrics-token <METRICS_TOKEN>
 ```
+
+With the metrics token, the smoke test also checks that the AI's moves came from its worker
+thread rather than the fallback (see The AI below). `AI_THREADS` (1) and `AI_MAX_THINK_MS` (8,000)
+set the AI's threads and the longest an AI move may take.
 
 `/healthz` is public. `/metrics` and `/admin/status` need `Authorization: Bearer <token>` with the
 tokens from the service's Environment tab; `POST /admin/drain?on=true` stops new games and
@@ -106,8 +114,9 @@ curl -H "Authorization: Bearer $ADMIN_TOKEN" -H "True-Client-IP: 203.0.113.9" \
 
 ```text
 packages/
-  engine/      rules: cards, setup, legal moves, move validation and application, views
+  engine/      rules: cards, setup, legal moves, move validation and application, views, variants
   protocol/    events, zod payload schemas, wire views, error codes, view-to-engine decoding
+  ai/          the AI: a fast model of the rules, ISMCTS, the playout policy, the worker pool
 apps/
   server/      Express 5 + Socket.IO 4 game server
     src/games/ the game actor, the manager (commands, timers, disconnects, cleanup), views
@@ -120,10 +129,9 @@ apps/
     e2e/       Playwright tests: real browsers, a real server
 tools/
   client/      terminal client, random-move bots, smoke test
+  balance-lab/ AI-vs-AI tournaments on every core, with rule variants
 render.yaml    Render Blueprint: the server (free plan for now) and the web client (static site)
 ```
-
-The AI (`packages/ai`) arrives with M3.
 
 ## How the web client plays
 
@@ -161,6 +169,68 @@ The AI (`packages/ai`) arrives with M3.
 The protocol is defined once in `packages/protocol/src/events.ts`; every client event is
 acknowledged with `{ ok: true, ... }` or `{ ok: false, code }`, and every game message carries the
 player's complete view plus the events since the last update, for animations and the move log.
+
+## The AI
+
+The AI decides from its own seat's view only: the server hands it the view a player's client
+gets, so it never sees the opponent's hidden cards or the 67 face-down cards.
+
+- **Search.** Single-observer information set Monte Carlo tree search
+  ([Cowling, Powley and Whitehouse, 2012](https://eprints.whiterose.ac.uk/id/eprint/75048/)). Each
+  iteration deals the unseen cards at random, walks one shared tree along the moves legal in that
+  deal (UCB1 with availability counts), adds a node, plays the game out and credits the winner. A
+  turn is two levels of the tree: the bid, then the card taken. The most-visited move is played.
+- **Its own model of the rules.** The search runs on card counts per face in typed arrays, with
+  moves packed into integers. Property tests play random games in lockstep with the engine (300
+  under the standard rules, 60 per variant) and turn the model's moves back into moves the engine
+  must accept.
+- **Guided playouts.** A bid that leaves the opponent no answer wins at once. Otherwise bids that
+  leave the opponent few suits to answer with, keep the action cards and keep the last card of a
+  rank come first, and takes favour missing ranks, new suits and action cards. One move in ten is
+  random.
+- **P2's exchange.** The root weighs passing against the 40 most promising swaps.
+
+| Level  | Iterations per move | Moves played at random | Gate result (1,000 games, each deal from both seats) |
+| ------ | ------------------- | ---------------------- | ---------------------------------------------------- |
+| Easy   | 300                 | 25%                    | beats random play in 85.5% of 400 games              |
+| Medium | 2,000               | none                   | beats Easy in 86.3% (95% interval 84.0–88.3%)        |
+| Hard   | 8,000               | none                   | beats Medium in 57.5% (95% interval 54.4–60.5%)      |
+
+An iteration costs about 22 µs of one 2.1 GHz Xeon core on average: 44 µs at a game's start,
+under 10 µs after six bids. A Hard move thus takes about 0.18 s of a full core, 0.35 s at the
+start. On Render's free instance (0.1 CPU) that is a few seconds; on Starter (0.5 CPU) it hides
+inside the wait below.
+
+On the server the searches run on a worker thread (`AI_THREADS`, 1 on Render), off the event
+loop. They queue; with others waiting, a search's budget shrinks to a half, a third, and no less
+than a quarter, and a move waits at most `AI_MAX_THINK_MS` (8 s) from the request, queue included. A game
+that ends stops its search at once through a shared flag. The AI's move lands no sooner than
+0.8–1.5 s after the player's, so it can be followed. If the thread fails, a small search on the
+main thread keeps the game going; threads that cannot start at all are given up after three tries,
+and the log says so once.
+
+## Balance lab
+
+`pnpm lab` plays tournaments between two players on your own machine (never on Render), on every
+core. Each deal is played twice, with the seats swapped, so luck of the deal cancels out.
+
+```sh
+pnpm lab --a hard --b medium --deals 500
+pnpm lab --a medium --b medium --deals 500 --rules exchange=false
+pnpm lab --a random --b random --deals 20000 --rules distinctSuits=true --csv games.csv
+```
+
+Players are `random`, `easy`, `medium`, `hard`, or `search:<iterations>` with optional settings
+(`:c=` exploration, `:eps=` playout randomness, `:random=` share of random moves). Rules are
+comma-separated changes to the standard rules: `exchange`, `firstBidTableCard`, `distinctSuits`,
+`handSize`, `tableSize`. The report gives the win rate with its 95% interval and p-value, deals won
+from both seats, P1's win rate, game length, how games end, how often P2 exchanges and P1 opens
+with the table's action card, action cards in bids, the table running dry, and think times;
+`--csv` writes every game.
+
+A first rules sample, Medium against itself on 200 deals (400 games) per variant: P1 won 49.8%
+under the standard rules and 55.0% without P2's exchange. That hints the exchange offsets P1's
+first move, but the difference is not yet significant (p ≈ 0.14); larger runs will tell.
 
 ## Rules as implemented
 
@@ -219,4 +289,4 @@ Suits are numbered ★ ♦ ♣ ♥ ♠ (rule-book order).
 | Bids whose two cards share a suit | 0% (not allowed)             | 13.9% (both copies: 0.6%)   |
 | Games where P1 could not open     | 7                            | 7                           |
 
-Random play is a weak player; the AI in M3 will give more meaningful balance data.
+Random play is a weak player; the balance lab (above) runs the same kind of study with the AI.

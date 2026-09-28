@@ -14,6 +14,10 @@ const envSchema = z.object({
   MAX_GAMES: z.coerce.number().int().positive().default(250),
   MAX_AI_GAMES: z.coerce.number().int().nonnegative().default(5),
   MAX_CONNECTIONS_PER_IP: z.coerce.number().int().positive().default(20),
+  /** AI worker threads; 0 runs the AI on the main thread (tests). Render's small instances: 1. */
+  AI_THREADS: z.coerce.number().int().min(0).max(16).default(1),
+  /** Longest AI search, whatever the level's budget (a slow instance thinks longer). */
+  AI_MAX_THINK_MS: z.coerce.number().int().min(100).max(30_000).default(8_000),
   /** memory: games live only in this process. keyvalue arrives with milestone M4. */
   STATE_STORE: z.enum(['memory']).default('memory'),
   /** Bearer tokens for /metrics and /admin; the endpoints are off when unset. */
@@ -38,6 +42,8 @@ export interface Config {
   readonly maxGames: number;
   readonly maxAiGames: number;
   readonly maxConnectionsPerIp: number;
+  readonly aiThreads: number;
+  readonly aiMaxThinkMs: number;
   readonly stateStore: 'memory';
   readonly metricsToken: string | null;
   readonly adminToken: string | null;
@@ -72,6 +78,8 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     maxGames: e.MAX_GAMES,
     maxAiGames: e.MAX_AI_GAMES,
     maxConnectionsPerIp: e.MAX_CONNECTIONS_PER_IP,
+    aiThreads: e.AI_THREADS,
+    aiMaxThinkMs: e.AI_MAX_THINK_MS,
     stateStore: e.STATE_STORE,
     metricsToken: e.METRICS_TOKEN ?? null,
     adminToken: e.ADMIN_TOKEN ?? null,

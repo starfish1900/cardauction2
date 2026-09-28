@@ -17,7 +17,12 @@ export const en = {
     level: { easy: 'Easy', medium: 'Medium', hard: 'Hard' },
     seat: { P1: 'P1', P2: 'P2', random: 'Random' },
     seatHint: 'P1 makes the first bid; P2 may first swap a card with the table.',
-    aiNote: 'Until the AI milestone, every level plays random legal moves.',
+    aiNote: {
+      easy: 'Easy weighs up to 300 possible games before each move, and slips now and then.',
+      medium: 'Medium weighs up to 2,000 possible games before each move.',
+      hard: 'Hard weighs up to 8,000 possible games before each move.',
+    },
+    aiFair: 'The AI never sees your hidden cards.',
     start: 'Start',
     private: 'Private game',
     privateHint: 'Play a friend with a code or a link',

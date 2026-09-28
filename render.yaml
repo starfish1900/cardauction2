@@ -10,8 +10,9 @@ services:
     name: cardauction-server
     plan: free
     region: ohio # nearest region to Toronto
-    # pnpm is pinned to the version in package.json's packageManager field.
-    buildCommand: npx --yes pnpm@10.28.0 install --frozen-lockfile && npx --yes pnpm@10.28.0 --filter @cardauction/server build
+    # pnpm is pinned to the version in package.json's packageManager field. The install takes
+    # only the server and the workspace packages it uses, not the web client's dependencies.
+    buildCommand: npx --yes pnpm@10.28.0 install --frozen-lockfile --filter @cardauction/server... && npx --yes pnpm@10.28.0 --filter @cardauction/server build
     startCommand: node --max-old-space-size=320 apps/server/dist/main.js
     healthCheckPath: /healthz
     # A free service gets Render's default 30 s between SIGTERM and SIGKILL, and cannot set
@@ -26,6 +27,7 @@ services:
         - package.json
         - pnpm-lock.yaml
         - pnpm-workspace.yaml
+        - tsconfig.base.json
         - render.yaml
         - .node-version
     envVars:
@@ -41,6 +43,13 @@ services:
         value: '50'
       - key: MAX_AI_GAMES
         value: '3'
+      # The AI searches on one worker thread, off the main thread; an AI move waits at most this
+      # long for it, queue included. On the free instance's 0.1 CPU, a Hard move early in a game
+      # can take several seconds.
+      - key: AI_THREADS
+        value: '1'
+      - key: AI_MAX_THINK_MS
+        value: '8000'
       # Render generates these once; find them under the service's Environment tab.
       - key: SESSION_SECRET
         generateValue: true
@@ -60,16 +69,21 @@ services:
   - type: web
     runtime: static
     name: cardauction-web
-    buildCommand: npx --yes pnpm@10.28.0 install --frozen-lockfile && npx --yes pnpm@10.28.0 --filter @cardauction/web build
+    # Installs only the web client and the workspace packages it uses.
+    buildCommand: npx --yes pnpm@10.28.0 install --frozen-lockfile --filter @cardauction/web... && npx --yes pnpm@10.28.0 --filter @cardauction/web build
     staticPublishPath: apps/web/dist
     autoDeployTrigger: checksPass
     buildFilter:
       paths:
         - apps/web/**
-        - packages/**
+        # The workspace packages the web client uses (apps/web/src/deploy.test.ts checks the
+        # list), so a change to the AI alone does not rebuild the site.
+        - packages/engine/**
+        - packages/protocol/**
         - package.json
         - pnpm-lock.yaml
         - pnpm-workspace.yaml
+        - tsconfig.base.json
         - render.yaml
         - .node-version
     envVars:

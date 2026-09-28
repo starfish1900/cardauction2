@@ -1,9 +1,10 @@
 import { defineConfig } from 'tsup';
 
-// One ESM file for Render. The workspace packages (engine, protocol) are bundled from source;
-// npm dependencies stay in node_modules, which the build installs.
+// ESM files for Render: the server and the AI's worker thread. The workspace packages (engine,
+// protocol, ai) are bundled from source; npm dependencies stay in node_modules, which the build
+// installs.
 export default defineConfig({
-  entry: ['src/main.ts'],
+  entry: ['src/main.ts', 'src/ai-worker.ts'],
   format: ['esm'],
   platform: 'node',
   target: 'node22',

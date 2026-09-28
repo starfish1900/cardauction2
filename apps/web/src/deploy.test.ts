@@ -12,6 +12,21 @@ function setting(service: string, pattern: RegExp): string | undefined {
   return pattern.exec(block)?.[1];
 }
 
+/** The workspace packages a package uses, directly or not, as directories ("packages/engine"). */
+function workspacePackages(dir: string, found = new Set<string>()): Set<string> {
+  const manifest = JSON.parse(
+    readFileSync(new URL(`../../../${dir}/package.json`, import.meta.url), 'utf8'),
+  ) as { dependencies?: Record<string, string> };
+  for (const [name, version] of Object.entries(manifest.dependencies ?? {})) {
+    if (!version.startsWith('workspace:')) continue;
+    const used = `packages/${name.replace('@cardauction/', '')}`;
+    if (found.has(used)) continue;
+    found.add(used);
+    workspacePackages(used, found);
+  }
+  return found;
+}
+
 describe('the Render Blueprint', () => {
   const server = setting('cardauction-web', /key: VITE_SERVER_URL\s+value: (\S+)/);
   const web = setting('cardauction-server', /key: CORS_ORIGIN\s+value: (\S+)/);
@@ -32,6 +47,24 @@ describe('the Render Blueprint', () => {
     expect(
       setting('cardauction-server', /(maxShutdownDelaySeconds|numInstances|scaling|disk):/),
     ).toBeUndefined();
+  });
+
+  it('installs each service alone, and rebuilds it when a package it uses changes', () => {
+    for (const [service, app] of [
+      ['cardauction-server', 'server'],
+      ['cardauction-web', 'web'],
+    ] as const) {
+      const build = setting(service, /buildCommand: (.+)/) ?? '';
+      expect(build).toContain(`install --frozen-lockfile --filter @cardauction/${app}...`);
+      const paths = /buildFilter:\s+paths:\n((?:\s+(?:- .+|#.*)\n)+)/.exec(
+        blueprint.slice(blueprint.indexOf(`name: ${service}`)),
+      )?.[1];
+      const watched = (paths ?? '').match(/- \S+/g)?.map((line) => line.slice(2)) ?? [];
+      expect(watched).toContain(`apps/${app}/**`);
+      for (const used of workspacePackages(`apps/${app}`)) {
+        expect(watched.includes(`${used}/**`) || watched.includes('packages/**'), used).toBe(true);
+      }
+    }
   });
 
   it('rewrites every path to the single page (for /join/CODE links)', () => {

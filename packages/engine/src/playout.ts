@@ -2,7 +2,7 @@ import { exchangeOptions, legalBids, takeOptions } from './legal.js';
 import { applyMove, type Move } from './moves.js';
 import { pick, type Rng } from './rng.js';
 import { newGame } from './setup.js';
-import type { GameState } from './state.js';
+import type { GameState, RuleSet } from './state.js';
 
 /**
  * A uniformly random legal move: at the exchange, pass or a random swap (half each); otherwise a
@@ -26,8 +26,8 @@ export function randomMove(state: GameState, rng: Rng): Move {
 export type MoveVisitor = (before: GameState, move: Move, after: GameState) => void;
 
 /** Deals a game with `rng` and plays random moves until the game ends. */
-export function playRandomGame(rng: Rng, visit?: MoveVisitor): GameState {
-  let state = newGame(rng);
+export function playRandomGame(rng: Rng, visit?: MoveVisitor, rules?: RuleSet): GameState {
+  let state = newGame(rng, rules);
   while (state.result === null) {
     const move = randomMove(state, rng);
     const next = applyMove(state, state.toMove, move);

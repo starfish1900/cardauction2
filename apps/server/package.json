@@ -12,6 +12,7 @@
     "start": "node dist/main.js"
   },
   "dependencies": {
+    "@cardauction/ai": "workspace:*",
     "@cardauction/engine": "workspace:*",
     "@cardauction/protocol": "workspace:*",
     "express": "^5.2.1",

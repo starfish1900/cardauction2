@@ -45,6 +45,7 @@ const MESSAGES: Record<MoveError, string> = {
   ONE_TABLE_CARD_ONLY: 'Only one table card may be used in the first bid.',
   TABLE_CARD_NOT_ALLOWED: 'Only the first bid may use a table card.',
   NO_NEW_COLOR: 'Your bid needs a suit that the latest bid does not have.',
+  SAME_SUIT: 'In this variant, the tens and units cards must have different suits.',
   OUT_OF_RANGE: 'The new number must be 1 to 10 above the (modified) latest bid.',
   TAKE_REQUIRED: 'Add the table card you take: ... take <card>.',
   TAKE_NOT_ALLOWED: 'The table is empty: nothing to take.',

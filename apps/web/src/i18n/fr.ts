@@ -19,7 +19,12 @@ export const fr: Messages = {
     level: { easy: 'Facile', medium: 'Moyen', hard: 'Difficile' },
     seat: { P1: 'J1', P2: 'J2', random: 'Au hasard' },
     seatHint: 'J1 fait la première enchère ; J2 peut d’abord échanger une carte avec la table.',
-    aiNote: "En attendant le jalon de l'IA, chaque niveau joue des coups légaux au hasard.",
+    aiNote: {
+      easy: "Facile envisage jusqu'à 300 parties possibles avant chaque coup, et se trompe de temps en temps.",
+      medium: "Moyen envisage jusqu'à 2\u202f000 parties possibles avant chaque coup.",
+      hard: "Difficile envisage jusqu'à 8\u202f000 parties possibles avant chaque coup.",
+    },
+    aiFair: "L'IA ne voit jamais vos cartes cachées.",
     start: 'Commencer',
     private: 'Partie privée',
     privateHint: 'Jouez avec un ami grâce à un code ou un lien',
