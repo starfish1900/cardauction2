@@ -30,6 +30,9 @@ function Bid({
   );
 }
 
+/** The video tutorial: every rule, then how to play in the app (8½ minutes, in English). */
+export const TUTORIAL_URL = 'https://youtu.be/ty3DnjXm33k';
+
 /** How to play, over whatever screen it was opened from. */
 export function Rules() {
   const { t } = useTranslation();
@@ -46,6 +49,22 @@ export function Rules() {
       </header>
       <div className="dialog-body">
         <p className="rules-goal">{t('rules.goal')}</p>
+        <a
+          className="btn tutorial-btn"
+          href={TUTORIAL_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-testid="tutorial"
+        >
+          <svg className="tutorial-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="11" />
+            <path d="M9.8 7.4 L16.6 12 L9.8 16.6 Z" />
+          </svg>
+          <span className="tutorial-text">
+            <span className="tutorial-title">{t('rules.tutorial')}</span>
+            <span className="tutorial-note">{t('rules.tutorialNote')}</span>
+          </span>
+        </a>
         <ol className="rules-list">
           {items.map((text, i) => (
             <li key={i}>{text}</li>

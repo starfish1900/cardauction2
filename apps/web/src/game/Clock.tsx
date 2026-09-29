@@ -1,7 +1,7 @@
 import { TIMING } from '@cardauction/protocol';
 import { useServerNow } from '../ui/hooks';
 
-/** A ring that drains over the 60 s turn and pulses in the last 10 s. */
+/** A ring that drains over the whole turn (TIMING.turnMs) and pulses in the last 10 s. */
 export function Clock({ deadline, size = 44 }: { deadline: number | null; size?: number }) {
   const now = useServerNow(200);
   if (deadline === null) return null;
@@ -11,6 +11,8 @@ export function Clock({ deadline, size = 44 }: { deadline: number | null; size?:
   const r = 18;
   const circumference = 2 * Math.PI * r;
   const tone = seconds <= 10 ? 'danger' : seconds <= 20 ? 'warn' : 'ok';
+  // Three digits (100 s and more) get a smaller type to fit inside the ring.
+  const digits = seconds >= 100 ? 'clock-seconds clock-seconds--long' : 'clock-seconds';
   return (
     <div
       className={`clock clock--${tone}`}
@@ -30,7 +32,7 @@ export function Clock({ deadline, size = 44 }: { deadline: number | null; size?:
           transform="rotate(-90 22 22)"
         />
       </svg>
-      <span className="clock-seconds">{seconds}</span>
+      <span className={digits}>{seconds}</span>
     </div>
   );
 }

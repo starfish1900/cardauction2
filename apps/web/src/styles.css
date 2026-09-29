@@ -1076,6 +1076,53 @@ p {
   color: var(--gold-2);
 }
 
+.tutorial-btn {
+  align-self: flex-start;
+  justify-content: flex-start;
+  gap: 12px;
+  min-height: 52px;
+  padding: 8px 20px 8px 10px;
+  border-radius: 16px;
+  border-color: rgba(229, 185, 90, 0.45);
+  white-space: normal;
+  text-align: left;
+  text-decoration: none;
+}
+
+.tutorial-btn:hover:not(:disabled) {
+  border-color: var(--gold-2);
+}
+
+.tutorial-icon {
+  flex: none;
+  width: 34px;
+  height: 34px;
+}
+
+.tutorial-icon circle {
+  fill: var(--gold);
+}
+
+.tutorial-icon path {
+  fill: var(--gold-ink);
+}
+
+.tutorial-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tutorial-title {
+  font-weight: 700;
+}
+
+.tutorial-note {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
 .rules-list {
   margin: 0;
   padding-left: 1.3em;
@@ -1341,6 +1388,11 @@ p {
   font-weight: 800;
   font-size: 0.9rem;
   font-variant-numeric: tabular-nums;
+}
+
+.clock-seconds--long {
+  font-size: 0.74rem;
+  letter-spacing: -0.03em;
 }
 
 /* Bid board */

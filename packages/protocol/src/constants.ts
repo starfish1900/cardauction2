@@ -6,8 +6,8 @@ export const ACCEPTED_PROTOCOLS: readonly number[] = [PROTOCOL_VERSION];
 
 /** Every duration the server enforces, in milliseconds. Clients use them for countdowns. */
 export const TIMING = {
-  /** Time to make a move (bid and take together, or P2's exchange). */
-  turnMs: 60_000,
+  /** Time to make a move (bid and take together, or P2's exchange): two minutes, for beginners. */
+  turnMs: 120_000,
   /** A move arriving this long after the turn deadline is still accepted (network delay). */
   lateMoveToleranceMs: 1_000,
   /** A disconnected player who is not back within this window forfeits. */
