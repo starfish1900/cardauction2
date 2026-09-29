@@ -1,6 +1,7 @@
 import { PROTOCOL_VERSION } from '@cardauction/protocol';
 import { io as connect } from 'socket.io-client';
 import { afterEach, describe, expect, it } from 'vitest';
+import { loadConfig } from '../src/config.js';
 import { normalizeNickname, TokenSigner } from '../src/session.js';
 import { closeAll, startServer, TestClient, until, type TestServer } from './harness.js';
 
@@ -183,5 +184,29 @@ describe('the message gate', () => {
     clients.push(a, b);
     await expect(TestClient.connect(t.url)).rejects.toThrow();
     expect(t.server.metrics.rejectedConnections).toBe(2);
+  });
+
+  it('accepts browsers from every address listed in CORS_ORIGIN, and only those', async () => {
+    const { corsOrigins } = loadConfig({
+      CORS_ORIGIN:
+        'https://cardauction.ca,https://www.cardauction.ca,https://cardauction-web.onrender.com',
+    });
+    expect(corsOrigins).toHaveLength(3);
+    t = await startServer({ config: { corsOrigins } });
+    for (const origin of [...corsOrigins, 'https://evil.example']) {
+      const socket = connect(t.url, {
+        transports: ['websocket'],
+        forceNew: true,
+        reconnection: false,
+        extraHeaders: { origin },
+      });
+      const accepted = await new Promise<boolean>((resolve) => {
+        socket.once('connect', () => resolve(true));
+        socket.once('connect_error', () => resolve(false));
+      });
+      socket.close();
+      expect(accepted, origin).toBe(origin !== 'https://evil.example');
+    }
+    expect(t.server.metrics.rejectedConnections).toBe(1);
   });
 });

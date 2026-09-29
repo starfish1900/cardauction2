@@ -63,9 +63,12 @@ services:
       # echo the forged value.
       - key: CLIENT_IP_HEADER
         value: true-client-ip
-      # The web client's address (M2). Tools such as the terminal client send no origin.
+      # Every address the web client is served from, comma-separated: the server refuses a page
+      # from any other, and that page then waits forever for the server. The custom domain (with
+      # its www form) and the onrender.com address, which keeps working. Tools such as the
+      # terminal client send no origin.
       - key: CORS_ORIGIN
-        value: https://cardauction-web.onrender.com
+        value: https://cardauction.ca,https://www.cardauction.ca,https://cardauction-web.onrender.com
 
   - type: web
     runtime: static
