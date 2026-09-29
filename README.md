@@ -178,7 +178,7 @@ render.yaml    Render Blueprint: the server (Starter plan) and the web client (s
 | One command at a time per game, validated by the engine           | `Games.command` in `games/manager.ts` |
 | Resent commands answered from a cache; stale ones answered STALE  | same pipeline, per-seat command cache |
 | One timer per game, armed for its earliest deadline               | `Games.arm` and `Games.onDeadlines`   |
-| 60 s turns (1 s grace for network delay); P2's timeout is a pass  | `onDeadlines`                         |
+| 120 s turns (1 s grace for network delay); P2's timeout is a pass | `onDeadlines`                         |
 | 25 s to come back, or forfeit; the clock keeps running meanwhile  | `disconnected`, `onDeadlines`         |
 | Both players away at any deadline: abandoned, deleted at once     | `onDeadlines`, `finish`, `dispose`    |
 | Deleting a game clears its timer, AI job and indexes; 10 min note | `Games.dispose` (tombstones)          |

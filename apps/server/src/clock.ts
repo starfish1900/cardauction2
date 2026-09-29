@@ -1,6 +1,6 @@
 /**
  * Time source for everything the server schedules. Production uses the system clock; tests inject
- * a ManualClock and move time forward explicitly, so a 25 s grace period or a 60 s turn takes no
+ * a ManualClock and move time forward explicitly, so a 25 s grace period or a 120 s turn takes no
  * real time and every deadline fires in a known order.
  */
 export interface TimerHandle {

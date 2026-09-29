@@ -57,6 +57,10 @@ test('language, rules and the invitation code screen', async ({ browser }) => {
   await page.getByRole('button', { name: /How to play/ }).click();
   const rules = page.getByRole('dialog');
   await expect(rules).toContainText('Outbid your opponent');
+  // The video tutorial opens on YouTube, in a new tab.
+  const tutorial = rules.getByRole('link', { name: /Watch the tutorial/ });
+  await expect(tutorial).toHaveAttribute('href', 'https://youtu.be/ty3DnjXm33k');
+  await expect(tutorial).toHaveAttribute('target', '_blank');
   await page.keyboard.press('Escape');
   await expect(rules).toBeHidden();
 
