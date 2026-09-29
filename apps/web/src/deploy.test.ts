@@ -29,11 +29,17 @@ function workspacePackages(dir: string, found = new Set<string>()): Set<string> 
 
 describe('the Render Blueprint', () => {
   const server = setting('cardauction-web', /key: VITE_SERVER_URL\s+value: (\S+)/);
-  const web = setting('cardauction-server', /key: CORS_ORIGIN\s+value: (\S+)/);
+  const allowed = setting('cardauction-server', /key: CORS_ORIGIN\s+value: (\S+)/) ?? '';
+  const origins = allowed.split(',');
 
-  it('points the web client at the server, and the server accepts the web client', () => {
+  it('points the web client at the server, and the server accepts it at each of its addresses', () => {
     expect(server).toBe('https://cardauction-server.onrender.com');
-    expect(web).toBe('https://cardauction-web.onrender.com');
+    // The custom domain, its www form, and the onrender.com address, which keeps working.
+    expect(origins).toEqual([
+      'https://cardauction.ca',
+      'https://www.cardauction.ca',
+      'https://cardauction-web.onrender.com',
+    ]);
   });
 
   it('sends the same Content-Security-Policy as the end-to-end tests', () => {

@@ -82,7 +82,11 @@ Actions passes:
 - `cardauction-server`, the game server, on the Starter plan ($7 a month: 0.5 CPU and 512 MB,
   and it never sleeps, unlike the free plan). Render needs a payment method on the workspace for
   it. Render generates `SESSION_SECRET`, `METRICS_TOKEN` and `ADMIN_TOKEN`.
-- `cardauction-web`, the web client, a static site (free): open its URL to play.
+- `cardauction-web`, the web client, a static site (free): play at https://cardauction.ca, its
+  custom domain, or at its onrender.com address.
+
+The server accepts only pages from the addresses in its `CORS_ORIGIN`. A new domain for the site
+goes there too, or the app on that domain never connects: it waits on "The server is waking up".
 
 Each build installs only its own service and the workspace packages it uses, and a service is
 rebuilt only when those change (a test checks both against the package manifests).
