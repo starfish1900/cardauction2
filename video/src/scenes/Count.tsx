@@ -6,6 +6,7 @@ import { Bracket, Hop, Tile, type TileState } from '../components/teaching';
 import { card } from '../cards';
 import { C, UI } from '../theme';
 import { useMarks } from '../timeline';
+import { tr } from '../lang';
 
 const FIRST = 55;
 const LAST = 70;
@@ -62,13 +63,13 @@ export function Count() {
         }}
       >
         <Text size={56} color={C.gold2} weight={700}>
-          The heart of the game
+          {tr('The heart of the game')}
         </Text>
       </div>
       {/* The two rules. */}
       <RuleCard
         n={1}
-        title="Count up"
+        title={tr('Count up')}
         x={370}
         y={340}
         opacity={Math.min(1, pop(frame, rulesAt)) * (1 - cardsOut)}
@@ -78,7 +79,7 @@ export function Count() {
       </RuleCard>
       <RuleCard
         n={2}
-        title="A new color"
+        title={tr('A new color')}
         x={990}
         y={340}
         opacity={Math.min(1, pop(frame, rulesAt + 8)) * (1 - cardsOut)}
@@ -89,8 +90,8 @@ export function Count() {
 
       <RuleHeader
         n={1}
-        title="Count up"
-        detail="1 to 10 steps above the latest bid"
+        title={tr('Count up')}
+        detail={tr('1 to 10 steps above the latest bid')}
         opacity={fade(frame, ruleAt, Number.POSITIVE_INFINITY, 12)}
         detailOpacity={fade(frame, detailAt)}
       />
@@ -100,14 +101,14 @@ export function Count() {
         <div
           style={{
             position: 'absolute',
-            left: center(58) - 100,
-            width: 200,
+            left: center(58) - 160,
+            width: 320,
             top: 236,
             textAlign: 'center',
           }}
         >
           <Text size={28} color={C.gold2}>
-            latest bid
+            {tr('latest bid')}
           </Text>
         </div>
         <PlayingCard id={card('5H')} w={78} x={center(58) - 82} y={280} compact />
@@ -165,7 +166,7 @@ export function Count() {
         progress={ramp(frame, rangeAt, rangeAt + 12)}
       >
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 14 }}>
-          <Verdict ok size={44} /> 59 to 68: fine
+          <Verdict ok size={44} /> {tr('59 to 68: fine')}
         </span>
       </Bracket>
 
@@ -195,7 +196,7 @@ export function Count() {
           color: C.danger,
         }}
       >
-        no step up
+        {tr('no step up')}
       </div>
       <div
         style={{
@@ -222,7 +223,7 @@ export function Count() {
           color: C.danger,
         }}
       >
-        11 steps
+        {tr('11 steps')}
       </div>
 
       <Sfx name="pop" at={rulesAt} volume={0.2} />

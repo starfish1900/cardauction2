@@ -5,6 +5,7 @@
  *   ../apps/server/node_modules/.bin/tsx capture/capture.ts
  *
  * Needs the capture server on :3100 and the web app's production build on :4173.
+ * CAPTURE_LANG=fr captures the app in French, into public/fr/screens and src/fr/screens.json.
  */
 import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
@@ -24,7 +25,29 @@ import {
 import { fromWireSeat, stateFromView, type WireView } from '../../packages/protocol/src/index.ts';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
-const OUT = path.join(ROOT, 'public', 'screens');
+const LANG = process.env.CAPTURE_LANG === 'fr' ? 'fr' : 'en';
+const OUT = path.join(ROOT, 'public', ...(LANG === 'fr' ? ['fr'] : []), 'screens');
+// The labels the script clicks, in the app's language.
+const L =
+  LANG === 'fr'
+    ? {
+        hard: 'Difficile',
+        easy: 'Facile',
+        p1: 'J1',
+        p2: 'J2',
+        clear: 'Effacer',
+        assist: 'Aide',
+        rules: 'Règles',
+      }
+    : {
+        hard: 'Hard',
+        easy: 'Easy',
+        p1: 'P1',
+        p2: 'P2',
+        clear: 'Clear',
+        assist: 'Assist',
+        rules: 'Rules',
+      };
 mkdirSync(OUT, { recursive: true });
 const WEB = process.env.WEB_URL ?? 'http://localhost:4173';
 const VIEWPORT = { width: 1440, height: 810 };
@@ -43,12 +66,15 @@ const faces = [
   ['Georgia', 'gelasio/files/gelasio-latin-400-normal.woff2', 400],
   ['Georgia', 'gelasio/files/gelasio-latin-700-normal.woff2', 700],
 ] as const;
-const fontCss = faces
-  .map(
-    ([family, file, weight]) =>
-      `@font-face{font-family:'${family}';font-weight:${weight};src:url(data:font/woff2;base64,${font(file)}) format('woff2');}`,
-  )
-  .join('\n');
+const fontCss =
+  faces
+    .map(
+      ([family, file, weight]) =>
+        `@font-face{font-family:'${family}';font-weight:${weight};src:url(data:font/woff2;base64,${font(file)}) format('woff2');}`,
+    )
+    .join('\n') +
+  // The video shows How to play as it was before its "Watch the tutorial" button.
+  '\n.tutorial-btn{display:none !important}';
 
 const browser = await chromium.launch({
   executablePath: process.env.PW_CHROMIUM_PATH ?? '/opt/pw-browsers/chromium',
@@ -59,6 +85,7 @@ async function newPlayer(name: string) {
     viewport: VIEWPORT,
     deviceScaleFactor: 2,
     bypassCSP: true,
+    locale: LANG === 'fr' ? 'fr-FR' : 'en-US',
   });
   const page = await context.newPage();
   await page.addInitScript((css) => {
@@ -71,6 +98,8 @@ async function newPlayer(name: string) {
     else document.addEventListener('DOMContentLoaded', add);
   }, fontCss);
   await page.goto(WEB);
+  // The style the init script adds does not stay; this one does.
+  await page.addStyleTag({ content: '.tutorial-btn{display:none !important}' });
   await page.waitForFunction(() => window.__cardauction?.getState().connection === 'online');
   await page.getByTestId('nickname').fill(name);
   await page.getByTestId('nickname').press('Enter');
@@ -197,8 +226,8 @@ async function legalBids(page: Page): Promise<BidChoice[]> {
 // 1. Home, with the name typed and Hard selected.
 const ada = await newPlayer('Ada');
 const { page } = ada;
-await page.getByRole('radio', { name: 'Hard' }).click();
-await page.getByRole('radio', { name: 'P1' }).click();
+await page.getByRole('radio', { name: L.hard }).click();
+await page.getByRole('radio', { name: L.p1 }).click();
 await shot(page, 'home', {
   nickname: page.getByTestId('nickname'),
   quick: page.locator('.home-card', { has: page.getByTestId('quick') }),
@@ -212,8 +241,8 @@ const needed = new Set(['table', 'why', 'tens', 'units', 'ready', 'action', 'res
 for (let game = 0; game < 8 && needed.size > 0; game++) {
   if (game > 0) {
     await page.getByTestId('lobby').click();
-    await page.getByRole('radio', { name: 'Easy' }).click();
-    await page.getByRole('radio', { name: 'P1' }).click();
+    await page.getByRole('radio', { name: L.easy }).click();
+    await page.getByRole('radio', { name: L.p1 }).click();
   }
   await page.getByTestId('ai-start').click();
   let v = await waitMyTurnOrOver(page);
@@ -227,7 +256,7 @@ for (let game = 0; game < 8 && needed.size > 0; game++) {
         board: page.getByTestId('board'),
         opponent: page.getByTestId('opponent'),
         composer: page.getByTestId('composer'),
-        assist: page.getByText('Assist').first(),
+        assist: page.getByText(L.assist, { exact: true }).first(),
       },
       1600,
     );
@@ -252,7 +281,7 @@ for (let game = 0; game < 8 && needed.size > 0; game++) {
           tens: cardAt(page, 'hand', pair[0]),
           units: cardAt(page, 'hand', pair[1]),
         });
-        await page.getByRole('button', { name: 'Clear', exact: true }).click();
+        await page.getByRole('button', { name: L.clear, exact: true }).click();
         await page.waitForTimeout(400);
         needed.delete('why');
       }
@@ -292,8 +321,8 @@ for (let game = 0; game < 8 && needed.size > 0; game++) {
 
 // 3. A game as Player 2: the swap, then a lost connection.
 await page.getByTestId('lobby').click();
-await page.getByRole('radio', { name: 'Easy' }).click();
-await page.getByRole('radio', { name: 'P2' }).click();
+await page.getByRole('radio', { name: L.easy }).click();
+await page.getByRole('radio', { name: L.p2 }).click();
 await page.getByTestId('ai-start').click();
 const p2 = await waitMyTurnOrOver(page);
 if (p2.phase === 'exchange') {
@@ -324,12 +353,12 @@ await page.waitForFunction(
 await page.waitForTimeout(1500);
 
 // 4. The rules, over the game.
-await page.getByTitle('Rules').first().click();
+await page.getByTitle(L.rules).first().click();
 await page.waitForTimeout(900);
 await shot(page, 'rules', { dialog: page.getByRole('dialog').first() });
 
 writeFileSync(
-  path.join(ROOT, 'src', 'screens.json'),
+  path.join(ROOT, 'src', ...(LANG === 'fr' ? ['fr'] : []), 'screens.json'),
   JSON.stringify({ viewport: VIEWPORT, shots }, null, 1),
 );
 await browser.close();

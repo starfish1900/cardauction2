@@ -1,0 +1,883 @@
+{
+ "lang": "fr",
+ "scenes": [
+  {
+   "id": "intro",
+   "title": "Bienvenue",
+   "segments": [
+    {
+     "text": "Bienvenue dans CardAuction, les Enchères-aux-Cartes !",
+     "gap": 0.5,
+     "id": "welcome",
+     "speech": "Bienvenue dans CardAuction, les Enchères-aux-Cartes !"
+    },
+    {
+     "text": "C'est un jeu pour deux joueurs, où l'on forme des nombres avec des cartes.",
+     "gap": 0.45,
+     "id": "idea",
+     "speech": "C'est un jeu pour deux joueurs, où l'on forme des nombres avec des cartes."
+    },
+    {
+     "text": "Si vous savez compter jusqu'à 100, vous savez jouer. Voyons toutes les règles, puis comment jouer dans l'appli.",
+     "gap": 0.6,
+     "id": "promise",
+     "speech": "Si vous savez compter jusqu'à cent, vous savez jouer. Voyons toutes les règles, puis comment jouer dans l'appli."
+    }
+   ],
+   "hold": 0.3
+  },
+  {
+   "id": "goal",
+   "title": "Le but",
+   "segments": [
+    {
+     "text": "Chacun son tour, les joueurs forment des nombres, et chaque nouveau nombre doit être un peu plus haut que le précédent : ce sont des enchères.",
+     "gap": 0.45,
+     "id": "turns",
+     "speech": "Chacun son tour, les joueurs forment des nombres, et chaque nouveau nombre doit être un peu plus haut que le précédent : ce sont des enchères."
+    },
+    {
+     "text": "Le premier joueur qui ne peut plus enchérir a perdu.",
+     "gap": 0.6,
+     "id": "loses",
+     "anchors": {
+      "can't": "ne peut plus",
+      "loses": "a perdu"
+     },
+     "speech": "Le premier joueur qui ne peut plus enchérir a perdu."
+    }
+   ],
+   "hold": 0.8
+  },
+  {
+   "id": "cards",
+   "title": "Les cartes",
+   "segments": [
+    {
+     "text": "CardAuction se joue avec 120 cartes.",
+     "gap": 0.45,
+     "id": "deck",
+     "speech": "CardAuction se joue avec cent vingt cartes."
+    },
+    {
+     "text": "La plupart sont des cartes chiffres, avec un seul chiffre chacune, de 0 à 9.",
+     "gap": 0.45,
+     "id": "digits",
+     "speech": "La plupart sont des cartes chiffres, avec un seul chiffre chacune, de zéro à neuf."
+    },
+    {
+     "text": "Chaque carte chiffre a une enseigne, avec sa propre couleur : étoiles dorées, carreaux bleus, trèfles verts, cœurs rouges et piques noirs.",
+     "gap": 0.45,
+     "id": "suits",
+     "anchors": {
+      "gold stars": "étoiles dorées",
+      "blue diamonds": "carreaux bleus",
+      "green clubs": "trèfles verts",
+      "red hearts": "cœurs rouges",
+      "black spades": "piques noirs"
+     },
+     "speech": "Chaque carte chiffre a une enseigne, avec sa propre couleur : étoiles dorées, carreaux bleus, trèfles verts, cœurs rouges et piques noirs."
+    },
+    {
+     "text": "Ici, couleur et enseigne, c'est pareil. Et chaque carte existe en deux exemplaires.",
+     "gap": 0.45,
+     "id": "copies",
+     "anchors": {
+      "color and suit": "couleur et enseigne",
+      "two copies": "deux exemplaires"
+     },
+     "speech": "Ici, couleur et enseigne, c'est pareil. Et chaque carte existe en deux exemplaires."
+    },
+    {
+     "text": "Les 20 autres cartes sont des cartes action, marquées plus ou moins 10.",
+     "gap": 0.5,
+     "id": "actions",
+     "speech": "Les vingt autres cartes sont des cartes action, marquées plus ou moins dix."
+    },
+    {
+     "text": "Pour former un nombre, posez deux cartes chiffres côte à côte : celle de gauche donne les dizaines, celle de droite les unités.",
+     "gap": 0.45,
+     "id": "build",
+     "anchors": {
+      "the left one": "celle de gauche",
+      "the right one": "celle de droite"
+     },
+     "speech": "Pour former un nombre, posez deux cartes chiffres côte à côte : celle de gauche donne les dizaines, celle de droite les unités."
+    },
+    {
+     "text": "Un 7 et un 3 donnent 73.",
+     "gap": 0.45,
+     "id": "seventythree",
+     "anchors": {
+      "make 73": "donnent 73"
+     },
+     "speech": "Un sept et un trois donnent soixante-treize."
+    },
+    {
+     "text": "Un 0 et un 5 donnent 05 : cinq, tout simplement, écrit avec deux chiffres.",
+     "gap": 0.6,
+     "id": "zerofive",
+     "anchors": {
+      "make 05": "donnent 05",
+      "just five": "cinq, tout simplement"
+     },
+     "speech": "Un zéro et un cinq donnent zéro cinq : cinq, tout simplement, écrit avec deux chiffres."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "setup",
+   "title": "La mise en place",
+   "segments": [
+    {
+     "text": "Pour commencer, mélangez les cartes. Les deux premières cartes chiffres retournées forment le nombre de départ : ici, 47.",
+     "gap": 0.45,
+     "id": "start",
+     "anchors": {
+      "The first two": "Les deux premières",
+      "here, 47": "ici, 47"
+     },
+     "speech": "Pour commencer, mélangez les cartes. Les deux premières cartes chiffres retournées forment le nombre de départ : ici, quarante-sept."
+    },
+    {
+     "text": "Chaque joueur reçoit 13 cartes, et 25 sont posées face visible au milieu : c'est la table.",
+     "gap": 0.45,
+     "id": "deal",
+     "anchors": {
+      "13 cards": "13 cartes",
+      "and 25 go": "et 25 sont",
+      "that's the table": "c'est la table"
+     },
+     "speech": "Chaque joueur reçoit treize cartes, et vingt-cinq sont posées face visible au milieu : c'est la table."
+    },
+    {
+     "text": "Les 67 autres restent face cachée, hors du jeu.",
+     "gap": 0.45,
+     "id": "stock",
+     "speech": "Les soixante-sept autres restent face cachée, hors du jeu."
+    },
+    {
+     "text": "Toute carte prise sur la table reste visible pour votre adversaire.",
+     "gap": 0.6,
+     "id": "visible",
+     "speech": "Toute carte prise sur la table reste visible pour votre adversaire."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "flow",
+   "title": "Le déroulement",
+   "segments": [
+    {
+     "text": "Le joueur 2 commence par un petit choix : échanger une carte de sa main contre une carte de la table, ou garder sa main.",
+     "gap": 0.45,
+     "id": "swap",
+     "anchors": {
+      "swap one card": "échanger une carte",
+      "for one on the table": "contre une carte de la table",
+      "or keep their hand": "ou garder sa main"
+     },
+     "speech": "Le joueur deux commence par un petit choix : échanger une carte de sa main contre une carte de la table, ou garder sa main."
+    },
+    {
+     "text": "Puis le joueur 1 fait la première enchère, avec exactement une carte de la table et des cartes de sa main.",
+     "gap": 0.45,
+     "id": "first",
+     "anchors": {
+      "exactly one card": "exactement une carte",
+      "with cards from their hand": "et des cartes de sa main"
+     },
+     "speech": "Puis le joueur un fait la première enchère, avec exactement une carte de la table et des cartes de sa main."
+    },
+    {
+     "text": "Ensuite, chacun joue à son tour. À votre tour, vous faites une enchère, puis vous prenez une carte de la table.",
+     "gap": 0.6,
+     "id": "loop",
+     "anchors": {
+      "you make a bid": "vous faites une enchère",
+      "then take one card": "puis vous prenez une carte"
+     },
+     "speech": "Ensuite, chacun joue à son tour. À votre tour, vous faites une enchère, puis vous prenez une carte de la table."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "count",
+   "title": "Règle un : monter",
+   "segments": [
+    {
+     "text": "Et maintenant, le cœur du jeu. Une enchère n'obéit qu'à deux règles.",
+     "gap": 0.5,
+     "id": "heart",
+     "anchors": {
+      "A bid must": "Une enchère"
+     },
+     "speech": "Et maintenant, le cœur du jeu. Une enchère n'obéit qu'à deux règles."
+    },
+    {
+     "text": "Règle un : monter. Votre nombre doit dépasser la dernière enchère de 1 à 10 crans.",
+     "gap": 0.45,
+     "say": "Règle un : monter. Votre nombre doit dépasser la dernière enchère de un à dix crans.",
+     "id": "rule",
+     "anchors": {
+      "Your number": "Votre nombre"
+     },
+     "speech": "Règle un : monter. Votre nombre doit dépasser la dernière enchère de un à dix crans."
+    },
+    {
+     "text": "Disons que la dernière enchère est 58.",
+     "gap": 0.45,
+     "id": "latest",
+     "anchors": {
+      "58": "58"
+     },
+     "speech": "Disons que la dernière enchère est cinquante-huit."
+    },
+    {
+     "text": "Un cran : 59.",
+     "gap": 0.25,
+     "id": "c1",
+     "speech": "Un cran : cinquante-neuf."
+    },
+    {
+     "text": "Deux crans : 60.",
+     "gap": 0.25,
+     "id": "c2",
+     "speech": "Deux crans : soixante."
+    },
+    {
+     "text": "Et jusqu'à dix crans : 68.",
+     "gap": 0.45,
+     "id": "c10",
+     "anchors": {
+      "68": "68"
+     },
+     "speech": "Et jusqu'à dix crans : soixante-huit."
+    },
+    {
+     "text": "Tout nombre de 59 à 68 convient.",
+     "gap": 0.45,
+     "id": "range",
+     "speech": "Tout nombre de cinquante-neuf à soixante-huit convient."
+    },
+    {
+     "text": "Mais pas 58 lui-même : il faut monter d'au moins un cran. Et 69, c'est trop loin : onze crans.",
+     "gap": 0.6,
+     "id": "nope",
+     "anchors": {
+      "58 itself": "58 lui-même",
+      "And 69": "Et 69",
+      "eleven steps": "onze crans"
+     },
+     "speech": "Mais pas cinquante-huit lui-même : il faut monter d'au moins un cran. Et soixante-neuf, c'est trop loin : onze crans."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "rollover",
+   "title": "Après 99 vient 00",
+   "segments": [
+    {
+     "text": "Ici, les nombres n'ont que deux chiffres : après 99 vient donc 00.",
+     "gap": 0.45,
+     "take": 3,
+     "id": "top",
+     "anchors": {
+      "only two digits": "que deux chiffres",
+      "so after 99": "après 99",
+      "comes 00": "vient donc 00"
+     },
+     "speech": "Ici, les nombres n'ont que deux chiffres : après quatre-vingt-dix-neuf vient donc zéro zéro."
+    },
+    {
+     "text": "Pensez au compteur kilométrique d'une voiture : après 99, il repasse à 00, et continue : 01, 02, et ainsi de suite.",
+     "gap": 0.45,
+     "id": "roll",
+     "anchors": {
+      "in a car": "d'une voiture",
+      "after 99": "après 99",
+      "rolls over": "il repasse à 00",
+      "01": "01",
+      "02": "02",
+      "and so on": "et ainsi de suite"
+     },
+     "speech": "Pensez au compteur kilométrique d'une voiture : après quatre-vingt-dix-neuf, il repasse à zéro zéro, et continue : zéro un, zéro deux, et ainsi de suite."
+    },
+    {
+     "text": "CardAuction compte de la même façon. Si la dernière enchère est 95, montez :",
+     "gap": 0.3,
+     "id": "from95",
+     "anchors": {
+      "95": "95"
+     },
+     "speech": "CardAuction compte de la même façon. Si la dernière enchère est quatre-vingt-quinze, montez :"
+    },
+    {
+     "text": "96,",
+     "gap": 0.12,
+     "id": "n96",
+     "speech": "quatre-vingt-seize,"
+    },
+    {
+     "text": "97,",
+     "gap": 0.12,
+     "id": "n97",
+     "speech": "quatre-vingt-dix-sept,"
+    },
+    {
+     "text": "98,",
+     "gap": 0.12,
+     "take": 1,
+     "id": "n98",
+     "speech": "quatre-vingt-dix-huit,"
+    },
+    {
+     "text": "99,",
+     "gap": 0.12,
+     "id": "n99",
+     "speech": "quatre-vingt-dix-neuf,"
+    },
+    {
+     "text": "00,",
+     "gap": 0.12,
+     "say": "zéro-zéro,",
+     "id": "n00",
+     "speech": "zéro-zéro,"
+    },
+    {
+     "text": "01,",
+     "gap": 0.12,
+     "id": "n01",
+     "speech": "zéro un,"
+    },
+    {
+     "text": "02,",
+     "gap": 0.12,
+     "take": 2,
+     "id": "n02",
+     "speech": "zéro deux,"
+    },
+    {
+     "text": "03,",
+     "gap": 0.12,
+     "id": "n03",
+     "speech": "zéro trois,"
+    },
+    {
+     "text": "04,",
+     "gap": 0.12,
+     "id": "n04",
+     "speech": "zéro quatre,"
+    },
+    {
+     "text": "05.",
+     "gap": 0.45,
+     "id": "n05",
+     "speech": "zéro cinq."
+    },
+    {
+     "text": "Soit dix crans : depuis 95, vous pouvez enchérir de 96 à 05, en faisant le tour.",
+     "gap": 0.45,
+     "id": "window",
+     "anchors": {
+      "you may bid": "vous pouvez enchérir"
+     },
+     "speech": "Soit dix crans : depuis quatre-vingt-quinze, vous pouvez enchérir de quatre-vingt-seize à zéro cinq, en faisant le tour."
+    },
+    {
+     "text": "Mais 94, c'est reculer, et 06 est à onze crans.",
+     "gap": 0.45,
+     "id": "nope",
+     "anchors": {
+      "94": "94",
+      "06": "06",
+      "eleven": "onze"
+     },
+     "speech": "Mais quatre-vingt-quatorze, c'est reculer, et zéro six est à onze crans."
+    },
+    {
+     "text": "On peut aussi voir les nombres sur un cadran, comme une horloge à 100 graduations. On avance toujours, de 1 à 10 graduations, et après 99, le cadran continue.",
+     "gap": 0.45,
+     "say": "On peut aussi voir les nombres sur un cadran, comme une horloge à cent graduations. On avance toujours, d'une à dix graduations, et après quatre-vingt-dix-neuf, le cadran continue.",
+     "id": "dial",
+     "anchors": {
+      "100 marks": "100 graduations",
+      "You always move forward": "On avance toujours",
+      "and after 99": "et après 99"
+     },
+     "speech": "On peut aussi voir les nombres sur un cadran, comme une horloge à cent graduations. On avance toujours, d'une à dix graduations, et après quatre-vingt-dix-neuf, le cadran continue."
+    },
+    {
+     "text": "Juste après 99, l'enchère suivante peut donc aller de 00 à 09.",
+     "gap": 0.45,
+     "id": "after99",
+     "speech": "Juste après quatre-vingt-dix-neuf, l'enchère suivante peut donc aller de zéro zéro à zéro neuf."
+    },
+    {
+     "text": "Un petit nombre peut battre un grand, quand on monte au-delà de 99 pour l'atteindre.",
+     "gap": 0.6,
+     "id": "small",
+     "speech": "Un petit nombre peut battre un grand, quand on monte au-delà de quatre-vingt-dix-neuf pour l'atteindre."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "color",
+   "title": "Règle deux : une nouvelle couleur",
+   "segments": [
+    {
+     "text": "Règle deux : votre enchère doit avoir au moins une couleur absente de la dernière enchère.",
+     "gap": 0.45,
+     "id": "rule",
+     "anchors": {
+      "your bid needs": "votre enchère doit"
+     },
+     "speech": "Règle deux : votre enchère doit avoir au moins une couleur absente de la dernière enchère."
+    },
+    {
+     "text": "Disons que la dernière enchère est 5 de cœur, 8 de pique : 58, en rouge et noir. Vous aimeriez enchérir 63.",
+     "gap": 0.45,
+     "id": "latest",
+     "anchors": {
+      "in red and black": "en rouge et noir",
+      "You'd like": "Vous aimeriez"
+     },
+     "speech": "Disons que la dernière enchère est cinq de cœur, huit de pique : cinquante-huit, en rouge et noir. Vous aimeriez enchérir soixante-trois."
+    },
+    {
+     "text": "6 d'étoiles et 3 de pique ? Oui ! L'étoile dorée est nouvelle.",
+     "gap": 0.45,
+     "id": "yes",
+     "anchors": {
+      "Yes!": "Oui !",
+      "The gold star": "L'étoile dorée"
+     },
+     "speech": "six d'étoiles et trois de pique ? Oui ! L'étoile dorée est nouvelle."
+    },
+    {
+     "text": "6 de cœur et 3 de pique ? Non : le rouge et le noir sont déjà dans 58.",
+     "gap": 0.45,
+     "id": "no",
+     "anchors": {
+      "No:": "Non :",
+      "red and black": "le rouge et le noir"
+     },
+     "speech": "six de cœur et trois de pique ? Non : le rouge et le noir sont déjà dans cinquante-huit."
+    },
+    {
+     "text": "Vos deux cartes peuvent être de la même couleur : 6 de carreau et 3 de carreau, ça marche, car le bleu est nouveau.",
+     "gap": 0.45,
+     "id": "share",
+     "anchors": {
+      "6 of diamonds": "6 de carreau",
+      "works": "ça marche",
+      "because blue": "car le bleu"
+     },
+     "speech": "Vos deux cartes peuvent être de la même couleur : six de carreau et trois de carreau, ça marche, car le bleu est nouveau."
+    },
+    {
+     "text": "Vous pouvez même utiliser les deux exemplaires d'une carte : deux 6 de carreau donnent 66.",
+     "gap": 0.6,
+     "id": "pair",
+     "anchors": {
+      "both copies": "les deux exemplaires",
+      "two 6s": "deux 6",
+      "make 66": "donnent 66"
+     },
+     "speech": "Vous pouvez même utiliser les deux exemplaires d'une carte : deux six de carreau donnent soixante-six."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "action",
+   "title": "Les cartes action",
+   "segments": [
+    {
+     "text": "Passons aux cartes action. Juste avant votre enchère, une carte action fait monter ou descendre la dernière enchère de 10.",
+     "gap": 0.45,
+     "id": "intro",
+     "anchors": {
+      "Just before": "Juste avant",
+      "moves the latest bid": "fait monter ou descendre"
+     },
+     "speech": "Passons aux cartes action. Juste avant votre enchère, une carte action fait monter ou descendre la dernière enchère de dix."
+    },
+    {
+     "text": "Posez-la à côté de la dernière enchère : à gauche, elle ajoute 10 ; à droite, elle retire 10.",
+     "gap": 0.45,
+     "id": "sides",
+     "anchors": {
+      "on the left": "à gauche",
+      "on the right": "à droite"
+     },
+     "speech": "Posez-la à côté de la dernière enchère : à gauche, elle ajoute dix ; à droite, elle retire dix."
+    },
+    {
+     "text": "Disons que la dernière enchère est 58, et que vos cartes peuvent faire 72, mais rien entre 59 et 68.",
+     "gap": 0.45,
+     "id": "example",
+     "anchors": {
+      "your cards can make 72": "vos cartes peuvent faire 72",
+      "but nothing": "mais rien"
+     },
+     "speech": "Disons que la dernière enchère est cinquante-huit, et que vos cartes peuvent faire soixante-douze, mais rien entre cinquante-neuf et soixante-huit."
+    },
+    {
+     "text": "Posez une carte action à gauche : 58 plus 10, ça fait 68.",
+     "gap": 0.45,
+     "id": "plus",
+     "anchors": {
+      "58 plus 10": "58 plus 10"
+     },
+     "speech": "Posez une carte action à gauche : cinquante-huit plus dix, ça fait soixante-huit."
+    },
+    {
+     "text": "Montez depuis 68 : de 69 à 78. 72 convient !",
+     "gap": 0.45,
+     "id": "fits",
+     "anchors": {
+      "69 to 78": "de 69 à 78",
+      "72 fits": "72 convient"
+     },
+     "speech": "Montez depuis soixante-huit : de soixante-neuf à soixante-dix-huit. soixante-douze convient !"
+    },
+    {
+     "text": "À droite, 58 moins 10 donne 48 : vous pouvez enchérir de 49 à 58. Cette fois, 58 lui-même est permis.",
+     "gap": 0.45,
+     "id": "minus",
+     "anchors": {
+      "58 minus 10": "58 moins 10",
+      "you may bid": "vous pouvez enchérir",
+      "This time": "Cette fois"
+     },
+     "speech": "À droite, cinquante-huit moins dix donne quarante-huit : vous pouvez enchérir de quarante-neuf à cinquante-huit. Cette fois, cinquante-huit lui-même est permis."
+    },
+    {
+     "text": "Les cartes action font aussi le tour : 95 plus 10 donne 05, donc vous pouvez enchérir de 06 à 15.",
+     "gap": 0.45,
+     "id": "wrapplus",
+     "anchors": {
+      "95 plus 10": "95 plus 10",
+      "so you may bid": "donc vous pouvez enchérir"
+     },
+     "speech": "Les cartes action font aussi le tour : quatre-vingt-quinze plus dix donne zéro cinq, donc vous pouvez enchérir de zéro six à quinze."
+    },
+    {
+     "text": "Et 03 moins 10 revient à 93 : vous pouvez enchérir de 94 à 03, en faisant le tour.",
+     "gap": 0.45,
+     "id": "wrapminus",
+     "anchors": {
+      "03 minus 10": "03 moins 10",
+      "you may bid": "vous pouvez enchérir"
+     },
+     "speech": "Et zéro trois moins dix revient à quatre-vingt-treize : vous pouvez enchérir de quatre-vingt-quatorze à zéro trois, en faisant le tour."
+    },
+    {
+     "text": "La règle de la couleur s'applique toujours.",
+     "gap": 0.6,
+     "id": "stillcolor",
+     "speech": "La règle de la couleur s'applique toujours."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "take",
+   "title": "Prendre une carte",
+   "segments": [
+    {
+     "text": "Après chaque enchère, prenez une carte de la table : un chiffre qui vous manque, une nouvelle couleur ou une carte action pourra vous sauver plus tard.",
+     "gap": 0.45,
+     "id": "take",
+     "anchors": {
+      "a missing number": "un chiffre qui vous manque",
+      "a new color": "une nouvelle couleur",
+      "or an action card": "ou une carte action"
+     },
+     "speech": "Après chaque enchère, prenez une carte de la table : un chiffre qui vous manque, une nouvelle couleur ou une carte action pourra vous sauver plus tard."
+    },
+    {
+     "text": "Les cartes de votre enchère restent sur le tableau des enchères. Quand la table est vide, vous ne prenez rien.",
+     "gap": 0.6,
+     "id": "board",
+     "anchors": {
+      "When the table is empty": "Quand la table est vide",
+      "you take nothing": "vous ne prenez rien"
+     },
+     "speech": "Les cartes de votre enchère restent sur le tableau des enchères. Quand la table est vide, vous ne prenez rien."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "first",
+   "title": "La première enchère",
+   "segments": [
+    {
+     "text": "Vous vous souvenez de la première enchère du joueur 1, avec exactement une carte de la table ?",
+     "gap": 0.45,
+     "id": "remember",
+     "speech": "Vous vous souvenez de la première enchère du joueur un, avec exactement une carte de la table ?"
+    },
+    {
+     "text": "Disons que le nombre de départ est 47. La table a un 5 d'étoiles, et vous avez un 2 de cœur.",
+     "gap": 0.45,
+     "id": "setup",
+     "anchors": {
+      "the starting number": "le nombre de départ",
+      "5 of stars": "5 d'étoiles",
+      "2 of hearts": "2 de cœur"
+     },
+     "speech": "Disons que le nombre de départ est quarante-sept. La table a un cinq d'étoiles, et vous avez un deux de cœur."
+    },
+    {
+     "text": "Ensemble, ils font 52 : cinq crans plus haut, avec une nouvelle couleur. Parfait.",
+     "gap": 0.45,
+     "id": "bid",
+     "anchors": {
+      "five steps up": "cinq crans plus haut",
+      "with a new color": "avec une nouvelle couleur"
+     },
+     "speech": "Ensemble, ils font cinquante-deux : cinq crans plus haut, avec une nouvelle couleur. Parfait."
+    },
+    {
+     "text": "La carte de la table peut aussi être une carte action, jouée avec deux cartes de votre main.",
+     "gap": 0.6,
+     "id": "action",
+     "anchors": {
+      "an action card": "une carte action",
+      "two cards from your hand": "deux cartes de votre main"
+     },
+     "speech": "La carte de la table peut aussi être une carte action, jouée avec deux cartes de votre main."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "end",
+   "title": "La fin de la partie",
+   "segments": [
+    {
+     "text": "La partie s'arrête quand un joueur ne peut pas faire d'enchère valable à son tour : ce joueur a perdu.",
+     "gap": 0.45,
+     "id": "rule",
+     "anchors": {
+      "that player loses": "ce joueur a perdu"
+     },
+     "speech": "La partie s'arrête quand un joueur ne peut pas faire d'enchère valable à son tour : ce joueur a perdu."
+    },
+    {
+     "text": "Disons que la dernière enchère est 87. Il vous faut un nombre de 88 à 97 : votre carte des dizaines doit donc être un 8 ou un 9.",
+     "gap": 0.45,
+     "id": "example",
+     "anchors": {
+      "88 to 97": "de 88 à 97",
+      "your tens card": "votre carte des dizaines"
+     },
+     "speech": "Disons que la dernière enchère est quatre-vingt-sept. Il vous faut un nombre de quatre-vingt-huit à quatre-vingt-dix-sept : votre carte des dizaines doit donc être un huit ou un neuf."
+    },
+    {
+     "text": "Pas de 8, pas de 9, pas de carte action pour vous aider : vous êtes bloqué, et vous avez perdu.",
+     "gap": 0.45,
+     "id": "stuck",
+     "anchors": {
+      "no 8": "Pas de 8",
+      "no 9": "pas de 9",
+      "no action card": "pas de carte action",
+      "you're stuck": "vous êtes bloqué"
+     },
+     "speech": "Pas de huit, pas de neuf, pas de carte action pour vous aider : vous êtes bloqué, et vous avez perdu."
+    },
+    {
+     "text": "Et si le joueur 1 ne peut pas faire la première enchère, c'est le joueur 2 qui gagne.",
+     "gap": 0.45,
+     "id": "open",
+     "anchors": {
+      "Player 2 wins": "le joueur 2 qui gagne"
+     },
+     "speech": "Et si le joueur un ne peut pas faire la première enchère, c'est le joueur deux qui gagne."
+    },
+    {
+     "text": "Dans l'appli, chaque tour dure au plus 120 secondes. Si le temps s'écoule alors que vous devez enchérir, vous perdez. S'il s'écoule pendant l'échange du joueur 2, il garde simplement sa main.",
+     "gap": 0.7,
+     "id": "clock",
+     "anchors": {
+      "If it runs out while": "Si le temps s'écoule",
+      "during Player 2's swap": "pendant l'échange du joueur 2"
+     },
+     "speech": "Dans l'appli, chaque tour dure au plus cent vingt secondes. Si le temps s'écoule alors que vous devez enchérir, vous perdez. S'il s'écoule pendant l'échange du joueur deux, il garde simplement sa main."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "app",
+   "title": "Jouer dans l'appli",
+   "segments": [
+    {
+     "text": "Jouons dans l'appli. Ouvrez le site de CardAuction : l'adresse est à l'écran.",
+     "gap": 0.45,
+     "id": "open",
+     "speech": "Jouons dans l'appli. Ouvrez le site de CardAuction : l'adresse est à l'écran."
+    },
+    {
+     "text": "Tapez votre nom, puis choisissez comment jouer : Partie rapide, contre la prochaine personne qui cherche une partie ;",
+     "gap": 0.2,
+     "id": "quick",
+     "anchors": {
+      "Type your name": "Tapez votre nom",
+      "then pick": "puis choisissez",
+      "Quick match": "Partie rapide"
+     },
+     "speech": "Tapez votre nom, puis choisissez comment jouer : Partie rapide, contre la prochaine personne qui cherche une partie ;"
+    },
+    {
+     "text": "Jouer contre l'IA, avec un niveau et une place ;",
+     "gap": 0.2,
+     "id": "ai",
+     "speech": "Jouer contre l'IA, avec un niveau et une place ;"
+    },
+    {
+     "text": "ou Partie privée, pour inviter un ami avec un code ou un lien.",
+     "gap": 0.5,
+     "id": "private",
+     "speech": "ou Partie privée, pour inviter un ami avec un code ou un lien."
+    },
+    {
+     "text": "Voici l'écran de jeu : votre main en bas, les cartes de la table au milieu, et le tableau des enchères, avec toutes les enchères jusqu'ici.",
+     "gap": 0.45,
+     "id": "table",
+     "anchors": {
+      "your hand": "votre main",
+      "the table cards": "les cartes de la table",
+      "and the bid board": "et le tableau des enchères"
+     },
+     "speech": "Voici l'écran de jeu : votre main en bas, les cartes de la table au milieu, et le tableau des enchères, avec toutes les enchères jusqu'ici."
+    },
+    {
+     "text": "En haut, les cartes de votre adversaire : face cachée, sauf celles qu'il a prises sur la table.",
+     "gap": 0.45,
+     "id": "opponent",
+     "anchors": {
+      "At the top": "En haut"
+     },
+     "speech": "En haut, les cartes de votre adversaire : face cachée, sauf celles qu'il a prises sur la table."
+    },
+    {
+     "text": "À votre tour, touchez une carte pour les dizaines, puis une pour les unités. L'appli affiche votre nombre et le vérifie.",
+     "gap": 0.45,
+     "id": "compose",
+     "anchors": {
+      "a card for the tens": "une carte pour les dizaines",
+      "then one for the units": "puis une pour les unités",
+      "The app shows": "L'appli affiche"
+     },
+     "speech": "À votre tour, touchez une carte pour les dizaines, puis une pour les unités. L'appli affiche votre nombre et le vérifie."
+    },
+    {
+     "text": "Si une enchère ne marche pas, l'appli vous dit pourquoi.",
+     "gap": 0.45,
+     "id": "why",
+     "speech": "Si une enchère ne marche pas, l'appli vous dit pourquoi."
+    },
+    {
+     "text": "Pour une carte action, touchez-la, puis la case plus 10 ou moins 10 à côté de la dernière enchère.",
+     "gap": 0.45,
+     "id": "action",
+     "anchors": {
+      "tap it": "touchez-la",
+      "the plus 10": "la case plus 10"
+     },
+     "speech": "Pour une carte action, touchez-la, puis la case plus dix ou moins dix à côté de la dernière enchère."
+    },
+    {
+     "text": "Touchez ensuite une carte de la table à prendre, et appuyez sur Valider.",
+     "gap": 0.45,
+     "id": "confirm",
+     "anchors": {
+      "tap a table card": "Touchez ensuite une carte de la table",
+      "press Confirm": "appuyez sur Valider"
+     },
+     "speech": "Touchez ensuite une carte de la table à prendre, et appuyez sur Valider."
+    },
+    {
+     "text": "Avec l'Aide activée, les cartes qui permettent un coup valable s'allument.",
+     "gap": 0.45,
+     "id": "assist",
+     "anchors": {
+      "the cards that fit": "les cartes qui permettent"
+     },
+     "speech": "Avec l'Aide activée, les cartes qui permettent un coup valable s'allument."
+    },
+    {
+     "text": "En tant que joueur 2, votre premier coup est l'échange : touchez une carte de votre main et une carte de la table, ou gardez votre main.",
+     "gap": 0.45,
+     "id": "swap",
+     "anchors": {
+      "tap a card in your hand": "touchez une carte de votre main",
+      "and a table card": "et une carte de la table",
+      "or keep your hand": "ou gardez votre main"
+     },
+     "speech": "En tant que joueur deux, votre premier coup est l'échange : touchez une carte de votre main et une carte de la table, ou gardez votre main."
+    },
+    {
+     "text": "Connexion perdue ? Vous avez 25 secondes pour revenir.",
+     "gap": 0.45,
+     "id": "grace",
+     "speech": "Connexion perdue ? Vous avez vingt-cinq secondes pour revenir."
+    },
+    {
+     "text": "À la fin, les deux mains sont dévoilées, et vous pouvez demander une revanche.",
+     "gap": 0.45,
+     "id": "result",
+     "anchors": {
+      "ask for a rematch": "demander une revanche"
+     },
+     "speech": "À la fin, les deux mains sont dévoilées, et vous pouvez demander une revanche."
+    },
+    {
+     "text": "Et les règles sont toujours à portée de main, en français ou en anglais.",
+     "gap": 0.7,
+     "id": "rules",
+     "anchors": {
+      "in English": "en français"
+     },
+     "speech": "Et les règles sont toujours à portée de main, en français ou en anglais."
+    }
+   ],
+   "hold": 0.0
+  },
+  {
+   "id": "outro",
+   "title": "C'est tout",
+   "segments": [
+    {
+     "text": "C'est tout ! Montez de 1 à 10 crans, rappelez-vous qu'après 99 vient 00, apportez une nouvelle couleur, et utilisez bien vos cartes action.",
+     "gap": 0.45,
+     "say": "C'est tout ! Montez de un à dix crans, rappelez-vous qu'après quatre-vingt-dix-neuf vient zéro zéro, apportez une nouvelle couleur, et utilisez bien vos cartes action.",
+     "id": "recap",
+     "anchors": {
+      "Count up": "Montez",
+      "remember that after 99": "rappelez-vous qu'après 99",
+      "bring a new color": "apportez une nouvelle couleur",
+      "and use your action cards": "et utilisez bien vos cartes action"
+     },
+     "speech": "C'est tout ! Montez de un à dix crans, rappelez-vous qu'après quatre-vingt-dix-neuf vient zéro zéro, apportez une nouvelle couleur, et utilisez bien vos cartes action."
+    },
+    {
+     "text": "Bon jeu, et bonne chance !",
+     "gap": 1.2,
+     "id": "luck",
+     "speech": "Bon jeu, et bonne chance !"
+    }
+   ],
+   "hold": 1.5
+  }
+ ]
+}

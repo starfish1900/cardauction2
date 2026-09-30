@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { FlipCard, Num, PlayingCard, Text } from './base';
 import { easeInOut, lerp, pop, ramp, toss } from './anim';
 import { C, UI } from '../theme';
+import { tr } from '../lang';
 
 /**
  * The game laid out from above, shared by the setup and the flow of a game: Player 2's hand at
@@ -178,7 +179,7 @@ export function BoardPanel({ opacity, children }: { opacity: number; children?: 
           color: C.ink3,
         }}
       >
-        Bid board
+        {tr('Bid board')}
       </div>
       {children}
     </div>
@@ -268,7 +269,7 @@ export function HandLabel({
           }}
         />
         <Text size={32} color={turn > 0.5 ? C.gold2 : C.ink}>
-          Player {seat}
+          {tr('Player')} {seat}
         </Text>
       </div>
       {count && (

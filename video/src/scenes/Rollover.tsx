@@ -14,6 +14,7 @@ import {
 import { card } from '../cards';
 import { C, UI } from '../theme';
 import { useMarks } from '../timeline';
+import { tr } from '../lang';
 
 const FIRST = 93;
 const N = 15;
@@ -100,7 +101,7 @@ function Dashboard({ value, panel }: { value: number; panel: number }) {
           color: '#9aa39e',
         }}
       >
-        MILES
+        {tr('MILES')}
       </div>
     </>
   );
@@ -196,7 +197,7 @@ export function Rollover() {
           }}
         >
           <Text size={34} color={C.gold2}>
-            only two digits
+            {tr('only two digits')}
           </Text>
         </div>
       </div>
@@ -209,7 +210,7 @@ export function Rollover() {
         }}
       >
         <Pill size={34} color={C.goldInk} bg={C.gold} border={C.gold2}>
-          after 99 comes 00
+          {tr('after 99 comes 00')}
         </Pill>
       </div>
       <div
@@ -230,15 +231,15 @@ export function Rollover() {
         <div
           style={{
             position: 'absolute',
-            left: center(95) - 100,
-            width: 200,
+            left: center(95) - 160,
+            width: 320,
             top: 236,
             textAlign: 'center',
             opacity: fade(frame, latestAt - 4),
           }}
         >
           <Text size={28} color={C.gold2}>
-            latest bid
+            {tr('latest bid')}
           </Text>
         </div>
         <div style={{ opacity: fade(frame, latestAt - 4) }}>
@@ -290,7 +291,7 @@ export function Rollover() {
           }}
         >
           <Pill size={28} color={C.goldInk} bg={C.gold} border={C.gold2}>
-            after 99 comes 00
+            {tr('after 99 comes 00')}
           </Pill>
         </div>
         <Hop
@@ -308,7 +309,7 @@ export function Rollover() {
           progress={ramp(frame, windowAt, windowAt + 12)}
         >
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 14 }}>
-            <Verdict ok size={44} /> 96 to 05: ten steps
+            <Verdict ok size={44} /> {tr('96 to 05: ten steps')}
           </span>
         </Bracket>
         <div
@@ -336,7 +337,7 @@ export function Rollover() {
             color: C.danger,
           }}
         >
-          backward
+          {tr('backward')}
         </div>
         <div
           style={{
@@ -363,7 +364,7 @@ export function Rollover() {
             color: C.danger,
           }}
         >
-          11 steps
+          {tr('11 steps')}
         </div>
       </div>
 
@@ -453,30 +454,31 @@ export function Rollover() {
         }}
       >
         <Text size={38} color={C.mint}>
-          forward
+          {tr('forward')}
         </Text>
       </div>
       <div style={{ position: 'absolute', left: 70, width: 480, top: 360, opacity: dialIn }}>
         <div style={{ opacity: fade(frame, marksAt) }}>
           <Text size={40} color={C.ink}>
-            100 marks,
+            {tr('100 marks,')}
             <br />
-            like a clock
+            {tr('like a clock')}
           </Text>
         </div>
         <div style={{ marginTop: 40, opacity: fade(frame, forwardAt) }}>
           <Text size={40} color={C.mint}>
-            Always forward:
-            <br />1 to 10 marks
+            {tr('Always forward:')}
+            <br />
+            {tr('1 to 10 marks')}
           </Text>
         </div>
       </div>
       <div style={{ position: 'absolute', left: 1380, width: 480, top: 380, opacity: dialIn }}>
         <div style={{ position: 'absolute', top: 0, opacity: fade(frame, keepAt, after99 - 8, 8) }}>
           <Text size={40} color={C.gold2}>
-            After 99,
+            {tr('After 99,')}
             <br />
-            keep going
+            {tr('keep going')}
           </Text>
         </div>
         <div
@@ -487,11 +489,11 @@ export function Rollover() {
           }}
         >
           <Text size={40} color={C.gold2}>
-            Right after 99:
+            {tr('Right after 99:')}
           </Text>
           <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: 16 }}>
             <Num size={64} color={C.mint}>
-              00 to 09
+              {tr('00 to 09')}
             </Num>
             <Verdict ok size={52} />
           </div>
@@ -502,7 +504,7 @@ export function Rollover() {
               03
             </Num>
             <Text size={40} color={C.ink}>
-              tops
+              {tr('tops')}
             </Text>
             <Num size={64} color={C.gold2}>
               97
@@ -511,7 +513,7 @@ export function Rollover() {
           <div style={{ marginTop: 14, display: 'flex', alignItems: 'center', gap: 14 }}>
             <Verdict ok size={46} />
             <Text size={34} color={C.ink2}>
-              6 steps up, past 99
+              {tr('6 steps up, past 99')}
             </Text>
           </div>
         </div>

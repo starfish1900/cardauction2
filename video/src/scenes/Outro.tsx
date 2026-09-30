@@ -7,6 +7,7 @@ import { card } from '../cards';
 import { C, UI } from '../theme';
 import { useMarks } from '../timeline';
 import { SITE } from './App';
+import { LANG, tr } from '../lang';
 
 function Badge({
   at,
@@ -52,7 +53,8 @@ function Badge({
           fontWeight: 700,
           fontSize: 40,
           color: C.ink,
-          whiteSpace: 'nowrap',
+          // French lines are longer: they break where their text says.
+          whiteSpace: LANG === 'fr' ? 'pre-line' : 'nowrap',
         }}
       >
         {children}
@@ -77,7 +79,7 @@ export function Outro() {
       <div style={{ opacity: fade(frame, titleAt, recapOut, 12) }}>
         <div style={{ position: 'absolute', left: 0, right: 0, top: 96, textAlign: 'center' }}>
           <Num size={84} color={C.gold2}>
-            That&apos;s everything!
+            {tr("That's everything!")}
           </Num>
         </div>
         <Badge
@@ -91,7 +93,7 @@ export function Outro() {
             </Num>
           }
         >
-          Count up 1 to 10 steps
+          {tr('Count up 1 to 10 steps')}
         </Badge>
         <Badge
           at={rollAt}
@@ -104,10 +106,10 @@ export function Outro() {
             </Num>
           }
         >
-          After 99 comes 00
+          {tr('After 99 comes 00')}
         </Badge>
         <Badge at={colorAt} frame={frame} x={150} y={500} icon={<SuitRow size={26} gap={4} />}>
-          Bring a new color
+          {tr('Bring a new color')}
         </Badge>
         <Badge
           at={actionAt}
@@ -116,7 +118,7 @@ export function Outro() {
           y={500}
           icon={<PlayingCard id={card('A0')} w={82} style={{ position: 'relative' }} />}
         >
-          Use action cards wisely
+          {tr('Use action cards wisely')}
         </Badge>
       </div>
 
@@ -131,11 +133,11 @@ export function Outro() {
         }}
       >
         <Num size={110} color={C.gold2}>
-          Have fun, and good luck!
+          {tr('Have fun, and good luck!')}
         </Num>
         <div style={{ marginTop: 50 }}>
           <Text size={30} color={C.ink2} weight={500}>
-            Play CardAuction at
+            {tr('Play CardAuction at')}
           </Text>
         </div>
         <div

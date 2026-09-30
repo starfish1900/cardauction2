@@ -28,3 +28,25 @@ The final files:
 The animation follows the narration: each scene of `src/scenes/` places its moves at the words
 they illustrate (`useMarks(scene).at(line)` and `.word(line, words)`), so a change of script
 only needs the voice step again, then a render.
+
+## The French version
+
+The same scenes in French. With `REMOTION_LANG=fr`, the video reads its French files: the
+narration and the subtitles (`src/fr/`, `public/fr/audio/`), the texts on screen
+(`src/fr/strings.json`, keyed by the English text, through `tr()`), and screenshots of the app in
+French (`public/fr/screens/`, `src/fr/screens.json`).
+
+| Step    | Command                                                                                       | Makes                                                                              |
+| ------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Script  | `python3 script/script_fr.py`                                                                 | `script/script.fr.json`, with the French words for each anchor the scenes wait for |
+| Voice   | `<python> audio/voice_fr.py --engine chatterbox --ref audio/voix-fr.wav`                      | the clips, in `public/fr/audio/voice/`                                             |
+| Layout  | `python3 audio/voice.py --lang fr`                                                            | the narration, `src/fr/timeline.json` and the French subtitles                     |
+| Screens | `CAPTURE_LANG=fr` with the capture script                                                     | `public/fr/screens/*.png` and `src/fr/screens.json`, the app in French             |
+| Stills  | `REMOTION_LANG=fr node scripts/stills.mjs <dir> <scene@seconds>…`                             | review stills                                                                      |
+| Render  | `REMOTION_LANG=fr npx remotion render src/index.ts TutorialSubtitled out/fr/tutorial-raw.mp4` | the video, with its subtitles                                                      |
+| Finish  | `python3 scripts/finish.py --lang fr`                                                         | `out/fr/cardauction-tutoriel-fr.mp4`, sound evened out to -16 LUFS                 |
+
+`<python>` has `chatterbox-tts` installed. The French voice is Chatterbox Multilingual (MIT
+licence), speaking in the voice of `audio/voix-fr.wav`, a short sample of the Piper voice
+`fr_FR-tom-medium`. A line of the script names English words the animation waits for (`anchors`),
+so the scenes stay the same in both languages.

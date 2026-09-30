@@ -6,6 +6,7 @@ import { SuitChip } from '../components/SuitChip';
 import { card } from '../cards';
 import { C, SUIT_NAMES, SUIT_ON_FELT, UI } from '../theme';
 import { useMarks } from '../timeline';
+import { tr } from '../lang';
 
 const CODE = ['*', 'D', 'C', 'H', 'S'] as const;
 const CW = 96;
@@ -77,7 +78,7 @@ export function Cards() {
           {count}
         </Num>
         <Text size={40} color={C.ink2} style={{ marginLeft: 16 }}>
-          cards
+          {tr('cards')}
         </Text>
       </div>
 
@@ -114,7 +115,7 @@ export function Cards() {
               >
                 <SuitChip suit={row as Suit} size={50} />
                 <Text size={34} color={SUIT_ON_FELT[row]}>
-                  {SUIT_NAMES[row]}
+                  {tr(SUIT_NAMES[row] ?? '')}
                 </Text>
               </div>
               {[...Array(10).keys()].map((digit) => {
@@ -188,7 +189,7 @@ export function Cards() {
         }}
       >
         <Text size={40} color={C.ink2}>
-          one digit on each card: 0 to 9
+          {tr('one digit on each card: 0 to 9')}
         </Text>
       </div>
       <div
@@ -227,7 +228,7 @@ export function Cards() {
         }}
       >
         <Pill size={32} color={C.gold2} border="rgba(229,185,90,0.5)">
-          color = suit
+          {tr('color = suit')}
         </Pill>
       </div>
       <div
@@ -241,7 +242,7 @@ export function Cards() {
         }}
       >
         <Pill size={32} color={C.gold2} border="rgba(229,185,90,0.5)">
-          2 copies of every card
+          {tr('2 copies of every card')}
         </Pill>
       </div>
 
@@ -275,11 +276,11 @@ export function Cards() {
           20
         </Num>
         <Text size={40} color={C.ink} style={{ marginLeft: 14 }}>
-          action cards
+          {tr('action cards')}
         </Text>
         <div style={{ marginTop: 12 }}>
           <Text size={34} color={C.ink2} weight={500}>
-            ±10: plus or minus 10
+            {tr('±10: plus or minus 10')}
           </Text>
         </div>
       </div>
@@ -297,7 +298,7 @@ export function Cards() {
           100
         </Num>
         <Text size={40} color={C.ink} style={{ marginLeft: 14 }}>
-          number cards
+          {tr('number cards')}
         </Text>
       </div>
 
@@ -403,8 +404,8 @@ function Build({
   };
   return (
     <>
-      {slot(TENS_X, 'tens', tensAt)}
-      {slot(UNITS_X, 'units', unitsAt)}
+      {slot(TENS_X, tr('tens'), tensAt)}
+      {slot(UNITS_X, tr('units'), unitsAt)}
       {card7 > 0 && (
         <PlayingCard
           id={card('7D')}
@@ -468,7 +469,7 @@ function Build({
           color: C.ink2,
         }}
       >
-        just 5, with two digits
+        {tr('just 5, with two digits')}
       </div>
     </>
   );

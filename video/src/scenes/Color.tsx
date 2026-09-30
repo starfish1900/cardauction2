@@ -7,6 +7,7 @@ import { SuitChip } from '../components/SuitChip';
 import { card } from '../cards';
 import { C } from '../theme';
 import { useMarks } from '../timeline';
+import { tr } from '../lang';
 
 const BLUE_GLOW = '#6ea8ff';
 
@@ -40,7 +41,7 @@ export function Color() {
       cards: ['6*', '3S'],
       value: '63',
       ok: true,
-      caption: 'the gold star is new',
+      caption: tr('the gold star is new'),
       inAt: m.at('yes'),
       verdictAt: m.word('yes', 'Yes!'),
       captionAt: m.word('yes', 'The gold star'),
@@ -50,7 +51,7 @@ export function Color() {
       cards: ['6H', '3S'],
       value: '63',
       ok: false,
-      caption: 'red and black: both in 58',
+      caption: tr('red and black: both in 58'),
       inAt: m.at('no'),
       verdictAt: m.word('no', 'No:'),
       captionAt: redBlackAt,
@@ -60,7 +61,7 @@ export function Color() {
       cards: ['6D', '3D'],
       value: '63',
       ok: true,
-      caption: 'blue is new',
+      caption: tr('blue is new'),
       inAt: m.word('share', '6 of diamonds'),
       verdictAt: m.word('share', 'works'),
       captionAt: m.word('share', 'because blue'),
@@ -70,7 +71,7 @@ export function Color() {
       cards: ['6D', '6D2'],
       value: '66',
       ok: true,
-      caption: 'both copies of one card',
+      caption: tr('both copies of one card'),
       inAt: m.word('pair', 'two 6s'),
       verdictAt: m.word('pair', 'make 66'),
       captionAt: m.word('pair', 'both copies', -0.2),
@@ -88,8 +89,8 @@ export function Color() {
     <>
       <RuleHeader
         n={2}
-        title="A new color"
-        detail="one color the latest bid doesn't have"
+        title={tr('A new color')}
+        detail={tr("one color the latest bid doesn't have")}
         opacity={fade(frame, ruleAt, Number.POSITIVE_INFINITY, 12)}
         detailOpacity={fade(frame, detailAt)}
       />
@@ -129,7 +130,7 @@ export function Color() {
         }}
       >
         <Text size={40} color={C.ink2}>
-          five colors: one per suit
+          {tr('five colors: one per suit')}
         </Text>
       </div>
       {/* The latest bid and its colors. */}
@@ -157,7 +158,7 @@ export function Color() {
         }}
       >
         <Text size={30} color={C.gold2}>
-          latest bid
+          {tr('latest bid')}
         </Text>
       </div>
       <PlayingCard
@@ -218,7 +219,7 @@ export function Color() {
               }}
             />
             <Text size={34} color={C.ink}>
-              {suit === 3 ? 'red' : 'black'}
+              {suit === 3 ? tr('red') : tr('black')}
             </Text>
           </div>
         ))}
@@ -234,14 +235,15 @@ export function Color() {
         }}
       >
         <Text size={28} color={C.ink2} weight={500}>
-          colors already in 58
+          {tr('colors already in 58')}
         </Text>
       </div>
 
       {/* The bids you might make. */}
       <div style={{ position: 'absolute', left: 700, top: 222, opacity: fade(frame, targetAt) }}>
         <Text size={32} color={C.ink2} weight={500}>
-          You&apos;d like to bid <span style={{ color: C.ink, fontWeight: 700 }}>63</span>:
+          {tr("You'd like to bid")} <span style={{ color: C.ink, fontWeight: 700 }}>63</span>
+          {tr(':')}
         </Text>
       </div>
       {rows.map((row, i) => {

@@ -2,6 +2,7 @@ import type { ComponentType } from 'react';
 import { AbsoluteFill, Audio, interpolate, Sequence, staticFile, useCurrentFrame } from 'remotion';
 import { Band, Chapter, Felt, Stage } from './components/base';
 import { SubtitleText } from './components/Subtitles';
+import { langFile } from './lang';
 import { SCENES } from './scenes';
 import { frames, timeline, useMarks } from './timeline';
 import { BAND } from './theme';
@@ -62,7 +63,7 @@ export function Tutorial({ subtitles }: { subtitles: boolean }) {
         );
       })}
       <Band>{subtitles ? <SubtitleText /> : null}</Band>
-      <Audio src={staticFile('audio/narration.wav')} />
+      <Audio src={staticFile(langFile('audio/narration.wav'))} />
     </AbsoluteFill>
   );
 }

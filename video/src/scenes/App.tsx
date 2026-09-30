@@ -1,7 +1,9 @@
 import { Img, staticFile, useCurrentFrame } from 'remotion';
 import { easeInOut, fade, lerp, ramp } from '../components/anim';
 import { Sfx, Text } from '../components/base';
-import screens from '../screens.json';
+import frScreens from '../fr/screens.json';
+import { LANG, langFile, tr } from '../lang';
+import enScreens from '../screens.json';
 import { C, UI } from '../theme';
 import { useMarks } from '../timeline';
 
@@ -18,20 +20,32 @@ interface Cam {
 }
 
 export const SITE = 'cardauction.ca';
-const SHOTS = screens.shots as Record<string, { file: string; boxes: Record<string, Box> }>;
+const SHOTS = (LANG === 'fr' ? frScreens : enScreens).shots as Record<
+  string,
+  { file: string; boxes: Record<string, Box> }
+>;
 const shotBox = (screen: string, name: string): Box => {
   const found = SHOTS[screen]?.boxes[name];
   if (!found) throw new Error(`no box ${name} on screen ${screen}`);
   return found;
 };
 /** Boxes the capture did not record, measured on the screenshots. */
-const EXTRA: Record<string, Box> = {
+const EXTRA_EN: Record<string, Box> = {
   units: { x: 1111, y: 556, w: 78, h: 109 },
   assist: { x: 1094, y: 10, w: 96, h: 34 },
   language: { x: 1294, y: 10, w: 46, h: 36 },
   opponent: { x: 76, y: 68, w: 560, h: 70 },
   check: { x: 82, y: 695, w: 1000, h: 95 },
 };
+/** The same boxes, measured on the French screenshots. */
+const EXTRA_FR: Record<string, Box> = {
+  units: { x: 1025, y: 556, w: 78, h: 109 },
+  assist: { x: 1054, y: 10, w: 84, h: 34 },
+  language: { x: 1252, y: 10, w: 46, h: 36 },
+  opponent: { x: 76, y: 68, w: 560, h: 70 },
+  check: { x: 82, y: 695, w: 1000, h: 95 },
+};
+const EXTRA = LANG === 'fr' ? EXTRA_FR : EXTRA_EN;
 const pad = (b: Box, p: number): Box => ({
   x: b.x - p,
   y: b.y - p,
@@ -259,7 +273,7 @@ export function App() {
       >
         <div>
           <Text size={40} color={C.ink2}>
-            Open the website:
+            {tr('Open the website:')}
           </Text>
         </div>
         <div
@@ -486,7 +500,7 @@ function Shot({
 }) {
   return (
     <Img
-      src={staticFile(`screens/${name}.png`)}
+      src={staticFile(langFile(`screens/${name}.png`))}
       style={{
         position: 'absolute',
         left: 0,

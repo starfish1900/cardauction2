@@ -8,13 +8,18 @@ Finishes the rendered tutorial:
   3. copies the subtitles next to them: out/cardauction-tutorial.en.srt.
 
   python3 scripts/finish.py [--skip-band]
+
+The French version is rendered with its subtitles (the TutorialSubtitled composition, with
+REMOTION_LANG=fr) to out/fr/tutorial-raw.mp4; `python3 scripts/finish.py --lang fr` evens out its
+sound into out/fr/cardauction-tutoriel-fr.mp4.
 """
 import json, os, re, shutil, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT = os.path.join(ROOT, "out")
+FR = "--lang" in sys.argv and sys.argv[sys.argv.index("--lang") + 1] == "fr"
+OUT = os.path.join(ROOT, "out", "fr") if FR else os.path.join(ROOT, "out")
 RAW = os.path.join(OUT, "tutorial-raw.mp4")
-CLEAN = os.path.join(OUT, "cardauction-tutorial.mp4")
+CLEAN = os.path.join(OUT, "cardauction-tutoriel-fr.mp4" if FR else "cardauction-tutorial.mp4")
 BAND = os.path.join(OUT, "band.mp4")
 SUBTITLED = os.path.join(OUT, "cardauction-tutorial-subtitled.mp4")
 TARGET = "I=-16:TP=-1.5:LRA=11"
@@ -36,6 +41,10 @@ second = (
 )
 run("ffmpeg", "-hide_banner", "-y", "-i", RAW, "-map", "0:v", "-map", "0:a", "-c:v", "copy",
     "-af", second, "-ar", "48000", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", CLEAN)
+
+if FR:  # the French render already has its subtitles
+    print("done")
+    sys.exit(0)
 
 # 2. The subtitle band over the bottom 150 pixels.
 if "--skip-band" not in sys.argv:

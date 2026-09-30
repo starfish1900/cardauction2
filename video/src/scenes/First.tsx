@@ -14,6 +14,7 @@ import { card } from '../cards';
 import { C } from '../theme';
 import { useMarks } from '../timeline';
 import { TABLE } from './Setup';
+import { tr } from '../lang';
 
 const HAND = ['9S', '2H', '6H', '0S', '3D', '7C'] as const;
 const HW = 80;
@@ -77,7 +78,7 @@ export function First() {
         }}
       >
         <Pill size={34} color={C.gold2} border="rgba(229,185,90,0.5)">
-          Player 1&apos;s first bid: exactly 1 table card
+          {tr("Player 1's first bid: exactly 1 table card")}
         </Pill>
       </div>
 
@@ -192,7 +193,7 @@ export function First() {
         }}
       >
         <Text size={28} color={C.ink2}>
-          your hand
+          {tr('your hand')}
         </Text>
       </div>
       {HAND.map((code, i) => {
@@ -264,7 +265,7 @@ export function First() {
       >
         <Verdict ok size={52} />
         <Text size={38} color={C.mint}>
-          5 steps up from 47
+          {tr('5 steps up from 47')}
         </Text>
       </div>
       <div
@@ -280,7 +281,7 @@ export function First() {
       >
         <Verdict ok size={52} />
         <Text size={38} color={C.mint}>
-          new colors: gold, red
+          {tr('new colors: gold, red')}
         </Text>
       </div>
 
@@ -288,7 +289,7 @@ export function First() {
       <div style={{ opacity: fade(frame, actionAt) }}>
         <div style={{ position: 'absolute', left: 1240, top: 520 }}>
           <Text size={32} color={C.gold2}>
-            or:
+            {tr('or:')}
           </Text>
         </div>
         <div style={{ position: 'absolute', left: 1406, top: COMBO_Y + 36 }}>
@@ -307,7 +308,7 @@ export function First() {
           }}
         >
           <Text size={28} color={C.ink2} weight={500}>
-            the table
+            {tr('the table')}
           </Text>
         </div>
         <div
@@ -321,7 +322,7 @@ export function First() {
           }}
         >
           <Text size={28} color={C.ink2} weight={500}>
-            your hand
+            {tr('your hand')}
           </Text>
         </div>
       </div>

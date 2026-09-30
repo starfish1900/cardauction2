@@ -3,13 +3,18 @@ dist/
 coverage/
 test-results/
 playwright-report/
-# The video tutorial's generated files: its lockfile, the timings and subtitles written by
-# audio/voice.py, the boxes found by capture/capture.ts, and the render outputs.
+# The video tutorial's generated files, English and French: its lockfile, the timings and
+# subtitles written by audio/voice.py, the boxes found by capture/capture.ts, and the render
+# outputs.
 video/package-lock.json
 video/script/script.json
 video/src/timeline.json
 video/src/subtitles.json
 video/src/screens.json
+video/script/script.fr.json
+video/src/fr/timeline.json
+video/src/fr/subtitles.json
+video/src/fr/screens.json
 video/node_modules/
 video/out/
 video/public/
