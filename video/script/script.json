@@ -516,11 +516,15 @@
      "speech": "And if player one can't make the first bid, player two wins."
     },
     {
-     "text": "In the app, each turn has a 60-second clock. If it runs out while you must bid, you lose. If it runs out during Player 2's swap, they just keep their hand.",
+     "text": "In the app, each turn has a 120-second clock. If it runs out while you must bid, you lose. If it runs out during Player 2's swap, they just keep their hand.",
      "gap": 0.7,
-     "say": "In the app, each turn has a sixty second clock. If it runs out while you must bid, you lose. If it runs out during player two's swap, they just keep their hand.",
+     "say": "In the app, each turn has a one hundred twenty second clock. If it runs out while you must bid, you lose. If it runs out during player two's swap, they just keep their hand.",
      "id": "clock",
-     "speech": "In the app, each turn has a sixty second clock. If it runs out while you must bid, you lose. If it runs out during player two's swap, they just keep their hand."
+     "cues": [
+      "In the app, each turn has a 120-second clock.\nIf it runs out while you must bid, you lose.",
+      "If it runs out during Player 2's swap,\nthey just keep their hand."
+     ],
+     "speech": "In the app, each turn has a one hundred twenty second clock. If it runs out while you must bid, you lose. If it runs out during player two's swap, they just keep their hand."
     }
    ],
    "hold": 0.0

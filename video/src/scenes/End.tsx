@@ -29,7 +29,7 @@ function Clock({
   left: number;
   opacity: number;
 }) {
-  const share = left / 60;
+  const share = left / 120;
   const a = share * 2 * Math.PI;
   const end = [cx + r * Math.sin(a), cy - r * Math.cos(a)];
   const large = share > 0.5 ? 1 : 0;
@@ -130,7 +130,7 @@ export function End() {
   };
   const tens = ramp(frame, tensAt, tensAt + 10);
   const left = lerp(
-    60,
+    120,
     0,
     ramp(frame, clockAt + 20, mustBid + 10, (t) => t),
   );
@@ -385,12 +385,12 @@ export function End() {
         cx={520}
         cy={560}
         r={170}
-        left={frame < clockAt ? 60 : left}
+        left={frame < clockAt ? 120 : left}
         opacity={fade(frame, clockAt)}
       />
       <div style={{ position: 'absolute', left: 820, top: 330, opacity: fade(frame, clockAt + 6) }}>
         <Text size={40} color={C.ink}>
-          In the app: 60 seconds a turn
+          In the app: 120 seconds a turn
         </Text>
       </div>
       <div

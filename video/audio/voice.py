@@ -158,6 +158,10 @@ def chunks_for(text):
     return [words[i:j] for i, j in best[n][1]]
 
 
+# Cues a segment of the script gives itself, instead of the automatic split.
+given_cues = {
+    (sc["id"], s.get("id")): s["cues"] for sc in script["scenes"] for s in sc["segments"] if s.get("cues")
+}
 cues = []
 for scene in timeline["scenes"]:
     counted = []
@@ -168,12 +172,14 @@ for scene in timeline["scenes"]:
             cues.append([start, end, " ".join(counted)])
             continue
         counted = []
-        chunks = chunks_for(text)
+        given = given_cues.get((scene["id"], seg.get("id")))
+        chunks = [c.replace("\n", " ").split() for c in given] if given else chunks_for(text)
         total = sum(len(" ".join(c)) for c in chunks)
         at = start
-        for c in chunks:
+        for k, c in enumerate(chunks):
             span = (end - start) * len(" ".join(c)) / total
-            cues.append([at, at + span, "\n".join(lines_for(c)[0])])
+            lines = given[k].split("\n") if given else lines_for(c)[0]
+            cues.append([at, at + span, "\n".join(lines)])
             at += span
 # Each cue stays up a moment after its words, never over the next one.
 for k, cue in enumerate(cues):

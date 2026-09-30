@@ -456,132 +456,132 @@
  },
  {
   "start": 398.674,
-  "end": 405.11,
-  "text": "In the app, each turn has a 60-second clock.\nIf it runs out while you must bid, you lose."
+  "end": 405.537,
+  "text": "In the app, each turn has a 120-second clock.\nIf it runs out while you must bid, you lose."
  },
  {
-  "start": 405.11,
-  "end": 410.21,
+  "start": 405.537,
+  "end": 410.893,
   "text": "If it runs out during Player 2's swap,\nthey just keep their hand."
  },
  {
-  "start": 411.11,
-  "end": 412.64,
+  "start": 411.793,
+  "end": 413.323,
   "text": "Let's play in the app."
  },
  {
-  "start": 412.64,
-  "end": 417.212,
+  "start": 413.323,
+  "end": 417.895,
   "text": "Open the CardAuction website:\nthe address is on your screen."
  },
  {
-  "start": 417.262,
-  "end": 419.84,
+  "start": 417.945,
+  "end": 420.523,
   "text": "Type your name, then pick a way to play:"
  },
  {
-  "start": 419.84,
-  "end": 423.649,
+  "start": 420.523,
+  "end": 424.333,
   "text": "Quick match,\nagainst the next person looking for a game;"
  },
  {
-  "start": 423.649,
-  "end": 426.296,
+  "start": 424.333,
+  "end": 426.979,
   "text": "Play the AI, with a level and a seat;"
  },
  {
-  "start": 426.296,
-  "end": 430.714,
+  "start": 426.979,
+  "end": 431.397,
   "text": "or Private game,\nto invite a friend with a code or a link."
  },
  {
-  "start": 430.814,
-  "end": 433.778,
+  "start": 431.497,
+  "end": 434.461,
   "text": "Here's the table: your hand at the bottom,"
  },
  {
-  "start": 433.778,
-  "end": 439.189,
+  "start": 434.461,
+  "end": 439.872,
   "text": "the table cards in the middle,\nand the bid board with every bid so far."
  },
  {
-  "start": 439.239,
-  "end": 442.362,
+  "start": 439.922,
+  "end": 443.045,
   "text": "At the top, your opponent's cards:\nface down,"
  },
  {
-  "start": 442.362,
-  "end": 445.608,
+  "start": 443.045,
+  "end": 446.291,
   "text": "except the ones they took from the table."
  },
  {
-  "start": 445.658,
-  "end": 449.806,
+  "start": 446.341,
+  "end": 450.489,
   "text": "On your turn, tap a card for the tens,\nthen one for the units."
  },
  {
-  "start": 449.806,
-  "end": 452.882,
+  "start": 450.489,
+  "end": 453.565,
   "text": "The app shows your number and checks it."
  },
  {
-  "start": 452.932,
-  "end": 455.688,
+  "start": 453.615,
+  "end": 456.371,
   "text": "If a bid can't work, it tells you why."
  },
  {
-  "start": 455.738,
-  "end": 462.526,
+  "start": 456.421,
+  "end": 463.209,
   "text": "For an action card, tap it, then the plus 10\nor minus 10 slot beside the latest bid."
  },
  {
-  "start": 462.576,
-  "end": 466.483,
+  "start": 463.259,
+  "end": 467.166,
   "text": "Then tap a table card to take,\nand press Confirm."
  },
  {
-  "start": 466.533,
-  "end": 470.761,
+  "start": 467.216,
+  "end": 471.444,
   "text": "With Assist on,\nthe cards that fit a legal move light up."
  },
  {
-  "start": 470.811,
-  "end": 476.86,
+  "start": 471.494,
+  "end": 477.544,
   "text": "As Player 2, your first move is the swap:\ntap a card in your hand and a table card,"
  },
  {
-  "start": 476.86,
-  "end": 478.572,
+  "start": 477.544,
+  "end": 479.256,
   "text": "or keep your hand."
  },
  {
-  "start": 478.622,
-  "end": 482.906,
+  "start": 479.306,
+  "end": 483.589,
   "text": "Lost your connection?\nYou have 25 seconds to come back."
  },
  {
-  "start": 482.956,
-  "end": 487.833,
+  "start": 483.639,
+  "end": 488.516,
   "text": "At the end, both hands are revealed,\nand you can ask for a rematch."
  },
  {
-  "start": 487.883,
-  "end": 492.482,
+  "start": 488.566,
+  "end": 493.165,
   "text": "And the rules are always one tap away,\nin English or French."
  },
  {
-  "start": 493.382,
-  "end": 499.942,
+  "start": 494.065,
+  "end": 500.625,
   "text": "That's everything! Count up 1 to 10 steps,\nremember that after 99 comes 00,"
  },
  {
-  "start": 499.942,
-  "end": 504.89,
+  "start": 500.625,
+  "end": 505.573,
   "text": "bring a new color,\nand use your action cards wisely."
  },
  {
-  "start": 504.94,
-  "end": 506.881,
+  "start": 505.623,
+  "end": 507.564,
   "text": "Have fun, and good luck!"
  }
 ]

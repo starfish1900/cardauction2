@@ -522,131 +522,131 @@
     },
     {
      "id": "clock",
-     "text": "In the app, each turn has a 60-second clock. If it runs out while you must bid, you lose. If it runs out during Player 2's swap, they just keep their hand.",
+     "text": "In the app, each turn has a 120-second clock. If it runs out while you must bid, you lose. If it runs out during Player 2's swap, they just keep their hand.",
      "start": 398.674,
-     "end": 409.81
+     "end": 410.493
     }
    ],
-   "end": 410.51
+   "end": 411.193
   },
   {
    "id": "app",
    "title": "Playing in the app",
-   "start": 410.51,
+   "start": 411.193,
    "segments": [
     {
      "id": "open",
      "text": "Let's play in the app. Open the CardAuction website: the address is on your screen.",
-     "start": 411.11,
-     "end": 416.812
+     "start": 411.793,
+     "end": 417.495
     },
     {
      "id": "quick",
      "text": "Type your name, then pick a way to play: Quick match, against the next person looking for a game;",
-     "start": 417.262,
-     "end": 423.449
+     "start": 417.945,
+     "end": 424.133
     },
     {
      "id": "ai",
      "text": "Play the AI, with a level and a seat;",
-     "start": 423.649,
-     "end": 426.096
+     "start": 424.333,
+     "end": 426.779
     },
     {
      "id": "private",
      "text": "or Private game, to invite a friend with a code or a link.",
-     "start": 426.296,
-     "end": 430.314
+     "start": 426.979,
+     "end": 430.997
     },
     {
      "id": "table",
      "text": "Here's the table: your hand at the bottom, the table cards in the middle, and the bid board with every bid so far.",
-     "start": 430.814,
-     "end": 438.789
+     "start": 431.497,
+     "end": 439.472
     },
     {
      "id": "opponent",
      "text": "At the top, your opponent's cards: face down, except the ones they took from the table.",
-     "start": 439.239,
-     "end": 445.208
+     "start": 439.922,
+     "end": 445.891
     },
     {
      "id": "compose",
      "text": "On your turn, tap a card for the tens, then one for the units. The app shows your number and checks it.",
-     "start": 445.658,
-     "end": 452.482
+     "start": 446.341,
+     "end": 453.165
     },
     {
      "id": "why",
      "text": "If a bid can't work, it tells you why.",
-     "start": 452.932,
-     "end": 455.288
+     "start": 453.615,
+     "end": 455.971
     },
     {
      "id": "action",
      "text": "For an action card, tap it, then the plus 10 or minus 10 slot beside the latest bid.",
-     "start": 455.738,
-     "end": 462.126
+     "start": 456.421,
+     "end": 462.809
     },
     {
      "id": "confirm",
      "text": "Then tap a table card to take, and press Confirm.",
-     "start": 462.576,
-     "end": 466.083
+     "start": 463.259,
+     "end": 466.766
     },
     {
      "id": "assist",
      "text": "With Assist on, the cards that fit a legal move light up.",
-     "start": 466.533,
-     "end": 470.361
+     "start": 467.216,
+     "end": 471.044
     },
     {
      "id": "swap",
      "text": "As Player 2, your first move is the swap: tap a card in your hand and a table card, or keep your hand.",
-     "start": 470.811,
-     "end": 478.172
+     "start": 471.494,
+     "end": 478.856
     },
     {
      "id": "grace",
      "text": "Lost your connection? You have 25 seconds to come back.",
-     "start": 478.622,
-     "end": 482.506
+     "start": 479.306,
+     "end": 483.189
     },
     {
      "id": "result",
      "text": "At the end, both hands are revealed, and you can ask for a rematch.",
-     "start": 482.956,
-     "end": 487.433
+     "start": 483.639,
+     "end": 488.116
     },
     {
      "id": "rules",
      "text": "And the rules are always one tap away, in English or French.",
-     "start": 487.883,
-     "end": 492.082
+     "start": 488.566,
+     "end": 492.765
     }
    ],
-   "end": 492.782
+   "end": 493.465
   },
   {
    "id": "outro",
    "title": "That's it",
-   "start": 492.782,
+   "start": 493.465,
    "segments": [
     {
      "id": "recap",
      "text": "That's everything! Count up 1 to 10 steps, remember that after 99 comes 00, bring a new color, and use your action cards wisely.",
-     "start": 493.382,
-     "end": 504.49
+     "start": 494.065,
+     "end": 505.173
     },
     {
      "id": "luck",
      "text": "Have fun, and good luck!",
-     "start": 504.94,
-     "end": 506.481
+     "start": 505.623,
+     "end": 507.164
     }
    ],
-   "end": 509.181
+   "end": 509.864
   }
  ],
- "duration": 509.181
+ "duration": 509.864
 }
