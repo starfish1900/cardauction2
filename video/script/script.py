@@ -16,12 +16,16 @@ def scene(sid, title, *segs, hold=0.0):
     S.append({"id": sid, "title": title, "segments": list(segs), "hold": hold})
 
 
-def seg(text, say=None, id=None, gap=0.45):
+def seg(text, say=None, id=None, gap=0.45, cues=None):
     out = {"text": text, "gap": gap}
     if say:
         out["say"] = say
     if id:
         out["id"] = id
+    if cues:
+        # The subtitles for this line, cue by cue ("\n" breaks a cue's two lines), when the
+        # automatic split will not do.
+        out["cues"] = cues
     return out
 
 
@@ -113,7 +117,9 @@ scene("end", "How the game ends",
       seg("Say the latest bid is 87. You need a number from 88 to 97, so your tens card must be an 8 or a 9.", say="Say the latest bid is eighty-seven. You need a number from eighty-eight to ninety-seven, so your tens card must be an eight or a nine.", id="example"),
       seg("With no 8, no 9, and no action card to help, you're stuck, and you lose.", say="With no eight, no nine, and no action card to help, you're stuck, and you lose.", id="stuck"),
       seg("And if Player 1 can't make the first bid, Player 2 wins.", id="open"),
-      seg("In the app, each turn has a 60-second clock. If it runs out while you must bid, you lose. If it runs out during Player 2's swap, they just keep their hand.", say="In the app, each turn has a sixty second clock. If it runs out while you must bid, you lose. If it runs out during player two's swap, they just keep their hand.", id="clock", gap=0.7))
+      seg("In the app, each turn has a 120-second clock. If it runs out while you must bid, you lose. If it runs out during Player 2's swap, they just keep their hand.", say="In the app, each turn has a one hundred twenty second clock. If it runs out while you must bid, you lose. If it runs out during player two's swap, they just keep their hand.", id="clock", gap=0.7,
+          cues=["In the app, each turn has a 120-second clock.\nIf it runs out while you must bid, you lose.",
+                "If it runs out during Player 2's swap,\nthey just keep their hand."]))
 
 scene("app", "Playing in the app",
       seg("Let's play in the app. Open the CardAuction website: the address is on your screen.", say="Let's play in the app. Open the Card Auction website: the address is on your screen.", id="open"),

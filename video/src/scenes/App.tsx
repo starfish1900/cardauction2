@@ -17,7 +17,7 @@ interface Cam {
   readonly cy: number;
 }
 
-export const SITE = 'cardauction-web.onrender.com';
+export const SITE = 'cardauction.ca';
 const SHOTS = screens.shots as Record<string, { file: string; boxes: Record<string, Box> }>;
 const shotBox = (screen: string, name: string): Box => {
   const found = SHOTS[screen]?.boxes[name];
