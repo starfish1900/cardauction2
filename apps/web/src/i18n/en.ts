@@ -218,6 +218,8 @@ export const en = {
     ],
     tutorial: 'Watch the tutorial',
     tutorialNote: '8-minute video on YouTube',
+    // The video tutorial in this language: every rule, then how to play in the app.
+    tutorialUrl: 'https://youtu.be/rnim6YZoadw',
     example: 'Example',
     latest: 'Latest bid: 58',
     legal: '63 is legal: +5, and ★ is a new color.',

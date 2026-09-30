@@ -1976,7 +1976,9 @@ p {
   }
 
   .home-grid {
-    grid-template-columns: 1fr;
+    /* minmax(0, …): the column keeps to the screen, and the cards' contents shrink to fit (the
+       code field beside "Rejoindre", in French). */
+    grid-template-columns: minmax(0, 1fr);
     gap: 12px;
   }
 
