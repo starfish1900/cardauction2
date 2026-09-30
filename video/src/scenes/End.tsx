@@ -5,6 +5,7 @@ import { Bracket, Tile, type TileState } from '../components/teaching';
 import { card } from '../cards';
 import { C, DISPLAY, UI } from '../theme';
 import { useMarks } from '../timeline';
+import { tr } from '../lang';
 
 const FIRST = 86;
 const N = 13;
@@ -97,7 +98,7 @@ function Clock({
           color: C.ink2,
         }}
       >
-        seconds
+        {tr('seconds')}
       </div>
     </div>
   );
@@ -149,7 +150,7 @@ export function End() {
         }}
       >
         <Pill size={34} color={C.gold2} border="rgba(229,185,90,0.5)">
-          No legal bid on your turn: you lose
+          {tr('No legal bid on your turn: you lose')}
         </Pill>
       </div>
 
@@ -198,7 +199,7 @@ export function End() {
         >
           <Verdict ok={false} size={72} />
           <Text size={52} color={C.danger} weight={700}>
-            that player loses
+            {tr('that player loses')}
           </Text>
         </div>
       </div>
@@ -209,7 +210,7 @@ export function End() {
             style={{ position: 'absolute', left: 110, width: 280, top: 214, textAlign: 'center' }}
           >
             <Text size={28} color={C.gold2}>
-              latest bid
+              {tr('latest bid')}
             </Text>
           </div>
           <PlayingCard id={card('8H')} w={100} x={140} y={262} />
@@ -254,7 +255,7 @@ export function End() {
           y={TY + TH + 16}
           progress={ramp(frame, rangeAt, rangeAt + 12)}
         >
-          88 to 97
+          {tr('88 to 97')}
         </Bracket>
         <div
           style={{
@@ -267,7 +268,7 @@ export function End() {
           }}
         >
           <Text size={38} color={C.gold2}>
-            tens card: 8 or 9
+            {tr('tens card: 8 or 9')}
           </Text>
         </div>
 
@@ -283,7 +284,7 @@ export function End() {
           }}
         >
           <Text size={28} color={C.ink2}>
-            your hand
+            {tr('your hand')}
           </Text>
         </div>
         {HAND.map((code, i) => (
@@ -309,9 +310,9 @@ export function End() {
           }}
         >
           {[
-            ['no 8', no8],
-            ['no 9', no9],
-            ['no action card', noAction],
+            [tr('no 8'), no8],
+            [tr('no 9'), no9],
+            [tr('no action card'), noAction],
           ].map(([label, at]) => (
             <div
               key={label as string}
@@ -340,7 +341,7 @@ export function End() {
         >
           <Verdict ok={false} size={76} />
           <Text size={60} color={C.danger} weight={700}>
-            you lose
+            {tr('you lose')}
           </Text>
         </div>
       </div>
@@ -361,7 +362,7 @@ export function End() {
         }}
       >
         <Pill size={34} color={C.ink}>
-          Player 1 can&apos;t make the first bid
+          {tr("Player 1 can't make the first bid")}
         </Pill>
         <svg width={60} height={30} viewBox="0 0 60 30" style={{ opacity: fade(frame, p2Wins) }}>
           <path
@@ -375,7 +376,7 @@ export function End() {
         </svg>
         <div style={{ opacity: fade(frame, p2Wins) }}>
           <Pill size={34} color={C.goldInk} bg={C.gold} border={C.gold2}>
-            Player 2 wins
+            {tr('Player 2 wins')}
           </Pill>
         </div>
       </div>
@@ -390,7 +391,7 @@ export function End() {
       />
       <div style={{ position: 'absolute', left: 820, top: 330, opacity: fade(frame, clockAt + 6) }}>
         <Text size={40} color={C.ink}>
-          In the app: 120 seconds a turn
+          {tr('In the app: 120 seconds a turn')}
         </Text>
       </div>
       <div
@@ -412,11 +413,11 @@ export function End() {
         <Verdict ok={false} size={60} />
         <div>
           <Text size={34} color={C.ink2} weight={500}>
-            Time runs out when you must bid:
+            {tr('Time runs out when you must bid:')}
           </Text>
           <div style={{ marginTop: 4 }}>
             <Text size={40} color={C.danger} weight={700}>
-              you lose
+              {tr('you lose')}
             </Text>
           </div>
         </div>
@@ -457,11 +458,11 @@ export function End() {
         </svg>
         <div>
           <Text size={34} color={C.ink2} weight={500}>
-            Time runs out during Player 2&apos;s swap:
+            {tr("Time runs out during Player 2's swap:")}
           </Text>
           <div style={{ marginTop: 4 }}>
             <Text size={40} color={C.gold2} weight={700}>
-              they keep their hand
+              {tr('they keep their hand')}
             </Text>
           </div>
         </div>

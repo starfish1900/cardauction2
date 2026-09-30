@@ -7,6 +7,7 @@ import { Bracket, Dial, Hop, Slot, Tile, type TileState } from '../components/te
 import { card } from '../cards';
 import { C, UI } from '../theme';
 import { useMarks } from '../timeline';
+import { tr } from '../lang';
 
 const BLUE = '#6ea8ff';
 const ROW_Y = 196;
@@ -154,7 +155,7 @@ export function Action() {
             <path d="M5 0 L10 8 L0 8 Z" fill={C.mint} />
           </svg>
           <Text size={46} color={C.mint}>
-            up 10
+            {tr('up 10')}
           </Text>
         </div>
         <div
@@ -172,7 +173,7 @@ export function Action() {
             <path d="M5 10 L10 2 L0 2 Z" fill={C.danger} />
           </svg>
           <Text size={46} color={C.danger}>
-            down 10
+            {tr('down 10')}
           </Text>
         </div>
         <div
@@ -186,9 +187,9 @@ export function Action() {
           }}
         >
           <Text size={40} color={C.ink2}>
-            just before
+            {tr('just before')}
             <br />
-            you bid
+            {tr('you bid')}
           </Text>
         </div>
       </div>
@@ -198,14 +199,14 @@ export function Action() {
         <div
           style={{
             position: 'absolute',
-            left: CARD_5,
-            width: 2 * CARD_W + 16,
+            left: CARD_5 - 80,
+            width: 2 * CARD_W + 16 + 160,
             top: ROW_Y - 50,
             textAlign: 'center',
           }}
         >
           <Text size={30} color={C.gold2}>
-            latest bid
+            {tr('latest bid')}
           </Text>
         </div>
         <Slot
@@ -233,7 +234,7 @@ export function Action() {
           }}
         >
           <Text size={30} color={C.mint}>
-            adds 10
+            {tr('adds 10')}
           </Text>
         </div>
         <div
@@ -247,7 +248,7 @@ export function Action() {
           }}
         >
           <Text size={30} color={C.danger}>
-            takes 10
+            {tr('takes 10')}
           </Text>
         </div>
         <PlayingCard id={card('5H')} w={CARD_W} x={CARD_5} y={ROW_Y} />
@@ -270,7 +271,7 @@ export function Action() {
         />
         <div style={{ position: 'absolute', left: 1464, top: 196 }}>
           <Text size={28} color={C.ink2}>
-            your cards
+            {tr('your cards')}
           </Text>
         </div>
         <PlayingCard
@@ -289,7 +290,7 @@ export function Action() {
         />
         <div style={{ position: 'absolute', left: 1464, top: 390 }}>
           <Text size={28} color={BLUE}>
-            make 72
+            {tr('make 72')}
           </Text>
         </div>
       </div>
@@ -351,7 +352,7 @@ export function Action() {
         />
         <div style={{ opacity: fade(frame, nothingAt, plusAt - 4, 8) }}>
           <Bracket x1={tileX(59) + 4} x2={tileX(68) + TW - 4} y={TY + TH + 14} color={C.danger}>
-            your cards can&apos;t make these
+            {tr("your cards can't make these")}
           </Bracket>
         </div>
         <div style={{ opacity: 1 - ramp(frame, minusAt - 6, minusAt) }}>
@@ -362,10 +363,10 @@ export function Action() {
             progress={ramp(frame, rangeAt, rangeAt + 12)}
           >
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 12 }}>
-              69 to 78
+              {tr('69 to 78')}
               {frame >= fitAt && (
                 <>
-                  <Verdict ok size={40} /> 72 fits!
+                  <Verdict ok size={40} /> {tr('72 fits!')}
                 </>
               )}
             </span>
@@ -378,10 +379,10 @@ export function Action() {
           progress={ramp(frame, minusRange, minusRange + 12)}
         >
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 12 }}>
-            49 to 58
+            {tr('49 to 58')}
             {frame >= allowedAt && (
               <>
-                <Verdict ok size={40} /> 58 allowed
+                <Verdict ok size={40} /> {tr('58 allowed')}
               </>
             )}
           </span>
@@ -454,10 +455,10 @@ export function Action() {
             }}
           >
             <Text size={40} color={C.ink}>
-              bid
+              {tr('bid')}
             </Text>
             <Num size={72} color={C.mint}>
-              06 to 15
+              {tr('06 to 15')}
             </Num>
             <Verdict ok size={52} />
           </div>
@@ -478,10 +479,10 @@ export function Action() {
             }}
           >
             <Text size={40} color={C.ink}>
-              bid
+              {tr('bid')}
             </Text>
             <Num size={72} color={C.mint}>
-              94 to 03
+              {tr('94 to 03')}
             </Num>
             <Verdict ok size={52} />
           </div>
@@ -504,11 +505,11 @@ export function Action() {
       >
         <div>
           <Text size={32} color={C.gold2}>
-            Rule 2 still applies:
+            {tr('Rule 2 still applies:')}
           </Text>
           <div style={{ marginTop: 6 }}>
             <Text size={32} color={C.ink}>
-              bring a new color
+              {tr('bring a new color')}
             </Text>
           </div>
         </div>

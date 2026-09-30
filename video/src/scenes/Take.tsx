@@ -13,6 +13,7 @@ import {
 import { card } from '../cards';
 import { C } from '../theme';
 import { useMarks } from '../timeline';
+import { tr } from '../lang';
 
 const TABLE: readonly (readonly (string | null)[])[] = [
   ['5*', null, 'A0', '2C', null],
@@ -43,9 +44,9 @@ export function Take() {
   const n = HAND.length + ramp(frame, grabAt, grabAt + 12);
   const landing: Place = { x: handX(HAND.length, HAND.length + 1), y: HY, w: HW };
   const callouts: readonly { code: string; at: number; title: string; note: string }[] = [
-    { code: '9C', at: numberAt, title: 'a missing number', note: 'no 9 in your hand' },
-    { code: '4*', at: colorAt, title: 'a new color', note: 'no gold star yet' },
-    { code: 'A0', at: actionAt, title: 'an action card', note: 'up or down 10, later' },
+    { code: '9C', at: numberAt, title: tr('a missing number'), note: tr('no 9 in your hand') },
+    { code: '4*', at: colorAt, title: tr('a new color'), note: tr('no gold star yet') },
+    { code: 'A0', at: actionAt, title: tr('an action card'), note: tr('up or down 10, later') },
   ];
   const lit = (code: string) => {
     const c = callouts.find((x) => x.code === code);
@@ -154,9 +155,9 @@ export function Take() {
           }}
         >
           <Text size={38} color={C.gold2}>
-            empty table:
+            {tr('empty table:')}
             <br />
-            take nothing
+            {tr('take nothing')}
           </Text>
         </div>
       </div>
@@ -173,7 +174,7 @@ export function Take() {
         }}
       >
         <Text size={28} color={C.ink2}>
-          your hand
+          {tr('your hand')}
         </Text>
       </div>
       {HAND.map((code, i) => (

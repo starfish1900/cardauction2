@@ -4,6 +4,7 @@ import { fade, pop } from '../components/anim';
 import { Num, PlayingCard, Sfx, Text, useAppear, useProgress, Verdict } from '../components/base';
 import { C } from '../theme';
 import { useMarks } from '../timeline';
+import { tr } from '../lang';
 
 const FAN = ['3*', '9D', 'A0', '5H', '0C', '8S', '7D'];
 
@@ -34,11 +35,11 @@ export function Intro() {
           color={C.gold2}
           style={{ letterSpacing: 1, textShadow: '0 4px 18px rgba(0,0,0,0.35)' }}
         >
-          CardAuction
+          {tr('CardAuction')}
         </Num>
         <div style={{ marginTop: 18 }}>
           <Text size={44} color={C.ink2} weight={500}>
-            How to play
+            {tr('How to play')}
           </Text>
         </div>
       </div>
@@ -94,7 +95,7 @@ export function Intro() {
         }}
       >
         <Text size={40} color={C.ink2} weight={500}>
-          count to
+          {tr('count to')}
         </Text>
         <Pill100 value={hundred} />
         <div

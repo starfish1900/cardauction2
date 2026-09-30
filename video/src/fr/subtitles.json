@@ -1,0 +1,672 @@
+[
+ {
+  "start": 0.6,
+  "end": 4.274,
+  "text": "Bienvenue dans CardAuction,\nles Enchères-aux-Cartes !"
+ },
+ {
+  "start": 4.374,
+  "end": 8.428,
+  "text": "C’est un jeu pour deux joueurs,\noù l’on forme des nombres avec des cartes."
+ },
+ {
+  "start": 8.478,
+  "end": 13.428,
+  "text": "Si vous savez compter jusqu’à 100,\nvous savez jouer. Voyons toutes les règles,"
+ },
+ {
+  "start": 13.428,
+  "end": 15.859,
+  "text": "puis comment jouer dans l’appli."
+ },
+ {
+  "start": 16.959,
+  "end": 19.395,
+  "text": "Chacun son tour,\nles joueurs forment des nombres,"
+ },
+ {
+  "start": 19.395,
+  "end": 22.875,
+  "text": "et chaque nouveau nombre doit être\nun peu plus haut que le précédent :"
+ },
+ {
+  "start": 22.875,
+  "end": 24.319,
+  "text": "ce sont des enchères."
+ },
+ {
+  "start": 24.369,
+  "end": 28.159,
+  "text": "Le premier joueur\nqui ne peut plus enchérir a perdu."
+ },
+ {
+  "start": 29.759,
+  "end": 32.909,
+  "text": "CardAuction se joue avec 120 cartes."
+ },
+ {
+  "start": 32.959,
+  "end": 38.149,
+  "text": "La plupart sont des cartes chiffres,\navec un seul chiffre chacune, de 0 à 9."
+ },
+ {
+  "start": 38.199,
+  "end": 41.869,
+  "text": "Chaque carte chiffre a une enseigne,\navec sa propre couleur :"
+ },
+ {
+  "start": 41.869,
+  "end": 46.841,
+  "text": "étoiles dorées, carreaux bleus,\ntrèfles verts, cœurs rouges et piques noirs."
+ },
+ {
+  "start": 46.891,
+  "end": 53.146,
+  "text": "Ici, couleur et enseigne, c’est pareil.\nEt chaque carte existe en deux exemplaires."
+ },
+ {
+  "start": 53.196,
+  "end": 58.049,
+  "text": "Les 20 autres cartes sont des cartes action,\nmarquées plus ou moins 10."
+ },
+ {
+  "start": 58.149,
+  "end": 61.679,
+  "text": "Pour former un nombre,\nposez deux cartes chiffres côte à côte :"
+ },
+ {
+  "start": 61.679,
+  "end": 65.609,
+  "text": "celle de gauche donne les dizaines,\ncelle de droite les unités."
+ },
+ {
+  "start": 65.659,
+  "end": 68.949,
+  "text": "Un 7 et un 3 donnent 73."
+ },
+ {
+  "start": 68.999,
+  "end": 74.924,
+  "text": "Un 0 et un 5 donnent 05 : cinq,\ntout simplement, écrit avec deux chiffres."
+ },
+ {
+  "start": 75.724,
+  "end": 80.143,
+  "text": "Pour commencer, mélangez les cartes.\nLes deux premières cartes chiffres"
+ },
+ {
+  "start": 80.143,
+  "end": 83.593,
+  "text": "retournées forment le nombre de départ :\nici, 47."
+ },
+ {
+  "start": 83.643,
+  "end": 88.22,
+  "text": "Chaque joueur reçoit 13 cartes,\net 25 sont posées face visible au milieu :"
+ },
+ {
+  "start": 88.22,
+  "end": 89.548,
+  "text": "c’est la table."
+ },
+ {
+  "start": 89.598,
+  "end": 94.028,
+  "text": "Les 67 autres restent face cachée,\nhors du jeu."
+ },
+ {
+  "start": 94.078,
+  "end": 98.438,
+  "text": "Toute carte prise sur la table\nreste visible pour votre adversaire."
+ },
+ {
+  "start": 99.238,
+  "end": 101.453,
+  "text": "Le joueur 2 commence par un petit choix :"
+ },
+ {
+  "start": 101.453,
+  "end": 106.068,
+  "text": "échanger une carte de sa main contre\nune carte de la table, ou garder sa main."
+ },
+ {
+  "start": 106.118,
+  "end": 108.506,
+  "text": "Puis le joueur 1 fait la première enchère,"
+ },
+ {
+  "start": 108.506,
+  "end": 112.488,
+  "text": "avec exactement une carte\nde la table et des cartes de sa main."
+ },
+ {
+  "start": 112.538,
+  "end": 114.583,
+  "text": "Ensuite, chacun joue à son tour."
+ },
+ {
+  "start": 114.583,
+  "end": 119.966,
+  "text": "À votre tour, vous faites une enchère,\npuis vous prenez une carte de la table."
+ },
+ {
+  "start": 120.766,
+  "end": 125.239,
+  "text": "Et maintenant, le cœur du jeu.\nUne enchère n’obéit qu’à deux règles."
+ },
+ {
+  "start": 125.339,
+  "end": 126.492,
+  "text": "Règle un : monter."
+ },
+ {
+  "start": 126.492,
+  "end": 130.926,
+  "text": "Votre nombre doit dépasser\nla dernière enchère de 1 à 10 crans."
+ },
+ {
+  "start": 130.976,
+  "end": 134.593,
+  "text": "Disons que la dernière enchère est 58."
+ },
+ {
+  "start": 134.643,
+  "end": 136.403,
+  "text": "Un cran : 59."
+ },
+ {
+  "start": 136.403,
+  "end": 138.323,
+  "text": "Deux crans : 60."
+ },
+ {
+  "start": 138.323,
+  "end": 140.854,
+  "text": "Et jusqu’à dix crans : 68."
+ },
+ {
+  "start": 140.904,
+  "end": 144.132,
+  "text": "Tout nombre de 59 à 68 convient."
+ },
+ {
+  "start": 144.182,
+  "end": 146.104,
+  "text": "Mais pas 58 lui-même :"
+ },
+ {
+  "start": 146.104,
+  "end": 152.705,
+  "text": "il faut monter d’au moins un cran.\nEt 69, c’est trop loin : onze crans."
+ },
+ {
+  "start": 153.505,
+  "end": 159.415,
+  "text": "Ici, les nombres n’ont que deux chiffres :\naprès 99 vient donc 00."
+ },
+ {
+  "start": 159.465,
+  "end": 163.765,
+  "text": "Pensez au compteur\nkilométrique d’une voiture :"
+ },
+ {
+  "start": 163.765,
+  "end": 170.295,
+  "text": "après 99, il repasse à 00, et continue :\n01, 02, et ainsi de suite."
+ },
+ {
+  "start": 170.345,
+  "end": 176.244,
+  "text": "CardAuction compte de la même façon.\nSi la dernière enchère est 95, montez :"
+ },
+ {
+  "start": 176.244,
+  "end": 177.207,
+  "text": "96,"
+ },
+ {
+  "start": 177.207,
+  "end": 178.39,
+  "text": "96, 97,"
+ },
+ {
+  "start": 178.39,
+  "end": 179.638,
+  "text": "96, 97, 98,"
+ },
+ {
+  "start": 179.638,
+  "end": 180.804,
+  "text": "96, 97, 98, 99,"
+ },
+ {
+  "start": 180.804,
+  "end": 181.679,
+  "text": "96, 97, 98, 99, 00,"
+ },
+ {
+  "start": 181.679,
+  "end": 182.529,
+  "text": "96, 97, 98, 99, 00, 01,"
+ },
+ {
+  "start": 182.529,
+  "end": 183.316,
+  "text": "96, 97, 98, 99, 00, 01, 02,"
+ },
+ {
+  "start": 183.316,
+  "end": 184.326,
+  "text": "96, 97, 98, 99, 00, 01, 02, 03,"
+ },
+ {
+  "start": 184.326,
+  "end": 185.276,
+  "text": "96, 97, 98, 99, 00, 01, 02, 03, 04,"
+ },
+ {
+  "start": 185.276,
+  "end": 186.514,
+  "text": "96, 97, 98, 99, 00, 01, 02, 03, 04, 05."
+ },
+ {
+  "start": 186.564,
+  "end": 193.774,
+  "text": "Soit dix crans : depuis 95, vous pouvez\nenchérir de 96 à 05, en faisant le tour."
+ },
+ {
+  "start": 193.824,
+  "end": 198.274,
+  "text": "Mais 94, c’est reculer,\net 06 est à onze crans."
+ },
+ {
+  "start": 198.324,
+  "end": 201.07,
+  "text": "On peut aussi voir\nles nombres sur un cadran,"
+ },
+ {
+  "start": 201.07,
+  "end": 203.268,
+  "text": "comme une horloge à 100 graduations."
+ },
+ {
+  "start": 203.268,
+  "end": 208.245,
+  "text": "On avance toujours, de 1 à 10 graduations,\net après 99, le cadran continue."
+ },
+ {
+  "start": 208.295,
+  "end": 214.785,
+  "text": "Juste après 99, l’enchère suivante\npeut donc aller de 00 à 09."
+ },
+ {
+  "start": 214.835,
+  "end": 220.734,
+  "text": "Un petit nombre peut battre un grand, quand\non monte au-delà de 99 pour l’atteindre."
+ },
+ {
+  "start": 221.534,
+  "end": 223.31,
+  "text": "Règle deux : votre enchère"
+ },
+ {
+  "start": 223.31,
+  "end": 228.014,
+  "text": "doit avoir au moins une couleur\nabsente de la dernière enchère."
+ },
+ {
+  "start": 228.064,
+  "end": 232.195,
+  "text": "Disons que la dernière enchère\nest 5 de cœur, 8 de pique :"
+ },
+ {
+  "start": 232.195,
+  "end": 236.014,
+  "text": "58, en rouge et noir.\nVous aimeriez enchérir 63."
+ },
+ {
+  "start": 236.064,
+  "end": 240.834,
+  "text": "6 d’étoiles et 3 de pique ? Oui !\nL’étoile dorée est nouvelle."
+ },
+ {
+  "start": 240.884,
+  "end": 246.236,
+  "text": "6 de cœur et 3 de pique ? Non :\nle rouge et le noir sont déjà dans 58."
+ },
+ {
+  "start": 246.286,
+  "end": 250.631,
+  "text": "Vos deux cartes peuvent être de la même\ncouleur : 6 de carreau et 3 de carreau,"
+ },
+ {
+  "start": 250.631,
+  "end": 252.956,
+  "text": "ça marche, car le bleu est nouveau."
+ },
+ {
+  "start": 253.006,
+  "end": 256.772,
+  "text": "Vous pouvez même utiliser\nles deux exemplaires d’une carte :"
+ },
+ {
+  "start": 256.772,
+  "end": 258.992,
+  "text": "deux 6 de carreau donnent 66."
+ },
+ {
+  "start": 259.792,
+  "end": 262.835,
+  "text": "Passons aux cartes action.\nJuste avant votre enchère,"
+ },
+ {
+  "start": 262.835,
+  "end": 267.139,
+  "text": "une carte action fait monter\nou descendre la dernière enchère de 10."
+ },
+ {
+  "start": 267.189,
+  "end": 269.904,
+  "text": "Posez-la à côté de la dernière enchère :"
+ },
+ {
+  "start": 269.904,
+  "end": 273.833,
+  "text": "à gauche, elle ajoute 10 ;\nà droite, elle retire 10."
+ },
+ {
+  "start": 273.883,
+  "end": 279.87,
+  "text": "Disons que la dernière enchère est 58,\net que vos cartes peuvent faire 72,"
+ },
+ {
+  "start": 279.87,
+  "end": 282.293,
+  "text": "mais rien entre 59 et 68."
+ },
+ {
+  "start": 282.343,
+  "end": 286.873,
+  "text": "Posez une carte action à gauche :\n58 plus 10, ça fait 68."
+ },
+ {
+  "start": 286.923,
+  "end": 292.86,
+  "text": "Montez depuis 68 : de 69 à 78. 72 convient !"
+ },
+ {
+  "start": 292.91,
+  "end": 299.377,
+  "text": "À droite, 58 moins 10 donne 48 :\nvous pouvez enchérir de 49 à 58."
+ },
+ {
+  "start": 299.377,
+  "end": 303.259,
+  "text": "Cette fois, 58 lui-même est permis."
+ },
+ {
+  "start": 303.309,
+  "end": 306.052,
+  "text": "Les cartes action font aussi le tour :"
+ },
+ {
+  "start": 306.052,
+  "end": 310.639,
+  "text": "95 plus 10 donne 05,\ndonc vous pouvez enchérir de 06 à 15."
+ },
+ {
+  "start": 310.689,
+  "end": 319.039,
+  "text": "Et 03 moins 10 revient à 93 : vous pouvez\nenchérir de 94 à 03, en faisant le tour."
+ },
+ {
+  "start": 319.089,
+  "end": 322.832,
+  "text": "La règle de la couleur s’applique toujours."
+ },
+ {
+  "start": 323.632,
+  "end": 324.766,
+  "text": "Après chaque enchère,"
+ },
+ {
+  "start": 324.766,
+  "end": 327.898,
+  "text": "prenez une carte de la table :\nun chiffre qui vous manque,"
+ },
+ {
+  "start": 327.898,
+  "end": 332.078,
+  "text": "une nouvelle couleur ou une carte\naction pourra vous sauver plus tard."
+ },
+ {
+  "start": 332.128,
+  "end": 335.61,
+  "text": "Les cartes de votre enchère restent\nsur le tableau des enchères."
+ },
+ {
+  "start": 335.61,
+  "end": 338.458,
+  "text": "Quand la table est vide,\nvous ne prenez rien."
+ },
+ {
+  "start": 339.258,
+  "end": 342.213,
+  "text": "Vous vous souvenez de la première\nenchère du joueur 1,"
+ },
+ {
+  "start": 342.213,
+  "end": 344.748,
+  "text": "avec exactement une carte de la table ?"
+ },
+ {
+  "start": 344.798,
+  "end": 347.527,
+  "text": "Disons que le nombre de départ est 47."
+ },
+ {
+  "start": 347.527,
+  "end": 351.734,
+  "text": "La table a un 5 d’étoiles,\net vous avez un 2 de cœur."
+ },
+ {
+  "start": 351.784,
+  "end": 354.625,
+  "text": "Ensemble, ils font 52 :\ncinq crans plus haut,"
+ },
+ {
+  "start": 354.625,
+  "end": 357.234,
+  "text": "avec une nouvelle couleur. Parfait."
+ },
+ {
+  "start": 357.284,
+  "end": 360.767,
+  "text": "La carte de la table peut aussi\nêtre une carte action,"
+ },
+ {
+  "start": 360.767,
+  "end": 363.554,
+  "text": "jouée avec deux cartes de votre main."
+ },
+ {
+  "start": 364.354,
+  "end": 367.951,
+  "text": "La partie s’arrête quand un joueur\nne peut pas faire d’enchère valable"
+ },
+ {
+  "start": 367.951,
+  "end": 369.944,
+  "text": "à son tour : ce joueur a perdu."
+ },
+ {
+  "start": 369.994,
+  "end": 375.151,
+  "text": "Disons que la dernière enchère est 87.\nIl vous faut un nombre de 88 à 97 :"
+ },
+ {
+  "start": 375.151,
+  "end": 379.244,
+  "text": "votre carte des dizaines\ndoit donc être un 8 ou un 9."
+ },
+ {
+  "start": 379.294,
+  "end": 380.501,
+  "text": "Pas de 8, pas de 9,"
+ },
+ {
+  "start": 380.501,
+  "end": 385.666,
+  "text": "pas de carte action pour vous aider :\nvous êtes bloqué, et vous avez perdu."
+ },
+ {
+  "start": 385.716,
+  "end": 388.615,
+  "text": "Et si le joueur 1 ne peut pas faire\nla première enchère,"
+ },
+ {
+  "start": 388.615,
+  "end": 390.464,
+  "text": "c’est le joueur 2 qui gagne."
+ },
+ {
+  "start": 390.514,
+  "end": 393.85,
+  "text": "Dans l’appli,\nchaque tour dure au plus 120 secondes."
+ },
+ {
+  "start": 393.85,
+  "end": 397.956,
+  "text": "Si le temps s’écoule alors\nque vous devez enchérir, vous perdez."
+ },
+ {
+  "start": 397.956,
+  "end": 403.04,
+  "text": "S’il s’écoule pendant l’échange du joueur 2,\nil garde simplement sa main."
+ },
+ {
+  "start": 403.94,
+  "end": 405.049,
+  "text": "Jouons dans l’appli."
+ },
+ {
+  "start": 405.049,
+  "end": 408.554,
+  "text": "Ouvrez le site de CardAuction :\nl’adresse est à l’écran."
+ },
+ {
+  "start": 408.604,
+  "end": 411.325,
+  "text": "Tapez votre nom,\npuis choisissez comment jouer :"
+ },
+ {
+  "start": 411.325,
+  "end": 415.379,
+  "text": "Partie rapide, contre la prochaine\npersonne qui cherche une partie ;"
+ },
+ {
+  "start": 415.379,
+  "end": 418.761,
+  "text": "Jouer contre l’IA,\navec un niveau et une place ;"
+ },
+ {
+  "start": 418.761,
+  "end": 422.559,
+  "text": "ou Partie privée,\npour inviter un ami avec un code ou un lien."
+ },
+ {
+  "start": 422.659,
+  "end": 426.982,
+  "text": "Voici l’écran de jeu : votre main en bas,\nles cartes de la table au milieu,"
+ },
+ {
+  "start": 426.982,
+  "end": 431.014,
+  "text": "et le tableau des enchères,\navec toutes les enchères jusqu’ici."
+ },
+ {
+  "start": 431.064,
+  "end": 433.607,
+  "text": "En haut, les cartes de votre adversaire :"
+ },
+ {
+  "start": 433.607,
+  "end": 437.294,
+  "text": "face cachée,\nsauf celles qu’il a prises sur la table."
+ },
+ {
+  "start": 437.344,
+  "end": 441.882,
+  "text": "À votre tour, touchez une carte\npour les dizaines, puis une pour les unités."
+ },
+ {
+  "start": 441.882,
+  "end": 444.849,
+  "text": "L’appli affiche votre nombre et le vérifie."
+ },
+ {
+  "start": 444.899,
+  "end": 448.629,
+  "text": "Si une enchère ne marche pas,\nl’appli vous dit pourquoi."
+ },
+ {
+  "start": 448.679,
+  "end": 449.865,
+  "text": "Pour une carte action,"
+ },
+ {
+  "start": 449.865,
+  "end": 454.309,
+  "text": "touchez-la, puis la case plus 10\nou moins 10 à côté de la dernière enchère."
+ },
+ {
+  "start": 454.359,
+  "end": 459.036,
+  "text": "Touchez ensuite une carte de la table\nà prendre, et appuyez sur Valider."
+ },
+ {
+  "start": 459.086,
+  "end": 463.657,
+  "text": "Avec l’Aide activée, les cartes\nqui permettent un coup valable s’allument."
+ },
+ {
+  "start": 463.707,
+  "end": 466.831,
+  "text": "En tant que joueur 2,\nvotre premier coup est l’échange :"
+ },
+ {
+  "start": 466.831,
+  "end": 471.637,
+  "text": "touchez une carte de votre main et une carte\nde la table, ou gardez votre main."
+ },
+ {
+  "start": 471.687,
+  "end": 475.955,
+  "text": "Connexion perdue ?\nVous avez 25 secondes pour revenir."
+ },
+ {
+  "start": 476.005,
+  "end": 480.935,
+  "text": "À la fin, les deux mains sont dévoilées,\net vous pouvez demander une revanche."
+ },
+ {
+  "start": 480.985,
+  "end": 485.475,
+  "text": "Et les règles sont toujours à portée\nde main, en français ou en anglais."
+ },
+ {
+  "start": 486.375,
+  "end": 491.057,
+  "text": "C’est tout ! Montez de 1 à 10 crans,\nrappelez-vous qu’après 99 vient 00,"
+ },
+ {
+  "start": 491.057,
+  "end": 495.749,
+  "text": "apportez une nouvelle couleur,\net utilisez bien vos cartes action."
+ },
+ {
+  "start": 495.799,
+  "end": 497.949,
+  "text": "Bon jeu, et bonne chance !"
+ }
+]

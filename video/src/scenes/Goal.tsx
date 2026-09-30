@@ -3,6 +3,7 @@ import { life, pop, pulse, ramp } from '../components/anim';
 import { Num, Sfx, Text, Verdict } from '../components/base';
 import { C, DISPLAY, UI } from '../theme';
 import { useMarks } from '../timeline';
+import { tr } from '../lang';
 
 const PLAYER = { 1: C.gold2, 2: '#9cc2ff' } as const;
 type Seat = 1 | 2;
@@ -66,7 +67,7 @@ function Badge({
       </div>
       <div style={{ marginTop: 18 }}>
         <Text size={36} color={C.ink}>
-          Player {seat}
+          {tr('Player')} {seat}
         </Text>
       </div>
       <div style={{ marginTop: 10, height: 50 }}>
@@ -108,7 +109,7 @@ export function Goal() {
         x={100}
         glow={glow(1)}
         dim={0}
-        note={verdict > 0.5 ? 'wins' : ''}
+        note={verdict > 0.5 ? tr('wins') : ''}
         noteColor={C.gold2}
       />
       <Badge
@@ -116,7 +117,7 @@ export function Goal() {
         x={1600}
         glow={glow(2)}
         dim={verdict}
-        note={verdict > 0.5 ? 'loses' : ''}
+        note={verdict > 0.5 ? tr('loses') : ''}
         noteColor={C.danger}
       />
 
@@ -177,7 +178,8 @@ export function Goal() {
                 color,
               }}
             >
-              P{seat}
+              {tr('P')}
+              {seat}
             </div>
           </div>
         );
@@ -220,7 +222,7 @@ export function Goal() {
                 color: PLAYER[2],
               }}
             >
-              P2
+              {tr('P2')}
             </div>
             <div
               style={{

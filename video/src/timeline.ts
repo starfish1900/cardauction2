@@ -1,12 +1,17 @@
-import data from './timeline.json';
-import subtitles from './subtitles.json';
+import frData from './fr/timeline.json';
+import frSubtitles from './fr/subtitles.json';
+import { LANG } from './lang';
 import { FPS } from './theme';
+import enData from './timeline.json';
+import enSubtitles from './subtitles.json';
 
 export interface Segment {
   readonly id: string | null;
   readonly text: string;
   readonly start: number;
   readonly end: number;
+  /** French segments: the English fragments the scenes look for, in this segment's words. */
+  readonly anchors?: Readonly<Record<string, string>>;
 }
 export interface SceneTiming {
   readonly id: string;
@@ -16,8 +21,16 @@ export interface SceneTiming {
   readonly segments: readonly Segment[];
 }
 
-export const timeline = data as { fps: number; duration: number; scenes: SceneTiming[] };
-export const cues = subtitles as { start: number; end: number; text: string }[];
+export const timeline = (LANG === 'fr' ? frData : enData) as {
+  fps: number;
+  duration: number;
+  scenes: SceneTiming[];
+};
+export const cues = (LANG === 'fr' ? frSubtitles : enSubtitles) as {
+  start: number;
+  end: number;
+  text: string;
+}[];
 
 export const frames = (seconds: number): number => Math.round(seconds * FPS);
 
@@ -49,8 +62,9 @@ export function useMarks(sceneId: string) {
      */
     word: (id: string, fragment: string, offset = 0): number => {
       const segment = find(id);
-      const index = segment.text.indexOf(fragment);
-      if (index < 0) throw new Error(`"${fragment}" is not in segment ${id}`);
+      const words = segment.anchors?.[fragment] ?? fragment;
+      const index = segment.text.indexOf(words);
+      if (index < 0) throw new Error(`"${words}" is not in segment ${id}`);
       const share = index / Math.max(1, segment.text.length);
       return frames(segment.start + (segment.end - segment.start) * share - scene.start + offset);
     },

@@ -19,6 +19,7 @@ import {
 import { card } from '../cards';
 import { C } from '../theme';
 import { useMarks } from '../timeline';
+import { tr } from '../lang';
 
 /** The 25 cards of the table, row by row. */
 export const TABLE = [
@@ -91,7 +92,7 @@ export function Setup() {
           }}
         >
           <Text size={26} color={C.ink2} weight={500}>
-            starting number
+            {tr('starting number')}
           </Text>
         </div>
       </BoardPanel>
@@ -217,24 +218,24 @@ export function Setup() {
         seat={2}
         y={HAND.top}
         opacity={fade(frame, handsLabel)}
-        count="13 cards"
+        count={tr('13 cards')}
         turn={0}
       />
       <HandLabel
         seat={1}
         y={HAND.bottom}
         opacity={fade(frame, handsLabel)}
-        {...(frame < takeAt ? { count: '13 cards' } : {})}
+        {...(frame < takeAt ? { count: tr('13 cards') } : {})}
         turn={0}
       />
 
       <div style={{ position: 'absolute', left: 1190, top: 440, opacity: fade(frame, tableLabel) }}>
         <Pill size={30} color={C.gold2} border="rgba(229,185,90,0.5)">
-          the table
+          {tr('the table')}
         </Pill>
         <div style={{ marginTop: 12, marginLeft: 6 }}>
           <Text size={26} color={C.ink2} weight={500}>
-            25 cards, face up
+            {tr('25 cards, face up')}
           </Text>
         </div>
       </div>
@@ -253,11 +254,11 @@ export function Setup() {
           67
         </Num>
         <Text size={30} color={C.ink2} style={{ marginLeft: 10 }}>
-          cards
+          {tr('cards')}
         </Text>
         <div style={{ marginTop: 6 }}>
           <Text size={26} color={C.ink3} weight={500}>
-            out of the game
+            {tr('out of the game')}
           </Text>
         </div>
       </div>
@@ -275,7 +276,7 @@ export function Setup() {
       >
         <Eye size={46} />
         <Text size={30} color={C.gold2}>
-          visible to your opponent
+          {tr('visible to your opponent')}
         </Text>
       </div>
 

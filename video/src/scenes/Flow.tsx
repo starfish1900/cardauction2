@@ -19,6 +19,7 @@ import { card } from '../cards';
 import { C, UI } from '../theme';
 import { useMarks } from '../timeline';
 import { TABLE } from './Setup';
+import { tr } from '../lang';
 
 function Step({
   n,
@@ -317,14 +318,14 @@ export function Flow() {
         }}
       >
         <Pill size={28} color={C.goldInk} bg={C.gold} border={C.gold2}>
-          swap one card
+          {tr('swap one card')}
         </Pill>
       </div>
       <div
         style={{ position: 'absolute', left: 1300, top: 160, opacity: fade(frame, keepAt, p1Turn) }}
       >
         <Pill size={28} color={C.ink}>
-          or keep the hand
+          {tr('or keep the hand')}
         </Pill>
       </div>
 
@@ -338,11 +339,11 @@ export function Flow() {
         }}
       >
         <Pill size={28} color={C.gold2} border="rgba(229,185,90,0.5)">
-          exactly 1 table card
+          {tr('exactly 1 table card')}
         </Pill>
         <div style={{ marginTop: 10, marginLeft: 8, opacity: fade(frame, handCardAt) }}>
           <Text size={26} color={C.ink2} weight={500}>
-            + cards from the hand
+            {tr('+ cards from the hand')}
           </Text>
         </div>
       </div>
@@ -355,12 +356,12 @@ export function Flow() {
           weight={600}
           style={{ textTransform: 'uppercase', letterSpacing: 1 }}
         >
-          Each turn
+          {tr('Each turn')}
         </Text>
       </div>
       <Step
         n="1"
-        label="make a bid"
+        label={tr('make a bid')}
         x={1290}
         y={410}
         opacity={fade(frame, loopAt + 4)}
@@ -368,7 +369,7 @@ export function Flow() {
       />
       <Step
         n="2"
-        label="take a table card"
+        label={tr('take a table card')}
         x={1290}
         y={490}
         opacity={fade(frame, loopAt + 8)}

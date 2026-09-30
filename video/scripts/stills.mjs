@@ -10,7 +10,14 @@ if (!outDir || items.length === 0) {
   console.error('usage: node scripts/stills.mjs <outDir> <scene@seconds | seconds>...');
   process.exit(2);
 }
-const timeline = JSON.parse(readFileSync('src/timeline.json', 'utf8'));
+// REMOTION_LANG=fr renders the French version (the page gets every REMOTION_ variable).
+const envVariables = Object.fromEntries(
+  Object.entries(process.env).filter(([key]) => key.startsWith('REMOTION_')),
+);
+const lang = envVariables.REMOTION_LANG === 'fr' ? 'fr' : 'en';
+const timeline = JSON.parse(
+  readFileSync(lang === 'fr' ? 'src/fr/timeline.json' : 'src/timeline.json', 'utf8'),
+);
 const fps = 30;
 const shots = items.map((item) => {
   const [scene, seconds] = item.includes('@') ? item.split('@') : [null, item];
@@ -48,6 +55,7 @@ const composition = await selectComposition({
   id,
   puppeteerInstance: browser,
   browserExecutable,
+  envVariables,
 });
 mkdirSync(outDir, { recursive: true });
 for (const shot of shots) {
@@ -59,6 +67,7 @@ for (const shot of shots) {
     scale: Number(process.env.SCALE ?? 0.5),
     puppeteerInstance: browser,
     browserExecutable,
+    envVariables,
   });
   console.log(`${shot.name} (frame ${shot.frame})`);
 }

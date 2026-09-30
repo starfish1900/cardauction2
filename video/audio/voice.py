@@ -7,11 +7,14 @@ Writes public/audio/voice/*.wav, public/audio/narration.wav (the whole track), s
 (read by the animation) and out/subtitles.srt.
 
   python3 audio/voice.py --model <dir with kokoro-v1.0.onnx and voices-v1.0.bin>
+
+With --lang fr it lays out the French narration instead: the clips audio/voice_fr.py made in
+public/fr/audio/voice/, then public/fr/audio/narration.wav, src/fr/timeline.json,
+src/fr/subtitles.json and out/fr/subtitles.srt.
 """
 import argparse, json, os, re, time
 import numpy as np
 import soundfile as sf
-from kokoro_onnx import Kokoro
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RATE = 24_000
@@ -19,15 +22,28 @@ LEAD = 0.6  # silence at the start of every scene, while it appears
 VOICE, SPEED = "am_michael", 0.88
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--model", required=True)
+parser.add_argument("--model", help="the Kokoro model directory (English)")
 parser.add_argument("--only", help="re-synthesize only segments whose text contains this")
+parser.add_argument("--lang", choices=["en", "fr"], default="en")
 args = parser.parse_args()
+FR = args.lang == "fr"
 
-script = json.load(open(os.path.join(ROOT, "script", "script.json")))
-voice_dir = os.path.join(ROOT, "public", "audio", "voice")
-os.makedirs(voice_dir, exist_ok=True)
-os.makedirs(os.path.join(ROOT, "out"), exist_ok=True)
-kokoro = Kokoro(os.path.join(args.model, "kokoro-v1.0.onnx"), os.path.join(args.model, "voices-v1.0.bin"))
+# The French version keeps its files beside the English ones, under fr/.
+sub = "fr" if FR else ""
+script = json.load(open(os.path.join(ROOT, "script", "script.fr.json" if FR else "script.json")))
+voice_dir = os.path.join(ROOT, "public", sub, "audio", "voice")
+narration_path = os.path.join(ROOT, "public", sub, "audio", "narration.wav")
+timeline_path = os.path.join(ROOT, "src", sub, "timeline.json")
+subtitles_path = os.path.join(ROOT, "src", sub, "subtitles.json")
+srt_path = os.path.join(ROOT, "out", sub, "subtitles.srt")
+for d in (voice_dir, os.path.dirname(srt_path)):
+    os.makedirs(d, exist_ok=True)
+if not FR:
+    from kokoro_onnx import Kokoro
+
+    if not args.model:
+        parser.error("--model is required for the English voice")
+    kokoro = Kokoro(os.path.join(args.model, "kokoro-v1.0.onnx"), os.path.join(args.model, "voices-v1.0.bin"))
 
 
 def clip_path(scene_id, index):
@@ -35,7 +51,14 @@ def clip_path(scene_id, index):
 
 
 started = time.time()
-for scene in script["scenes"]:
+if FR:
+    # audio/voice_fr.py made the clips; each key ends with the words it says.
+    stale = [clip_path(sc["id"], i) for sc in script["scenes"] for i, seg in enumerate(sc["segments"])
+             if not os.path.exists(clip_path(sc["id"], i) + ".txt")
+             or not open(clip_path(sc["id"], i) + ".txt").read().endswith("|" + seg["speech"].replace("CardAuction", "Card Auction"))]
+    if stale:
+        raise SystemExit(f"{len(stale)} French clips are missing or out of date, first {stale[0]}: run audio/voice_fr.py")
+for scene in [] if FR else script["scenes"]:
     for i, seg in enumerate(scene["segments"]):
         path = clip_path(scene["id"], i)
         cache = path + ".txt"
@@ -53,6 +76,31 @@ for scene in script["scenes"]:
         open(cache, "w").write(key)
 print(f"voice ready in {time.time() - started:.0f} s")
 
+def tighten(audio):
+    """Cuts the quiet tail (breath, room tone) the French voice often leaves after its last word,
+    so the pauses are the script's own: after the last loud stretch, the clip ends at the first
+    100 ms of silence."""
+    w = int(0.02 * RATE)
+    n = len(audio) // w
+    if n == 0:
+        return audio
+    db = 20 * np.log10(np.sqrt(np.mean(audio[: n * w].reshape(n, w) ** 2, axis=1)) + 1e-9)
+    loud = np.nonzero(db > -35)[0]
+    if not len(loud):
+        return audio
+    end = len(audio)
+    quiet = 0
+    for k in range(loud[-1] + 1, n):
+        quiet = quiet + 1 if db[k] < -55 else 0
+        if quiet == 5:
+            end = (k - 4) * w + int(0.05 * RATE)
+            break
+    out = audio[:end].copy()
+    fade = min(len(out), int(0.03 * RATE))
+    out[len(out) - fade:] *= np.linspace(1, 0, fade, dtype=np.float32)
+    return out
+
+
 # The timeline.
 t = 0.0
 track = []
@@ -63,9 +111,12 @@ for scene in script["scenes"]:
     track.append(np.zeros(int(LEAD * RATE), dtype=np.float32))
     for i, seg in enumerate(scene["segments"]):
         audio, _ = sf.read(clip_path(scene["id"], i), dtype="float32")
+        if FR:
+            audio = tighten(audio)
         start, end = t, t + len(audio) / RATE
         entry["segments"].append(
-            {"id": seg.get("id"), "text": seg["text"], "start": round(start, 3), "end": round(end, 3)}
+            {"id": seg.get("id"), "text": seg["text"], "start": round(start, 3), "end": round(end, 3),
+             **({"anchors": seg["anchors"]} if seg.get("anchors") else {})}
         )
         track.append(audio)
         gap = seg["gap"]
@@ -78,8 +129,8 @@ for scene in script["scenes"]:
     timeline["scenes"].append(entry)
 timeline["duration"] = round(t, 3)
 narration = np.concatenate(track)
-sf.write(os.path.join(ROOT, "public", "audio", "narration.wav"), narration, RATE)
-json.dump(timeline, open(os.path.join(ROOT, "src", "timeline.json"), "w"), indent=1)
+sf.write(narration_path, narration, RATE)
+json.dump(timeline, open(timeline_path, "w"), indent=1, ensure_ascii=not FR)
 
 
 # Subtitles: one cue per segment; a long one is split into cues of at most two lines, at the
@@ -99,6 +150,19 @@ WEAK_END = {"a", "an", "the", "and", "or", "to", "of", "in", "on", "at", "for", 
             "one", "two", "all", "you", "it", "if", "so", "can", "may", "must", "then", "new",
             "plus", "minus", "own"}
 BOUND_AFTER_NUMBER = {"to", "steps", "marks", "cards", "of", "and", "is"}
+if FR:
+    WEAK_END = {"le", "la", "les", "l'", "un", "une", "des", "de", "du", "d'", "à", "au", "aux", "et", "ou",
+                "en", "dans", "sur", "pour", "par", "avec", "sans", "votre", "vos", "sa", "son", "ses",
+                "que", "qui", "ne", "n'", "pas", "plus", "moins", "ce", "cette", "il", "elle", "on", "vous",
+                "se", "si", "mais", "donc", "car", "est", "sont", "peut", "doit", "deux", "chaque", "entre",
+                "jusqu'à", "après", "avant", "puis", "nouvelle", "nouveau", "toute", "tout", "mon", "ma"}
+    BOUND_AFTER_NUMBER = {"à", "crans", "cran", "cartes", "graduations", "de", "et", "est", "secondes",
+                          "plus", "moins", "donne", "revient"}
+
+
+def split_words(text):
+    """Words, with the no-break spaces of French typography kept inside them."""
+    return [w for w in text.split(" ") if w]
 
 
 def is_number(word):
@@ -112,7 +176,10 @@ def break_cost(before, after=""):
     if before.endswith((",", ";")):
         return 2
     cost = 7
-    if before.lower().strip("\"'") in WEAK_END:
+    word = before.lower().strip("\"'")
+    if FR and "'" in word:
+        word = word.split("'")[-1]  # "d'une" ends like "une"
+    if word in WEAK_END:
         cost += 10
     # Keep "1 to 10", "plus 10", "13 cards" together.
     if is_number(after) or (is_number(before) and after.lower().strip(".,:;") in BOUND_AFTER_NUMBER):
@@ -139,7 +206,7 @@ def lines_for(words):
 
 def chunks_for(text):
     """Splits a segment into cues: few of them, cut at clause boundaries, none very short."""
-    words = text.split()
+    words = split_words(text)
     n = len(words)
     best = [(0.0, [])] + [None] * n  # best[j]: cost and cut points for words[:j]
     for j in range(1, n + 1):
@@ -173,7 +240,7 @@ for scene in timeline["scenes"]:
             continue
         counted = []
         given = given_cues.get((scene["id"], seg.get("id")))
-        chunks = [c.replace("\n", " ").split() for c in given] if given else chunks_for(text)
+        chunks = [split_words(c.replace("\n", " ")) for c in given] if given else chunks_for(text)
         total = sum(len(" ".join(c)) for c in chunks)
         at = start
         for k, c in enumerate(chunks):
@@ -185,10 +252,13 @@ for scene in timeline["scenes"]:
 for k, cue in enumerate(cues):
     nxt = cues[k + 1][0] if k + 1 < len(cues) else cue[1] + 1
     cue[1] = min(cue[1] + 0.4, nxt) if nxt - cue[1] > 0.02 else cue[1]
-with open(os.path.join(ROOT, "out", "subtitles.srt"), "w") as f:
+if FR:
+    # The typographic apostrophe, as on screen.
+    cues = [[a, b, text.replace("'", "\u2019")] for a, b, text in cues]
+with open(srt_path, "w") as f:
     for n, (a, b, text) in enumerate(cues, 1):
         f.write(f"{n}\n{fmt(a)} --> {fmt(b)}\n{text}\n\n")
 json.dump([{"start": round(a, 3), "end": round(b, 3), "text": text} for a, b, text in cues],
-          open(os.path.join(ROOT, "src", "subtitles.json"), "w"), indent=1)
+          open(subtitles_path, "w"), indent=1, ensure_ascii=not FR)
 m, s = divmod(timeline["duration"], 60)
 print(f"{len(cues)} subtitle cues; total {int(m)}:{s:04.1f}")
