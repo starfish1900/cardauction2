@@ -31,7 +31,7 @@ function Bid({
 }
 
 /** The video tutorial: every rule, then how to play in the app (8½ minutes, in English). */
-export const TUTORIAL_URL = 'https://youtu.be/ty3DnjXm33k';
+export const TUTORIAL_URL = 'https://youtu.be/rnim6YZoadw';
 
 /** How to play, over whatever screen it was opened from. */
 export function Rules() {
