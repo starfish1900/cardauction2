@@ -30,9 +30,6 @@ function Bid({
   );
 }
 
-/** The video tutorial: every rule, then how to play in the app (8½ minutes, in English). */
-export const TUTORIAL_URL = 'https://youtu.be/rnim6YZoadw';
-
 /** How to play, over whatever screen it was opened from. */
 export function Rules() {
   const { t } = useTranslation();
@@ -51,7 +48,7 @@ export function Rules() {
         <p className="rules-goal">{t('rules.goal')}</p>
         <a
           className="btn tutorial-btn"
-          href={TUTORIAL_URL}
+          href={t('rules.tutorialUrl')}
           target="_blank"
           rel="noopener noreferrer"
           data-testid="tutorial"

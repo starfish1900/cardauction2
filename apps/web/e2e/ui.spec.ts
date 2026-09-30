@@ -64,6 +64,18 @@ test('language, rules and the invitation code screen', async ({ browser }) => {
   await page.keyboard.press('Escape');
   await expect(rules).toBeHidden();
 
+  // In French, the button opens the French video.
+  await page.getByTestId('language').click();
+  await page.getByRole('button', { name: /Comment jouer/ }).click();
+  const tutoriel = rules.getByRole('link', { name: /Regarder le tutoriel/ });
+  await expect(tutoriel).toHaveAttribute('href', 'https://youtu.be/xwfvwQZjbys');
+  await expect(tutoriel).toContainText('Vidéo de 8 minutes sur YouTube');
+  await expect(tutoriel).not.toContainText('anglais');
+  await page.keyboard.press('Escape');
+  await expect(rules).toBeHidden();
+  await page.getByTestId('language').click();
+  await expect(page.getByTestId('home')).toContainText('Quick match');
+
   await page.getByTestId('create-code').click();
   await expect(page.getByTestId('host')).toBeVisible();
   await page.getByRole('button', { name: 'Cancel' }).click();
