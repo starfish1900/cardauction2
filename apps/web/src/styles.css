@@ -1414,12 +1414,38 @@ p {
 
 .board-grid--head {
   padding: 0 8px 4px;
+  row-gap: 1px;
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-3);
   text-align: center;
+}
+
+/* Two lines of column titles: +10 and −10 over the outer columns, then the digits' titles just
+   above the cards. Those meet in the middle and may reach over the outer columns, so that long
+   titles (DIZAINES, UNITÉS) never run into each other, even on a phone. */
+.board-title {
+  white-space: nowrap;
+}
+
+.board-title--plus {
+  grid-area: 1 / 2;
+}
+
+.board-title--minus {
+  grid-area: 1 / 5;
+}
+
+.board-title--tens {
+  grid-area: 2 / 2 / 3 / 4;
+  text-align: right;
+}
+
+.board-title--units {
+  grid-area: 2 / 4 / 3 / 6;
+  text-align: left;
 }
 
 .board-rows {
@@ -2069,6 +2095,7 @@ p {
   }
 
   .board-grid--head {
+    row-gap: 1px;
     font-size: 0.6rem;
     padding: 0 6px 2px;
   }

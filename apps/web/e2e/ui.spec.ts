@@ -45,6 +45,40 @@ test('the composer explains an illegal bid before it is sent', async ({ browser 
   await expectClean(page);
 });
 
+test('the column titles of the bids stay apart, in English and in French', async ({ browser }) => {
+  const page = await newPlayer(browser);
+  await page.getByTestId('ai-start').click();
+  await expect(page.getByTestId('board')).toBeVisible();
+  for (const tens of ['Tens', 'Dizaines']) {
+    await expect(page.locator('.board-title--tens')).toHaveText(tens);
+    // Each title's text as drawn: two on one line must not touch, and none may leave the header.
+    const titles = await page.locator('.board-title').evaluateAll((spans) =>
+      spans.map((span) => {
+        const range = document.createRange();
+        range.selectNodeContents(span);
+        const { left, right, top, bottom } = range.getBoundingClientRect();
+        return { text: span.textContent ?? '', left, right, top, bottom };
+      }),
+    );
+    const head = await page.locator('.board-grid--head').boundingBox();
+    expect(titles).toHaveLength(4);
+    for (const [i, a] of titles.entries()) {
+      expect(a.left, a.text).toBeGreaterThanOrEqual(head?.x ?? Infinity);
+      expect(a.right, a.text).toBeLessThanOrEqual((head?.x ?? 0) + (head?.width ?? 0));
+      for (const b of titles.slice(i + 1)) {
+        if (Math.min(a.bottom, b.bottom) <= Math.max(a.top, b.top)) continue;
+        const gap = Math.max(a.left, b.left) - Math.min(a.right, b.right);
+        expect(gap, `${a.text} and ${b.text}`).toBeGreaterThanOrEqual(3);
+      }
+    }
+    await page.getByTestId('language').click();
+  }
+  await page.getByTestId('resign').click();
+  await page.getByTestId('resign-confirm').click();
+  await expect(page.getByTestId('result')).toBeVisible();
+  await expectClean(page);
+});
+
 test('language, rules and the invitation code screen', async ({ browser }) => {
   const page = await newPlayer(browser);
   await expect(page.getByTestId('quick')).toBeVisible();

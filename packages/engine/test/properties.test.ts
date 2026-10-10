@@ -1,13 +1,18 @@
 import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
 import {
+  ACTION_CARDS,
   cardsInView,
+  DECK_SIZE,
   findViolations,
+  HAND_SIZE,
+  isDigit,
   newGame,
   otherSeat,
   playRandomGame,
   seededRng,
   STOCK_SIZE,
+  TABLE_SIZE,
   viewFor,
   type CardId,
   type GameState,
@@ -79,6 +84,24 @@ describe('random games (property-based)', () => {
       }),
       { numRuns: 300 },
     );
+  });
+
+  it('deal each hand and the table their share of the action cards', () => {
+    // Action cards turned over before the starting number's second digit go back into the deck.
+    // Until October 2026 they stayed on top and went to P1: 2.5 action cards on average, P2 2.2.
+    const deals = 10_000;
+    const share = (cards: number): number => (cards * ACTION_CARDS) / (DECK_SIZE - 2);
+    const totals = { p1: 0, p2: 0, table: 0 };
+    const actions = (cards: readonly CardId[]): number => cards.filter((id) => !isDigit(id)).length;
+    for (let seed = 0; seed < deals; seed++) {
+      const state = newGame(seededRng(seed));
+      totals.p1 += actions(state.hands[0]);
+      totals.p2 += actions(state.hands[1]);
+      totals.table += actions(state.table);
+    }
+    expect(totals.p1 / deals).toBeCloseTo(share(HAND_SIZE), 1); // 2.20
+    expect(totals.p2 / deals).toBeCloseTo(share(HAND_SIZE), 1);
+    expect(totals.table / deals).toBeCloseTo(share(TABLE_SIZE), 1); // 4.24
   });
 
   it('replay identically from the same seed', () => {

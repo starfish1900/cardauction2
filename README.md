@@ -254,7 +254,8 @@ with the table's action card, action cards in bids, the table running dry, and t
 
 A first rules sample, Medium against itself on 200 deals (400 games) per variant: P1 won 49.8%
 under the standard rules and 55.0% without P2's exchange. That hints the exchange offsets P1's
-first move, but the difference is not yet significant (p ≈ 0.14); larger runs will tell.
+first move, but the difference is not yet significant (p ≈ 0.14); larger runs will tell. This
+sample predates the deal's fix of 10 October 2026 (below), when P1's hand held more action cards.
 
 ## Rules as implemented
 
@@ -265,6 +266,10 @@ The engine follows the rule book, with these decisions from the planning Q&A:
   after 5♥ 8♠, both 6♥ 3♠ and 6♠ 3♥ are illegal, while 6♠ 3★ and 6♦ 3♦ are legal; after 5♥ 8♥,
   6♠ 3♥ is legal. Bids needed two different suits until 27 September 2026, when that condition was
   dropped after the first simulations.
+- **The deal.** Cards are turned over until two digit cards appear: they are the starting number.
+  The other 118 cards, including any action cards turned over on the way, are shuffled again before
+  13 go to each player and 25 to the table. Until 10 October 2026 those action cards stayed on top
+  of the deck and went to P1, who averaged 2.5 action cards to P2's 2.2.
 - **The 67 undealt cards** stay face-down all game. If the table is empty, the bidder takes nothing.
 - **P1's first bid** uses exactly one table card: a table action card with two hand digits, or a
   table digit with one hand digit (plus, optionally, an action card from hand). P1 then takes a
