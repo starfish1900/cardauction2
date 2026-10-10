@@ -17,17 +17,28 @@ export function stockSize(rules: RuleSet): number {
 /**
  * Deals a new game from a freshly shuffled double deck. Use cryptoRng() for real games; `rules`
  * is for experiments only (real games leave it out).
+ *
+ * The first two digit cards turned over are the starting number. The other 118 cards, including
+ * any action cards turned over before them, are shuffled again before the deal (rules 5.2, 5.3):
+ * every card is then as likely to reach P1 as P2.
  */
 export function newGame(rng: Rng, rules?: RuleSet): GameState {
-  return gameFromDeck(shuffleInPlace(allCardIds(), rng), rules);
+  const deck = shuffleInPlace(allCardIds(), rng);
+  const starting = deck.filter(isDigit).slice(0, 2);
+  const rest = deck.filter((id) => !starting.includes(id));
+  return gameFromDeck([...starting, ...shuffleInPlace(rest, rng)], rules);
 }
 
 /**
  * Deals a game from a given deck order (top of the deck first):
  *
  * 1. the first two digit cards form the starting number, tens first (rule 5.2);
- * 2. from the remaining cards, 13 go to P1, 13 to P2 and 25 face-up to the table (rules 5.3, 5.4);
+ * 2. from the remaining cards, in order, 13 go to P1, 13 to P2 and 25 face-up to the table
+ *    (rules 5.3, 5.4);
  * 3. the other 67 stay face-down and never enter play.
+ *
+ * Action cards above the second digit card stay on top and go to P1, which is why
+ * {@link newGame} shuffles the rest of the deck again first.
  *
  * P2 moves first, with the optional exchange (rule 6.1). Rule variants change the counts, and
  * without the exchange P1 opens.

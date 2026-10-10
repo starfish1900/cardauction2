@@ -117,12 +117,10 @@ export function BidBoard({
         <span className="panel-meta">{t('game.bidCount', { count: rows.length - 1 })}</span>
       </header>
       <div className="board-grid board-grid--head" aria-hidden="true">
-        <span />
-        <span>{t('game.column1')}</span>
-        <span>{t('game.tens')}</span>
-        <span>{t('game.units')}</span>
-        <span>{t('game.column4')}</span>
-        <span />
+        <span className="board-title board-title--plus">{t('game.column1')}</span>
+        <span className="board-title board-title--tens">{t('game.tens')}</span>
+        <span className="board-title board-title--units">{t('game.units')}</span>
+        <span className="board-title board-title--minus">{t('game.column4')}</span>
       </div>
       <div className="board-rows" ref={scroller}>
         {rows.map((row, index) => {
